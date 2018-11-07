@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>菜单</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+</head>
+<body>
+<div class="super-side-menu">
+  <div class="logo"><a href="<{:U('Main/index')}>" target="_parent"><{$myweb.web_name}></a></div>
+  <div class="side-menu">    
+      <?php if (strstr($to[position_list], '1')) { ?>
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe60d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Author/index')}>" target="Mainindex">作者管理</a></li>
+        </ul>
+      </dd>
+    </dl> 
+  <?php } ?> 
+  <?php if (strstr($to[position_list], '2')) { ?>
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe639;</i>  作品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Book/index')}>" target="Mainindex">作品管理</a></li>
+          <li><a href="<{:U('Examine/index')}>" target="Mainindex">作品审核</a></li>
+          <li><a href="<{:U('Examine/chapter')}>" target="Mainindex">章节审核</a></li>
+          <li><a href="<{:U('Rankinglist/index')}>" target="Mainindex">作品排行</a></li>
+          <li><a href="<{:U('Promote/index')}>" target="Mainindex">推荐位</a></li>
+          <li><a href="<{:U('Ban/index')}>" target="Mainindex">广告位置</a></li> 
+          
+        </ul>
+      </dd>
+    </dl>
+  <?php } ?> 
+   <?php if (strstr($to[position_list], '3')) { ?>
+     <dl>
+      <dt><i class="Hui-iconfont">&#xe627;</i>  授权书籍<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Webbook/web')}>" target="Mainindex">授权书籍站</a></li>
+          <li><a href="<{:U('Agentbook/index')}>" target="Mainindex">授权代理作品</a></li>
+        </ul>
+      </dd>      
+    </dl>
+   <?php } ?> 
+    <?php if (strstr($to[position_list], '4')) { ?>
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe62e;</i> 网站设置<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Webannoucement/index')}>" target="Mainindex">网站公告</a></li>
+          <li><a href="<{:U('Help/index')}>" target="Mainindex">用户帮助</a></li>
+          <li><a href="<{:U('Friendlink/index')}>" target="Mainindex">友情链接</a></li>
+          <li><a href="<{:U('Main/remove')}>" target="Mainindex">清除缓存</a></li>
+        </ul>
+      </dd>
+    </dl> 
+   <?php } ?> 
+   <?php if (strstr($to[position_list], '5')) { ?>
+     <dl>
+      <dt><i class="Hui-iconfont">&#xe639;</i>  第三方作品<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Yunbook/index')}>" target="Mainindex">作品查看</a></li>
+        <?php if (strstr($to[position_list], '82')) { ?>
+         <li><a href="<{:U('Cpstatistical/index')}>" target="Mainindex">生成cp打款</a></li>
+        <?php } ?> 
+         <?php if (strstr($to[position_list], '84')) { ?>
+          <li><a href="<{:U('Money/cp')}>" target="Mainindex">Cp打款</a></li>
+        <?php } ?> 
+        </ul>
+      </dd>
+    </dl>     
+     <?php } ?> 
+       <?php if (strstr($to[position_list], '6')) { ?>
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe62d;</i> 接口管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+       <dd>
+        <ul>
+          <li><a href="<{:U('Cp/index')}>" target="Mainindex">CP管理</a></li>
+          <li><a href="<{:U('Interface/index')}>" target="Mainindex">CP查看</a></li>
+          <li><a href="<{:U('Interfaceoutput/index')}>" target="Mainindex">CP输出</a></li>
+        </ul>
+      </dd>     
+    </dl> 
+   <?php } ?> 
+<?php if (strstr($to[position_list], '8')) { ?>
+     <dl>
+      <dt><i class="Hui-iconfont">&#xe6ca;</i> 财务管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Agentmoneyday/index')}>" target="Mainindex">代理账单管理</a></li>
+          <li><a href="<{:U('Cpstatistical/index')}>" target="Mainindex">生成cp打款</a></li>
+          <li><a href="<{:U('Money/agent')}>" target="Mainindex">代理打款</a></li>
+          <li><a href="<{:U('Money/cp')}>" target="Mainindex">Cp打款</a></li>
+          <li><a href="<{:U('Money/author')}>" target="Mainindex">作者打款</a></li>
+          <li><a href="<{:U('Money/index')}>" target="Mainindex">打款记录</a></li>
+        </ul>
+      </dd>
+    </dl> 
+   <?php } ?>
+<?php if (strstr($to[position_list], '9')) { ?>
+     <dl>
+      <dt><i class="Hui-iconfont">&#xe61a;</i> 网站统计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Tongji/index')}>" target="Mainindex">运营统计</a></li>
+          <li><a href="<{:U('Webfigure/index')}>" target="Mainindex">站点折线图</a></li>
+          <li><a href="<{:U('Statement/index')}>" target="Mainindex">账单查询</a></li>
+        </ul>
+      </dd>
+    </dl> 
+   <?php } ?>
+   <?php if (strstr($to[position_list], '10')) { ?>
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>   
+          <li><a href="<{:U('Permission/index')}>" target="Mainindex">权限管理</a></li>
+          <li><a href="<{:U('Web/index')}>" target="Mainindex">站点管理</a></li>
+          <li><a href="<{:U('Agent/index')}>" target="Mainindex">代理管理</a></li>
+        </ul>
+      </dd>
+    </dl> 
+   <?php } ?>
+      <?php if (strstr($to[position_list], '11')) { ?>
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Key/index')}>" target="Mainindex">关键字屏蔽</a></li>    
+          <li><a href="<{:U('Annoucement/index')}>" target="Mainindex">平台公告</a></li>
+        </ul>
+      </dd>
+    </dl>        
+     <?php } ?>    
+      
+  </div>
+</div>
+<!--side E-->
+<script type="text/javascript">
+$(function () {
+    $('.side-menu dt').click(function () {
+        dd = $(this).next();
+        $(".side-menu dt").each(function () {
+            if ($(this).next().html() != dd.html()) {
+                $(this).removeClass('selected');
+                $(this).next().slideUp();
+            }
+        });
+        $(this).toggleClass('selected');
+        $(this).next().slideToggle();
+
+    });
+});
+$('.side-menu li>a').click(function () {
+    $('.side-menu li>a').removeClass('on');
+    $(this).addClass('on');
+})
+</script>
+</body>
+</html>

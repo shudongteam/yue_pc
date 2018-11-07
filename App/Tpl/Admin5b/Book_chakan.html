@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>作品稿费</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2><a href="<{:U('Book/index')}>" class="team-a">作品管理</a> <span class="en">&gt;</span> 作品稿费 <span class="en">&gt;</span> <{$isbooks.book_name}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>销售(阅读币)</th>
+                <th>全勤福利RMB</th>
+                <th>稿费RMB</th>
+                <th>备注</th>
+                <th>状态</th>
+                <th>时间</th> 
+              </tr>
+            </thead>
+          <tbody>
+          <volist name="books"  id="vo">
+            <tr>
+                  <td><{$vo.consumption}></td>
+                  <td><{$vo.welfare}></td>
+                  <td><{$vo.money}></td>
+                  <td><{$vo.beizhu}></td>
+                  <td><if condition="$vo[state]==1"><span class="label label-success radius">未处理</span>
+                      <else/>
+                      <span class="label label-danger radius">已处理</span></if></td>
+                  <td><{$vo.time}></td>
+            </tr>
+           </volist>
+          </tbody>
+        </table>
+        <{$page}>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

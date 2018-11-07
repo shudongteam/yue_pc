@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>生成稿费</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript">
+  function CheckPost(){
+     if (myform.consumption.value=="")
+    {
+        alert("销售不可未空！");
+        myform.consumption.focus();
+        return false;
+    }  
+      if (myform.welfare.value=="")
+    {
+        alert("全勤不可未空！");
+        myform.welfare.focus();
+        return false;
+    }    
+      if (myform.money.value=="")
+    {
+        alert("稿费不可未空！");
+        myform.money.focus();
+        return false;
+    }   
+       if (myform.beizhu.value=="")
+    {
+        alert("备注不可未空！");
+        myform.beizhu.focus();
+        return false;
+    }      
+  }  
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2><a href="<{:U('Book/index')}>" class="team-a">作品管理</a> <span class="en">&gt;</span> 生成稿费 <span class="en">&gt;</span> <{$books.book_name}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="javascript:history.go(-1)" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+        <form id="form1" method="post" action="" class="fomm1" name="myform" onSubmit="return CheckPost();">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+            <tr>
+              <td class="contenta">本月销售：</td>
+              <td><input type="text" name="consumption"  placeholder=" 阅读币" style="width:100px" class="shuruTxt" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            </tr>
+            <tr>
+              <td class="contenta">全勤福利：</td>
+              <td> <input type="text" name="welfare"  placeholder=" RMB" style="width:100px" class="shuruTxt" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            </tr>
+            <tr>
+              <td class="contenta">总稿费：</td>
+              <td><input type="text" name="money"  placeholder=" RMB" style="width:100px" class="shuruTxt" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            </tr>
+            <tr>
+              <td class="contenta">备注：</td>
+              <td><input type="text" name="beizhu"  placeholder=" 备注" style="width:250px" class="shuruTxt"></td>
+            </tr>            
+            <tr>
+              <td align="right">&nbsp;</td>
+              <td><input type="submit" id="" value="生成稿费" class="saveBtn"></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

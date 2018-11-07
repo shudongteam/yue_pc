@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>手动充值</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+ 	if (mform.user_name.value=="")
+	{
+		alert("账户不可为空！");
+		mform.user_name.focus();
+		return false;
+	}    
+ 	if (mform.money.value=="")
+	{
+		alert("钱不能少于0！");
+                mform.money.focus();
+		return false;
+	} 
+	
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>手动充值</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <form class="form form-horizontal" id="form" action="<{:U('Pay/add')}>" method="post" name="mform" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">用户账户：</td>
+        <td><input name="user_name" type="text" class="shuruTxt" placeholder="请填读者的账户" value="" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">充值金额：</td>
+        <td><input name="money" type="text" class="shuruTxt" placeholder="请填充值金额RMB" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+      </tr>
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" value="确认充值" class="saveBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

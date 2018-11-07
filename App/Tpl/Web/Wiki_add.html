@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title><{$title}>公众号</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+  error = false;
+  //$("#mform td").removeClass("error")
+  $('#mform tr').each(function(){
+    if(typeof($(this).find("input").val()) != 'undefined') {
+      if(!$(this).find("input").val()) {
+        //$(this).find("td:eq(1)").addClass("error");
+        alert($(this).find("input").attr("placeholder"));
+        $(this).find("input").focus();
+        error = true;
+      }
+    }    
+  })
+  if(error)
+  {
+    return false;
+  }
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2><{$title}>公众号</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> <a href="<{:U('Wiki/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form class="form form-horizontal" id="mform" action="" enctype="multipart/form-data" method="post" name="mform" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass" >
+
+      <tr>
+        <td class="contenta">公众号名称：</td>
+        <td><input name="name" type="text" class="shuruTxt" value="<{$wiki.name}>" placeholder="请填写公众号名称" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">原始ID：</td>
+        <td><input name="original_id" type="text" class="shuruTxt" value="<{$wiki.original_id}>" placeholder="请填写原始ID" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">appid：</td>
+        <td><input name="appid" type="text" class="shuruTxt" value="<{$wiki.appid}>" placeholder="请填写appid" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">密钥：</td>
+        <td><input name="secret" type="text" class="shuruTxt" value="<{$wiki.secret}>" placeholder="请填写公众号密钥" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">登录账号：</td>
+        <td><input name="user" type="text" class="shuruTxt" value="<{$wiki.user}>" placeholder="请填写登录账号" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">密码：</td>
+        <td><input name="passwd" type="text" class="shuruTxt" value="<{$wiki.passwd}>" placeholder="请填写账号密码" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">管理员：</td>
+        <td><input name="administrator" type="text" class="shuruTxt" value="<{$wiki.administrator}>" placeholder="请填写管理员" /></td>
+      </tr>
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" value="确定" class="saveBtn"></td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

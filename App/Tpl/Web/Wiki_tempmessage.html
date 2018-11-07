@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>模板消息</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>模板消息(<font color="red">仅限微信服务号使用！</font>)</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix"><a href="<{:U('Wiki/addTempMessage', array('id' => $id))}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>模板消息</a>
+    </div>      
+    <div class="pubMain"> <a href="<{:U('Wiki/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a></div>     
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th style="width: 5%">ID</th>
+                <th style="width: 10%">标题</th>
+                <th style="width: 15%">副标题</th>
+                <th style="width: 25%">内容</th>
+                <th style="width: 10%">备注</th>
+                <th style="width: 10%">链接</th>
+                <th style="width: 10%">提交时间</th>
+                <th style="width: 10%">定时发布</th>
+                <th style="width: 5%">操作</th>
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="data"  id="data">
+              <tr>
+                <td><{$data.id}></td>
+                <td><{$data.title}></td>
+                <td><{$data.type}></td>
+                <td><{$data.content}></td>
+                <td><{$data.remark}></td>
+                <td><{$data.url}></td>
+                <td><{$data.time}></td>
+                <!-- <td><if condition="$data['status'] eq 1">成功<else/>失败</if></td> -->
+                <td><{$data.sub_time}></td>
+                <td>
+                  <php>
+                    if($data['sub_time'] != '0000-00-00 00:00:00'){
+                      if(strtotime($data['sub_time']) >  strtotime(date("Y-m-d H:i:s", time()))+300){
+                        $url = '/Web/Wiki/editTempMessage/id/'.$data['id'].'/wiki_id/'.$id.'.html';
+                        echo '<a class ="team-a" href="'.$url.'">修改</a>';
+                      } else {
+                        echo "&nbsp;";
+                      }
+                    }else{
+                      echo "&nbsp;";
+                    }
+                  </php>
+                  </td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

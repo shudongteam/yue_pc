@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>作者打款</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>作者打款</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+        <form id="form1" name="form1" method="post" action="<{:U('Money/author')}>" class="fomm1">
+          <input type="text" name="keyword" id="" placeholder=" 请输入搜索信息" style="width:250px" class="keyword keywords">
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜作者</button>
+        </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+          <th>名称</th>
+          <th>阅读币</th>
+          <th>费用</th>
+          <th>备注</th>
+          <th>生成时间</th>
+          <th>打款</th>
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="content"  id="content">
+              <tr>
+		          <td><{$content.pen_name}></td>
+		          <td><{$content.consumption}></td>
+		          <td><{$content.money}></td>
+		          <td><{$content.beizhu}></td>
+		          <td><{$content.time}></td>
+                          <td><div class="btn"><a class ="modify" href="<{:U('Money/authoradd',array('id'=>$content[id]))}>" onclick='return confirm("确认发放吗？");'>确认打款</a></div></td>
+          </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

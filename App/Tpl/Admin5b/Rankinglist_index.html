@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>代理管理</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>代理管理</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+<div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+    <form method="post" action="" class="fomm1">
+      <input type="text" name="book_name"  placeholder=" 搜索书名" value="" size="12" class="keyword keywords" />  
+      <span class="select-box inline">
+      <select name="type" class="select">
+        <option value="all">全部分类</option>
+        <option value="buy_total">现订阅</option>
+        <option value="exceptional_total">现打赏</option>   
+        <option value="click_day">点击->日</option>
+        <option value="click_weeks">点击->周</option>
+        <option value="click_month">点击->月</option>
+        <option value="click_total">点击->总</option>
+        <option value="collection_day">收藏->日</option>
+        <option value="collection_weeks">收藏->周</option>
+        <option value="collection_month">收藏->月</option>
+        <option value="collection_total">收藏->总</option>
+        <option value="buy_day">购买->日</option>
+        <option value="buy_weeks">购买->周</option>
+        <option value="buy_month">购买->月</option>
+        <option value="buy_total">购买->总</option>
+        <option value="exceptional_day">打赏金额->日</option>
+        <option value="exceptional_weeks">打赏金额->周</option>
+        <option value="exceptional_month">打赏金额->月</option>
+        <option value="exceptional_total">打赏金额->总</option>
+        <option value="vote_day">普通票->日</option>
+        <option value="vote_weeks">普通票->周</option>
+        <option value="vote_month">普通票->月</option>
+        <option value="vote_total">普通票->总</option>
+        <option value="vipvote_day">vip票->日</option>
+        <option value="vipvote_weeks">vip票->周</option>
+        <option value="vipvote_month">vip票->月</option>
+        <option value="vipvote_total">vip票->总</option>          
+      </select>
+        </span>      
+      <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+    </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+          <th>书号</th>
+          <th>书名</th>
+          <th>现订阅</th>
+          <th>现打赏</th>
+          <th>日点击</th>
+          <th>周点击</th>
+          <th>月点击</th>
+          <th>总点击</th>
+          
+          <th>日收藏</th>
+          <th>周收藏</th>
+          <th>月收藏</th>
+          <th>总收藏</th>
+
+          <th>日购买</th>
+          <th>周购买</th>
+          <th>月购买</th>
+          <th>总购买</th>
+
+          <th>日打赏</th>
+          <th>周打赏</th>
+          <th>月打赏</th>
+          <th>总打赏</th>
+
+          <th>日票数</th>
+          <th>周票数</th>
+          <th>月票数</th>
+          <th>总票数</th>      
+          
+          <th>vip票日</th>
+          <th>vip票周</th>
+          <th>vip票月</th>
+          <th>vip票总</th>     
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="isstati"  id="isstati">
+              <tr>
+          <td><{$isstati.book_id}></td>
+          <td><{$isstati.book_name}></td>
+          <td><{$isstati.buy_total}></td>
+          <td><{$isstati.exceptional_total}></td>
+          <td><{$isstati.click_day}></td>
+          <td><{$isstati.click_weeks}></td>
+          <td><{$isstati.click_month}></td>
+          <td><{$isstati.click_total}></td>
+          
+          <td><{$isstati.collection_day}></td>
+          <td><{$isstati.collection_weeks}></td>
+          <td><{$isstati.collection_month}></td>
+          <td><{$isstati.collection_total}></td>
+
+          <td><{$isstati.buy_day}></td>
+          <td><{$isstati.buy_weeks}></td>
+          <td><{$isstati.buy_month}></td>
+          <td><?php echo $isstati[buy_total] + $isstati[exceptional_total]  ?></td>
+
+          <td><{$isstati.exceptional_day}></td>
+          <td><{$isstati.exceptional_weeks}></td>
+          <td><{$isstati.exceptional_month}></td>
+          <td><{$isstati.exceptional_total}></td>
+
+          <td><{$isstati.vote_day}></td>
+          <td><{$isstati.vote_weeks}></td>
+          <td><{$isstati.vote_month}></td>
+          <td><{$isstati.vote_total}></td>    
+          
+          <td><{$isstati.vipvote_day}></td>
+          <td><{$isstati.vipvote_weeks}></td>
+          <td><{$isstati.vipvote_month}></td>
+          <td><{$isstati.vipvote_total}></td>                      
+               </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>销售统计</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>销售统计 <span class="en">&gt;</span><{$isbook.book_name}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+          <th>站点ID</th>
+           <th>授权站书名</th>
+          <th>日点击</th>
+          <th>周点击</th>
+          <th>月点击</th>
+          <th>总点击</th>
+          
+          <th>日收藏</th>
+          <th>周收藏</th>
+          <th>月收藏</th>
+          <th>总收藏</th>
+
+          <th>日订阅</th>
+          <th>周订阅</th>
+          <th>月订阅</th>
+          <th>总订阅</th>
+
+          <th>日打赏</th>
+          <th>周打赏</th>
+          <th>月打赏</th>
+          <th>总打赏</th>    
+          
+          <th>日普通票</th>
+          <th>周普通票</th>
+          <th>月普通票</th>
+          <th>总普通票</th> 
+
+          <th>日vip票</th>
+          <th>周vip票</th>
+          <th>月vip票</th>
+          <th>总vip票</th>   
+              </tr>
+            </thead>
+          <tbody>
+          <volist name="sales"  id="vo">
+            <tr>
+          <td><{$vo.web_id}></td>
+           <th><{$vo.book_name}></th>
+          <td><{$vo.click_day}></td>
+          <td><{$vo.click_weeks}></td>
+          <td><{$vo.click_month}></td>
+          <td><{$vo.click_total}></td>
+          
+          <td><{$vo.collection_day}></td>
+          <td><{$vo.collection_weeks}></td>
+          <td><{$vo.collection_month}></td>
+          <td><{$vo.collection_total}></td>
+
+          <td><{$vo.buy_day}></td>
+          <td><{$vo.buy_weeks}></td>
+          <td><{$vo.buy_month}></td>
+          <td><{$vo.buy_total}></td>
+
+          <td><{$vo.exceptional_day}></td>
+          <td><{$vo.exceptional_weeks}></td>
+          <td><{$vo.exceptional_month}></td>
+          <td><{$vo.exceptional_total}></td>  
+          
+           <td><{$vo.vote_day}></td>
+          <td><{$vo.vote_weeks}></td>
+          <td><{$vo.vote_month}></td>
+          <td><{$vo.vote_total}></td>         
+          
+           <td><{$vo.vipvote_day}></td>
+          <td><{$vo.vipvote_weeks}></td>
+          <td><{$vo.vipvote_month}></td>
+          <td><{$vo.vipvote_total}></td> 
+            </tr>
+           </volist>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

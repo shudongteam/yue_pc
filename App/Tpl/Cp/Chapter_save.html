@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>修改章节</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+      <h2><a href="<{:U('Book/index')}>" class="team-a">作品管理</a> <span class="en">&gt;</span> <a href="<{:U('Chapter/index',array('book'=>$isbook[book_id]))}>" class="team-a">章节管理</a> <span class="en">&gt;</span> 修改章节 <span class="en">&gt;</span><{$isbook[book_name]}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="<{:U('Chapter/index',array('book'=>$isbook[book_id]))}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+   <form action="" name="mform" method="post" enctype="multipart/form-data" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">章节名称：</td>
+        <td><input name="title" type="text" class="shuruTxt" placeholder="请输入章节标题" value="<{$conn.title}>" /></td>
+      </tr>
+      <tr>
+        <td valign="top" class="contenta">章节内容：</td>
+        <td style="padding-top: 10px;"><textarea name="content" class="textarea" style='height: 300px;' id='content'  placeholder="请输入章节内容"><{$conn.content}></textarea></td>
+      </tr>      
+      <tr>
+        <td valign="top" class="contenta">作者的话：</td>
+        <td><textarea name="message" class="textarea"  placeholder="没有就不写" ><{$conn.message}></textarea></td>
+      </tr>      
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" value="确认修改" class="saveBtn">
+        <input type="button" value="统计字数" id="wordCount" class="resetBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script><!--
+var fm = new Object;
+fm.construct = function(){}
+var gt = new Object;
+gt.construct = function(){
+    this.content = null;
+    this.text = "";
+    this.arrText = [];
+    this.o_trim = true;
+    this.o_linespace = 1;
+    this.o_paragraphFirstString = "　　";
+    this.o_linefeedword = "\n";
+    //初始化调用
+    this.typeset_go = function ()
+    {
+        this.syncForm();                     //load option
+        this.splitText();                    //split the Text to Array
+        this.baseType();                     //base typeset
+        this.mergeArray();                   //unsplit
+        this.content.value = this.text;        //处理完毕   返回结果值      
+    }
+   //首行缩进操作
+    this.syncForm = function ()
+    {   this.text = this.content.value;
+        this.o_linespace = 1;
+        this.o_trim = true;
+        this.o_paragraphFirstString = "    "; 
+    }
+    this.splitText = function ()
+    {
+        this.arrText = this.text.split(this.o_linefeedword);
+    }
+    //通过数组拼接开头空行
+    this.baseType = function ()
+
+    {
+        for ( var i = 0; i < this.arrText.length; i++ ) {
+            if (this.o_trim) 
+            {
+                this.arrText[i] = this.o_paragraphFirstString+this.arrText[i].trim();
+            }
+        }
+    }     
+     //拼接行距代码
+    this.mergeArray = function ()
+    {
+        if (this.o_linespace > 0)
+        {
+            this.text = "";
+            var thislinefeed = "";
+            for ( var i = 0; i < this.o_linespace; i++ ) thislinefeed += this.o_linefeedword+"";
+            for ( var i = 0; i < this.arrText.length; i++ ) {
+                if (this.arrText[i].trim() == "") continue;
+                this.text += this.text == '' ? this.arrText[i] : thislinefeed + this.arrText[i];
+            }    
+        }
+    }
+}
+String.prototype.trim = function(){ 
+    return this.replace(/^( |[\s　])+|( |[\s　])+$/g, ""); 
+}
+gt.construct();
+fm.construct();
+window.onload = function(){
+    gt.content = document.getElementById('content');
+};
+
+
+
+$(document).ready(function(){
+ 
+ $("#wordCount").click(function(){
+
+  var content = $("#content").val();
+   $.post("<{:U('Chapter/trimalls')}>",{str:content},function(data){
+            alert('章节字数'+data+'字');
+   });
+ });
+});
+function CheckPost()
+{
+	if (mform.title.value=="")
+	{
+		alert("章节名称不能为空");
+		mform.title.focus();
+		return false;
+	}
+		if (mform.content.value=="")
+	{
+		alert("请输入您的章节内容");
+		mform.content.focus();
+		return false;
+	}
+	if (mform.content!="")
+	{
+	 gt.typeset_go();		
+	}
+}
+
+</script>
+</body>
+</html>

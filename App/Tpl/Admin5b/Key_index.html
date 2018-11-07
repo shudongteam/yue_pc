@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>关键字屏蔽</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>关键字屏蔽</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain">
+   <form action="<{:U('Key/save')}>" name="mform" method="post" enctype="multipart/form-data" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td valign="top" class="contenta">章节内容：</td>
+        <td style="padding-top: 10px;"><textarea name="keys" class="textarea" style='height: 300px;' id='content'  placeholder="请输入章节内容"><{$keys}></textarea></td>
+      </tr>   
+      <tr>
+        <td valign="top" class="contenta"></td>
+        <td> <span style="float: left;">关键字请用“,”分隔开，本关键可以屏蔽网站的用户留言跟作品章节!</span></td></td>
+      </tr>         
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td style="padding-top: 10px;"><input type="submit" value="确认修改" class="saveBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

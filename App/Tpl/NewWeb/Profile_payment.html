@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>收款信息</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" /></head>
+  
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" /></div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script>
+      <include file="Sidebar:include" />
+      <div class="main-content">
+        <include file="Bread:include" />
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!--/span-->
+                <!-- left menu ends -->
+                <div style="margin-bottom:30px">
+                  <ul class="nav nav-tabs">
+                    <if condition="session('web_id') neq 0">
+                    <li class="">
+                      <a href="/NewWeb/Profile/index">个人资料</a></li>
+                    <li class="active">
+                      <a href="/NewWeb/Profile/payment">收款信息</a></li>
+                      </if>
+                    <li class="">
+                      <a href="/NewWeb/Profile/password">修改密码</a></li>
+                  </ul>
+                </div>
+                <div class="alert alert-info">
+                  <i class="fa fa-info-circle"></i>如需修改请联系渠道</div>
+                <div class="form-horizontal">
+                  <if condition="$data['payment_account_type'] eq 3">
+                    <div class="form-group">
+                      <label class="control-label col-sm-3">收款方式</label>
+                      <div class="form-control-static col-sm-9">微信</div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-3">微信号</label>
+                      <div class="form-control-static col-sm-9"><{$data.weixin_account}></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-3">微信昵称</label>
+                      <div class="form-control-static col-sm-9"><{$data.weixin_name}></div>
+                    </div>
+                    <elseif condition="$data['payment_account_type'] eq 2"/>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3">收款方式</label>
+                        <div class="form-control-static col-sm-9">支付宝</div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3">账号</label>
+                        <div class="form-control-static col-sm-9"><{$data.alipay_account}></div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3">姓名</label>
+                        <div class="form-control-static col-sm-9"><{$data.alipay_name}></div>
+                      </div>
+                    <else />
+                        <div class="form-group">
+                        <label class="control-label col-sm-3">收款方式</label>
+                        <div class="form-control-static col-sm-9">银行卡</div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3">开户行</label>
+                        <div class="form-control-static col-sm-9"><{$data.bank}>-<{$data.bank_province}> <{$data.bank_city}> <{$data.open_account}></div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3">持卡人</label>
+                        <div class="form-control-static col-sm-9"><{$data.card_holder_name}></div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3">卡号</label>
+                        <div class="form-control-static col-sm-9"><{$data.bank_number}></div>
+                      </div>
+                  </if>
+                </div>
+                <!-- PAGE CONTENT ENDS --></div>
+              <!-- /.col --></div>
+            <!-- /.row --></div>
+          <!-- /.page-content-area --></div>
+        <!-- /.page-content --></div>
+      <!-- /.main-content --></div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <include file="Script:include" /></body>
+
+</html>

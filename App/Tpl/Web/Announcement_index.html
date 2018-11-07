@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>平台公告</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>平台公告</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>公告标题</th>
+                <th>发布时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="con"  id="vo">
+              <tr>
+                <td><{$vo.title}></td>
+                <td><{$vo.time}></td>
+                <td><a href="<{:U('Announcement/chakan',array('id'=>$vo[id]))}>" class="team-a">查看</a></td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+</div>
+</body>
+</html>

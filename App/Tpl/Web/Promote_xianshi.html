@@ -1,0 +1,24 @@
+<table border="0" cellpadding="0" cellspacing="0" class="defaultTable">
+    <thead>
+    <tr style='background-color: red'>
+        <th>排序</th>
+        <th>书号</th>
+        <th>自定义书名</th>
+        <th>封面</th>
+        <th width="40%">简介</th>
+        <th>操作</th>
+    </tr>    
+    </thead>
+    <tbody>
+    <volist name="xiaokuai" id="xiaokuai"> 
+         <tr>
+            <td><{$xiaokuai.xu}></td>
+            <td><{$xiaokuai.book_id}></td>
+            <td><{$xiaokuai.book_name}></td>
+            <td><img src="/Upload/Book/xiao/<{$xiaokuai.upload_img}>" width="50" height="70" /></td>
+            <td><{$xiaokuai.book_brief}></td>
+            <td><div class="btn"><a class ="modify" href="<{:U('Promote/save',array('id'=>$xiaokuai[id]))}>">修改</a> <a class ="delete" onClick="article_del(this, '<{$xiaokuai[id]}>')" href="javascript:;">删除</a></div></td>
+        </tr>
+    </volist>
+  </tbody>
+</table>

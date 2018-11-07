@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>结算记录</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>结算记录</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+        <form id="form1" name="form1" method="post" action="<{:U('Settlement/index')}>" class="fomm1">
+          <input readonly="true" type="text" name='time' onFocus="WdatePicker({dateFmt:'yyyy-MM', maxDate:'%y-{%M-1}'})" id="pubDate" class="keyword Wdate" style="width:110px;" placeholder="搜索时间">    
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+          <th>结算月份</th>
+          <th>总收入（元）</th>
+          <th>分成后（元）</th>
+          <!-- <th>推广费（元）</th> -->
+          <th>结算收入（元）</th>
+          <th>备注</th>
+          <th>生成时间</th>
+          <th>状态</th>
+          <th>结算单</th>
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="content"  id="content">
+              <tr>
+          <td><{$content.month}></td>
+          <td><{$content.total}></td>
+          <td><{$content.money55}></td>
+          <!-- <td><{$content.cost}></td> -->
+          <td><{$content.give}></td>
+          <td><{$content.beizhu}></td>
+          <td><{$content.time}></td>
+          <td><if condition="$content[state]==2"><span class="label label-blue">已打款</span>
+                      <else/>
+                      <span class="label label-red">等待打款</span></if></td>
+           <if condition="$_COOKIE[cp_id]!=null">
+           <td> <a href="/Cp/Settlement/export?month=<{$content.month}>&give=<{$content.give}>" class="label label-red">导出</a><!-- <button class="search-button label label-red" type="button" id="imports" >导出</button> --></td>
+          </if>
+          </tr>
+         
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

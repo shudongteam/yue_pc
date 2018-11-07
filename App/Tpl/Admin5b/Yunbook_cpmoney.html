@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>cp分成</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+	if (mform.consumption.value=="")
+	{
+		alert("检查到阅读币为0不可进行操作！");
+                return false;
+         }    
+	if (mform.money.value=="")
+	{
+		alert("收入不可为空！");
+		mform.money.focus();
+                return false;
+         }
+	if (mform.beizhu.value=="")
+	{
+		alert("备注不可为空！");
+		mform.beizhu.focus();
+                return false;
+         }         
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>cp分成</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+     <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+        <form id="form1" name="form1" method="post" action="<{:U('Yunbook/cpmoney')}>" class="fomm1">
+          <input type="text" name='da' value='<{$da}>' readonly="true" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="keyword Wdate" style="width:120px;" placeholder="最小范围">
+          <input type="text" name='xiao' value='<{$xiao}>' readonly="true" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="keyword Wdate" style="width:120px;" placeholder="最大范围">      
+          <span class="select-box inline">
+          <select name="cp_id" class="select"> 
+          <option disabled selected value>选择cp</option>
+          <volist name="cps"  id="vo">
+              <option value="<{$vo.cp_id}>"><{$vo.pen_name}></option>
+          </volist>
+          </select>
+          </span>
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe621;</i> 统计</button>
+          <button class="search-button" style="width:150px;" type="button" onclick="window.location.href='<{:U('Yunbook/bookDumps')}>'">导出本月cp图书详情</button>
+        </form>
+      </div>
+    </div>     
+    <div class="publishArt">
+      <div class="pubMain"> <a href="javascript:history.go(-1)" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+        <!--  <form id="form1" method="post" action="<{:U('Cpstatistical/add',array('cp'=>$mycp[cp_id]))}>" class="fomm1" name="mform" onSubmit="return CheckPost();"> -->
+             <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+             <if condition="$mycp neq null">
+             <th style="width:350px;padding:30px;"><{$da}>~<{$xiao}>期间，<span style="color:red;"><{$mycp['pen_name']}></span>的销售数据：</th>
+             </if>
+            <tr>
+              <td class="contenta" style='padding-top: 15px;width:280px;'>实际阅读币（阅读币）：</td>
+              <td style='padding-top: 15px;'><input type="text" readonly="true" name="consumption" placeholder=" 消费阅读币" style="width:100px" class="shuruTxt" value='<{$money}>'></td>
+            </tr>
+            <tr>
+              <td class="contenta" style='padding-top: 15px;width:280px;'>扣除10%阅读币后销售额（元）：</td>
+              <td style='padding-top: 15px;'><input type="text" readonly="true" name="money9" placeholder=" 消费阅读币" style="width:100px" class="shuruTxt" value='<{$money9}>'></td>
+            </tr>
+            <tr>
+              <td class="contenta" style='padding-top: 15px;width:280px;'>扣除10%，55分成后收入金额（元）：</td>
+              <td>
+              <input type="text" readonly="true" name="money955" placeholder=" 消费阅读币" style="width:100px" class="shuruTxt" value='<{$money955}>'>
+             <!--  <input type="text" name="money"  placeholder=" 收入" style="width:100px" class="shuruTxt" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"> -->
+              </td>
+            </tr>
+           <!--  <tr>
+              <td class="contenta">备注：</td>
+              <td><input type="text" name="beizhu"  placeholder=" 备注" style="width:250px" class="shuruTxt"></td>
+            </tr>     -->     
+            <!-- <tr>
+              <td align="right">&nbsp;</td>
+              <td><input type="submit" id="" value="生成费用" class="saveBtn"></td>
+            </tr> -->
+          </table>
+       <!--  </form> -->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>作者查看</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2><a href="<{:U('Author/index')}>" class="team-a">作者管理</a> <span class="en">&gt;</span> 作者查看 <span class="en">&gt;</span> <{$user.pen_name}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="<{:U('Author/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form class="form form-horizontal" id="form-article-add" action="" method="post">
+   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">账户：</td>
+        <td><{$user.user_name}></td>
+      </tr>
+      <tr>
+        <td class="contenta">昵称：</td>
+        <td><input name="pen_name" type="text" class="shuruTxt" value="<{$user.pen_name}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">vip等级：</td>
+        <td><img src="/Public/Vip/a<{$user.mem_vip}>.gif" width="72" height="15" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">密码：</td>
+        <td><a href="<{:U('Author/pass',array('id'=>$user['user_id']))}>" class="team-a">点击进行初始化</a> (ps:初始化的密码为123456)</td>
+      </tr>          
+      <tr>
+        <td class="contenta">电话：</td>
+        <td><input name="phone" type="text" class="shuruTxt" value="<{$user.phone}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">QQ：</td>
+        <td><input name="qq" type="text" class="shuruTxt" value="<{$user.qq}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">email：</td>
+        <td><input name="email" type="text" class="shuruTxt" value="<{$user.email}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">票数：</td>
+        <td><input name="vote" type="text" class="shuruTxt" value="<{$user.vote}>" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+      </tr>
+      <tr>
+        <td class="contenta"> vip推荐票 ：</td>
+        <td><input name="vipvote" type="text" class="shuruTxt" value="<{$user.vipvote}>" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+      </tr>
+      <tr>
+        <td class="contenta">开户人：</td>
+        <td><input name="name" type="text" class="shuruTxt" value="<{$user.name}>" /></td>
+      </tr>        
+      <tr>
+        <td class="contenta">身份证：</td>
+        <td><input name="ldentity_card" type="text" class="shuruTxt" value="<{$user.ldentity_card}>" /></td>
+      </tr>           
+      <tr>
+        <td class="contenta">银行：</td>
+        <td><input name="bank" type="text" class="shuruTxt" value="<{$user.bank}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">银行卡号：</td>
+        <td><input name="bank_number" type="text" class="shuruTxt" value="<{$user.bank_number}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">开户点地址：</td>
+        <td><input name="open_account" type="text" class="shuruTxt" value="<{$user.open_account}>" /></td>
+      </tr>          
+      <tr>
+        <td class="contenta">余额：</td>
+        <td><{$user.alance}></td>
+      </tr>
+      <tr>
+        <td class="contenta">总充值：</td>
+        <td><{$user.money}></td>
+      </tr>
+      <tr>
+        <td class="contenta">积分：</td>
+        <td><{$user.integral}></td>
+      </tr>        
+      <tr>
+        <td class="contenta">登陆IP：</td>
+        <td><{$user.login_ip}></td>
+      </tr>
+      <tr>
+        <td class="contenta">登陆时间：</td>
+        <td><{$user.login_time}></td>
+      </tr>
+      <tr>
+        <td class="contenta">注册时间：</td>
+        <td><{$user.registration_time}></td>
+      </tr>
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" id="" value="确认修改" class="saveBtn"></td>
+      </tr>
+    </table>
+    </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

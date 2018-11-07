@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>批量上书</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script>
+function CheckPost()
+{
+	if (mform.excel.value=="")
+	{
+		alert("请选择xls表！");
+		return false;
+	}
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>批量上书</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="javascript:history.go(-1)" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form action="" name="mform" method="post" enctype="multipart/form-data" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+
+      <tr>
+        <td class="contenta">所属公司：</td>
+        <td><span class="select-box inline">
+       <select name="cp_id" class="select select2">
+      <volist name="cps"  id="vo">
+          <option value="<{$vo.cp_id}>"><{$vo.pen_name}></option>
+      </volist>
+       </select>
+    </span></td>
+      </tr>   
+       <tr>
+        <td class="contenta">收费模式：</td>
+        <td><span class="select-box inline">
+       <select name="vip" class="select select2">
+      <option value="0">按章收费</option>
+      <option value="1">按本收费</option>
+      <option value="2">免费书籍</option>
+    </select>
+    </span></td>
+      </tr>  
+      <tr>
+        <td class="contenta">签约类型：</td>
+        <td><span class="select-box inline">
+       <select name="signing" class="select select2">
+        <option value="SS">SS</option>
+        <option value="S">S</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        </select>
+    </span></td>
+      </tr>       
+      <tr>
+        <td class="contenta">书籍模式：</td>
+        <td><input type="radio" name="is_show" value="0" />
+                隐藏
+                <input type="radio" name="is_show" value="1" checked="checked" />
+                显示</td>
+      </tr>         
+      <tr>
+        <td class="contenta">选择书单：</td>
+        <td><input name="excel" type="file" /></td>
+      </tr>            
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" id="" value="确认上传" class="saveBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

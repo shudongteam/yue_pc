@@ -1,0 +1,516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>
+             添加模板消息任务
+        </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+        <include file="Head:include" />
+
+        <link rel="stylesheet" type="text/css" href="/Public/NewWeb/jquery.bigcolorpicker.css">
+        <script type="text/javascript" src="/Public/NewWeb/jquery.bigcolorpicker.js"></script>
+        <style type="text/css">
+
+.yanse{
+   background: #000; 
+   color: #fff; padding-top: 10px; 
+   padding-bottom: 10px; 
+   padding-left: 5px; 
+   padding-right: 5px; 
+   margin-left: 10px;  
+}
+</style>
+    </head>
+    <body class="no-skin">
+        <!-- #section:basics/navbar.layout -->
+        <div id="navbar" class="navbar navbar-default">
+            <include file="Navbar:include" />
+        </div>
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('main-container', 'fixed')
+                } catch(e) {}
+            </script>
+            <include file="Sidebar:include" />
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                        } catch(e) {}
+                    </script>
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon">
+                            </i>
+                            <a href="/NewWeb/Notices">
+                                Home
+                            </a>
+                        </li>
+                        <li class="active">
+                            添加模板消息任务
+                        </li>
+                    </ul>
+                    <!-- /.breadcrumb -->
+                    <!-- /section:basics/content.searchbox -->
+                </div>
+                <!-- /section:basics/content.breadcrumbs -->
+                <div class="page-content">
+                    <div class="page-content-area">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <!--/span-->
+                                <!-- left menu ends -->
+                                <form class="form-horizontal" id="main-form" style="margin-top:20px" novalidate="novalidate">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="seller_name">
+                                            任务名称
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="name" id="name" class="col-xs-10 col-sm-5" data-val="true"
+                                            data-val-required="请输入任务名称" data-bind="value: name">
+                                            <div class="col-xs-10 no-padding-left" data-valmsg-for="name" data-valmsg-replace="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="m_flag">
+                                        <label class="col-sm-3 control-label no-padding-right">
+                                            选择模板
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <if condition="$data">
+                                            <div>
+                                                <select name="template_id" id="template_id" class="col-xs-10 col-sm-5" data-val="true" data-val-required="请选择模板">
+                                                    <volist name="data" id="vo">
+                                                    <option value="<{$vo.template_id}>"><{$vo.title}></option>
+                                                    </volist>
+                                                </select>
+                                                <button type="button" class="btn btn-primary" data-bind="click: refreshTemplates"
+                                                style="margin-left:5px"><i class="fa fa-refresh"></i>刷新
+                                                </button>
+
+                                            </div>
+                                            <else />
+                                            <div>
+                                                <div class="alert alert-info">
+                                                <if condition="$msg eq 1">
+                                                    获取token失败,请检查微信app_id和app_secret是否正确
+                                                    <else/>
+                                                    对不起，您还没有模板，请先到公众号后台申请。
+                                                    <br>
+                                                    如已申请，请点击下方按钮刷新:
+                                                    <p style="margin-top:10px">
+                                                        <button type="button" class="btn btn-primary" data-bind="click: refreshTemplates">
+                                                            <i class="fa fa-refresh">
+                                                            </i>
+                                                            刷新模板列表
+                                                        </button>
+                                                    </p>
+                                                    </if>
+                                                    </div>
+                                                </div>
+                                            </if>
+                                            <div class="col-xs-10 no-padding-left" data-valmsg-for="template_id" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" data-bind="visible: show_template_editor" style="display: none;">
+                                        <div class="col-sm-9 col-sm-offset-3">
+                                            <div style="background:#eee; padding:10px">
+                                                <div id="template-msg-editor" class="template-msg-editor">
+                                                    <div class="template-msg-title">
+                                                    </div>
+                                                    <div class="template-msg-meta">
+                                                        2017月18日
+                                                    </div>
+                                                    <div class="template-msg-main">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="m_flag_2">
+                                        <label class="col-sm-3 control-label no-padding-right">
+                                            原文链接
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <div class="col-xs-10 col-sm-5 no-padding-left no-padding-right">
+                                                <span class="twitter-typeahead" style="position: relative; display: inline-block;">
+                                                    <input type="text" data-val="true" data-val-required="请输入原文链接" data-bind="value: url"
+                                                    class="tt-hint" readonly="" autocomplete="off" spellcheck="false" tabindex="-1"
+                                                    style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);"
+                                                    dir="ltr">
+                                                    <input type="text" name="url" id="url-input" data-val="true" data-val-required="请输入原文链接"
+                                                    data-bind="value: url" class="tt-input" autocomplete="off" spellcheck="false"
+                                                    dir="auto" style="position: relative; vertical-align: top; background-color: transparent;">
+                                                    <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: &quot;Open Sans&quot;; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;">
+                                                    </pre>
+                                                    <div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;">
+                                                        <div class="tt-dataset tt-dataset-ref_link_source">
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <p class="help-block no-padding-left col-xs-10">
+                                                仅限您小说网站内部的链接
+                                            </p>
+                                            <div class="col-xs-10 no-padding-left" data-valmsg-for="url" data-valmsg-replace="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right">
+                                            发送时间
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="scheduled_at_text" class="col-xs-10 col-sm-5"
+                                            data-val="true" data-val-required="请设置发送时间" data-val-regex="格式错误。示例: 2017-04-25 12:30"
+                                            data-val-regex-pattern="^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}$" data-bind="datetimepicker: scheduled_at_text, datetimepickerOptions: { minDate: moment().startOf('day') }">
+                                            <div class="col-xs-10 no-padding-left" style="margin-top:10px">
+                                                <a href="#" data-bind="click: setScheduleTime.bind(this, 10, 'minutes')">
+                                                    10分钟后
+                                                </a>
+                                                <a href="#" data-bind="click: setScheduleTime.bind(this, 1, 'hour')">
+                                                    1小时后
+                                                </a>
+                                                <a href="#" data-bind="click: setScheduleTime.bind(this, 2, 'hours')">
+                                                    2小时后
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-10 no-padding-left" data-valmsg-for="scheduled_at_text"
+                                            data-valmsg-replace="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+<!--                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right">测试粉丝ID</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="url" class="col-xs-10 col-sm-5" data-bind="value: test_member_id" maxlength="10">
+                                            <button type="button" style="margin-left:5px" class="btn btn-primary" data-bind="click: test">测试发送</button>
+                                            <div class="help-block col-xs-10 no-padding-left">
+                                                用测试粉丝帐号点公众号菜单 "用户中心" &gt; "个人中心"。<a href="javascript:;" class="btn-member-id-screen">查看示例</a>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="clearfix form-actions">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <button type="submit" class="btn btn-primary" data-bind="click: submit, disable: processing">
+                                                保存
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <script>
+                                    $(function () {
+                                       $('.btn-member-id-screen').webuiPopover({
+                                           html: true,
+                                           trigger: 'hover',
+                                           placement: 'top',
+                                           content: function () {
+                                               return '<div style="width:240px;min-height:430px"><img style="max-width:100%" src="/Public/NewWeb/jietu.jpg" /></div>';
+                                           }
+                                       })
+                                    });
+                                </script>
+
+                                <script>
+                                    var taskId = null;
+                                    var templateEditor = null;
+
+                                    var viewModel = {
+                                        processing: ko.observable(false),
+
+                                        param: null,
+
+                                        id: ko.observable(taskId),
+                                        name: ko.observable(),
+                                        templates: ko.observableArray(),
+                                        template_id: ko.observable(),
+                                        template_title: ko.observable(),
+                                        show_template_editor: ko.observable(false),
+                                        url: ko.observable(),
+                                        scheduled_at_text: ko.observable(),
+
+                                        test_member_id: ko.observable()
+                                    };
+                                    viewModel.test = function () {
+                                        if (viewModel.processing()) {
+                                            return false;
+                                        }
+
+                                        if (!$('#main-form').valid()) {
+                                            return false;
+                                        }
+
+                                        if (!viewModel.test_member_id() || !/^\d+$/.test(viewModel.test_member_id())) {
+                                            toastr.error('测试粉丝ID必须为数字');
+                                            return false;
+                                        }
+                                        var fg = 0;
+                                        var fields = '';
+                                        var fields_color = '';
+                                        $('.field_vo').each(function(x){
+                                            var val = $(this).val();
+                                            fields += $(this).attr('name') + '=' + val + '&';
+                                            fields_color += $('.field_vo_color').eq(x).attr('name') + '=' + $('.field_vo_color').eq(x).val() + '&';
+                                            if (!val) {
+                                                alert('请输入'+$(this).attr('name'));
+                                                fg = 1;
+                                            }
+                                        });
+                                        if (fg) {
+                                            return false;
+                                        }
+
+                                        // var data = viewModel.getPostData();
+                                        var data = {
+                                            id: viewModel.id(), 
+                                            name: viewModel.name(),
+                                            template_id: $('#template_id').val(),
+                                            url: viewModel.url(),
+                                            scheduled_at: viewModel.scheduled_at_text(),
+                                            fields:fields,
+                                            fields_color:fields_color,
+                                        };
+                                        data.test_member_id = viewModel.test_member_id();
+
+                                        $.ajax({
+                                            url: '/NewWeb/Template/edit',
+                                            type: 'POST',
+                                            data: JSON.stringify(data),
+                                            contentType: 'application/json'
+                                        })
+                                        .then(function () {
+                                            toastr.success('已发送, 如未收到，请检查各项参数是否填对');
+                                        })
+                                        .fail(handleAjaxError);
+                                    };
+                                    viewModel.setScheduleTime = function(value, unit) {
+                                        viewModel.scheduled_at_text(moment().add(value, unit).format('YYYY-MM-DD HH:mm'));
+                                    };
+
+
+                                    viewModel.submit = function() {
+                                        if (viewModel.processing()) {
+                                            return false;
+                                        }
+
+                                        if (!$('#main-form').valid()) {
+                                            return false;
+                                        }
+                                        var fg = 0;
+                                        var fields = '';
+                                        var fields_color = '';
+                                        $('.field_vo').each(function(x){
+                                            var val = $(this).val();
+                                            fields += $(this).attr('name') + '=' + val + '&';
+                                            fields_color += $('.field_vo_color').eq(x).attr('name') + '=' + $('.field_vo_color').eq(x).val() + '&';
+                                            if (!val) {
+                                                alert('请输入'+$(this).attr('name'));
+                                                fg = 1;
+                                            }
+                                        });
+                                        if (fg) {
+                                            return false;
+                                        }
+                                        // alert(fields);
+                                        // alert(fields_color);
+                                        var postData = {
+                                            id: viewModel.id(), 
+                                            name: viewModel.name(),
+                                            template_id: $('#template_id').val(),
+                                            url: viewModel.url(),
+                                            scheduled_at: viewModel.scheduled_at_text(),
+                                            fields:fields,
+                                            fields_color:fields_color,
+                                        };
+
+                                        viewModel.processing(true);
+                                        // var postData = {
+
+                                        // }
+                                        $.ajax({
+                                            url: '/NewWeb/Template/edit',
+                                            type: 'POST',
+                                            data: JSON.stringify(postData),
+                                            contentType: 'application/json'
+                                        }).then(function() {
+                                            toastr.success('保存成功');
+                                            setTimeout(function() {
+                                                //location.href = '/backend/tasks/template_msg/index';
+                                            },
+                                            500);
+                                        }).fail(handleAjaxError).always(function() {
+                                            viewModel.processing(false);
+                                        });
+                                    };
+
+
+                                    viewModel.getSelectedTemplate = function() {
+                                        var id = viewModel.template_id();
+                                        if (!id) {
+                                            return null;
+                                        }
+
+                                        return _.find(viewModel.templates(),
+                                        function(it) {
+                                            return it.template_id === id;
+                                        });
+                                    };
+
+                                    viewModel.init = function() {
+                                        viewModel.template_id.subscribe(function() {
+                                            viewModel.updateTemplateEditor();
+                                        });
+                                    };
+
+                                    viewModel.updateTemplateEditor = function() {
+                                        var template = viewModel.getSelectedTemplate();
+                                        if (template) {
+                                            templateEditor.load(template, viewModel.param);
+                                            viewModel.template_title(template.title);
+                                            viewModel.show_template_editor(true);
+                                        } else {
+                                            viewModel.template_title(null);
+                                            viewModel.show_template_editor(false);
+                                        }
+                                    };
+
+                                    viewModel.refreshTemplates = function() {
+                                        if (viewModel.processing()) {
+                                            return false;
+                                        }
+
+                                        viewModel.processing(true);
+
+                                        viewModel.loadTemplates(true).then(function() {
+                                            toastr.success('刷新成功');
+                                            setTimeout(function() {
+                                            location.href = '/NewWeb/Template/edit';
+                                          },
+                                          500);
+                                        }).always(function() {
+                                            viewModel.processing(false);
+                                        });
+                                    };
+
+                                    viewModel.loadTemplates = function(refresh) {
+                                        var params = {};
+                                        if (refresh) {
+                                            params.refresh = 1;
+                                        }
+
+                                        return $.get('/NewWeb/Template/get_tmp_list', params,
+                                        function(templates) {
+                                            viewModel.templates.removeAll();
+                                            _.each(templates,
+                                            function(tmpl) {
+                                                viewModel.templates.push(tmpl);
+                                            });
+                                        }).fail(handleAjaxError);
+                                    };
+
+                                    $(function() {
+                                        viewModel.loadTemplates().always(function() {
+                                            if (taskId) {
+                                                $.get('/backend/tasks/template_msg/api_get/' + taskId,
+                                                function(data) {
+                                                    // 如果编辑的是一个已过期但未执行的任务, 则把时间置空, 让用户重新选择
+                                                    var unixTimeNow = Math.ceil(new Date().getTime() / 1000);
+                                                    if (data.scheduled_at < unixTimeNow) {
+                                                        data.scheduled_at = null;
+                                                    }
+
+                                                    data.scheduled_at_text = data.scheduled_at ? moment(data.scheduled_at * 1000).format('YYYY-MM-DD HH:mm') : null;
+                                                    viewModel.param = data.param;
+                                                    delete data.param;
+
+                                                    ko.mapping.fromJS(data, {},
+                                                    viewModel);
+
+                                                    viewModel.init();
+                                                    viewModel.updateTemplateEditor();
+
+                                                    bind();
+                                                });
+                                            } else {
+                                                viewModel.init();
+                                                bind();
+                                            }
+                                        });
+
+                                        function bind() {
+                                            ko.applyBindings(viewModel, document.getElementById('main-form'));
+
+                                            UIComponent.handlers['ref-link-search-box'].init([$('#url-input')]);
+                                        }
+                                    });
+
+                                    $(function(){
+                                        var data = <{$json_data}>;
+                                        if (data) {
+                                            show_tmp(0);
+                                        }
+
+                                        function show_tmp(i) {
+                                            $('.moban').remove();
+                                            $('.moban_fields').remove();
+                                            // alert(data[i]['content']);
+                                            var content = String(data[i]['content']).replace(/\\n/g,"<br/>");
+                                            // alert(content);
+                                            var html = '<div class="form-group moban"> <label class="col-sm-3 control-label no-padding-right"> 模板格式 </label> <div class="col-sm-9">'+content+'</textarea> </div>';
+                                            $('#m_flag').after(html);
+                                            var re = /\{\s?\{[^\}]+\}\s?\}/g;
+                                            var reg_str = data[i]['content'].match(re);
+                                            // alert(reg_str);
+                                            // alert(reg_str.length);
+
+                                            for (var i = 0; i < reg_str.length; i++) {
+                                                var new_str = reg_str[i].replace(/\s+/g, "");
+                                                var new_str_2 = new_str.replace(/\{/g, "");
+                                                var new_str_3 = new_str_2.replace(/\}/g, "");
+                                                var new_name = new_str_3.replace(/\.DATA/g, "");
+                                                var html = '<div class="form-group moban_fields"> <label class="col-sm-3 control-label no-padding-right"> '+new_str_3+'： </label> <div class="col-sm-9"> <input type="text" name="'+new_name+'" id="'+new_name+'" class="col-xs-10 col-sm-5 field_vo"><input type="hidden" name="'+new_name+'_color" id="'+new_name+'_color" class="field_vo_color"><span class="yanse" alt="'+new_name+'">颜色</span></div> </div>';
+                                                $('#m_flag_2').before(html);
+                                            }
+                                            $(".yanse").bigColorpicker(function(el,color){
+                                                 $(el).css("backgroundColor",color);
+                                                 $("#"+$(el).attr("alt")+"_color").val(color);
+                                                 $("#"+$(el).attr("alt")).css("color",color);
+
+                                            });
+                                        }
+
+
+                                        $('#template_id').change(function(){  
+                                　　　　　　var choose = $(this).children('option:selected').index();
+                                            show_tmp(choose);
+                                　　　　})
+                                    })
+                                </script>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.page-content-area -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+            <!-- /.main-content -->
+        </div>
+        <!-- /.main-container -->
+        <!-- basic scripts -->
+        <include file="Script:include" />
+    </body>
+
+</html>

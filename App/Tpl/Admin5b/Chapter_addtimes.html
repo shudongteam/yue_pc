@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>章节时间修改</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+      <h2><a href="<{:U('Chapter/index',array('book'=>$isbook[book_id]))}>" class="team-a">章节管理</a> <span class="en">&gt;</span> 新增章节 <span class="en">&gt;</span><{$isbook[book_name]}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="<{:U('Chapter/index',array('book'=>$isbook[book_id]))}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+   <form action="<{:U('Chapter/addtimes',array('book'=>$isbook[book_id]))}>" name="mform" method="post" enctype="multipart/form-data" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td valign="top" class="contenta">说明：</td>
+        <td>选择第一章上传时间，后面章节会自动增加天数</td>
+      </tr>
+      <tr>
+        <td valign="top" class="contenta">第一章上传时间：</td>
+        <td><input readonly="true" type="text" name='attribute' onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id="pubDate" class="shuruTxt Wdate" style="width:180px;" placeholder="选择定时时间">
+              </td>
+        <!-- <input name="bookid" type="hidden" value="<{$isbook[book_id]}>" > -->
+      </tr>         
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td style="padding-top: 10px;"><input type="submit" value="确认" class="saveBtn">
+        <!-- <input type="button" value="统计字数" id="wordCount" class="resetBtn"> -->
+        </td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

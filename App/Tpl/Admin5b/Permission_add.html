@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>添加角色</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+	if (mform.user_name.value == "")
+	{
+		alert("账户不可为空！");
+		mform.user_name.focus();
+		return false;
+	}
+	
+ 	if (mform.pen_name.value=="")
+	{
+		alert("名称不可为空！");
+		mform.pen_name.focus();
+		return false;
+	}
+	
+ 	if (mform.user_pass.value=="")
+	{
+		alert("密码不可为空！");
+		mform.user_pass.focus();
+		return false;
+	}
+	
+	if (((mform.position.value !=1) && (mform.position.value !=4)) && mform.web_id.value==0)
+	{
+		alert("请选择站点！");
+		mform.web_id.focus();
+		return false;
+	}
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>添加角色</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> <a href="<{:U('Permission/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form action="" name="mform" method="post" enctype="multipart/form-data" onSubmit="return CheckPost();">
+   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">账户：</td>
+        <td><input name="user_name" type="text" class="shuruTxt" placeholder="请填写账户名" /></td>
+      </tr>  
+       <tr>
+        <td class="contenta">名称：</td>
+        <td><input name="pen_name" type="text" class="shuruTxt" placeholder="请填写名称" /></td>
+      </tr>          
+       <tr>
+        <td class="contenta">密码：</td>
+        <td><input name="user_pass" type="password" class="shuruTxt" placeholder="该账户密码" /></td>
+      </tr>
+      <tr class="web_id">
+        <td class="contenta">站点：</td>
+        <td>
+        <span class=" select-box inline">
+        	<select name="web_id" style="height: 35px;text-indent: 2px;">
+        		<volist name="webs" id="vo">
+        		<option value="<{$vo.web_id}>" <if condition="($vo[web_id] eq $myadmin[web_id])">selected="selected"</if>><{$vo.web_name}></option>
+        		</volist>
+        	</select>
+        </span>
+        </td>
+      </tr>  
+       <tr class="web_id">
+        <td class="contenta">权限：</td>
+        <td>
+            <input type="checkbox" name="checkbox[]" value="1" checked="checked"> 用户管理
+            <input type="checkbox" name="checkbox[]" value="2"> 作品管理
+            <input type="checkbox" name="checkbox[]" value="3"> 授权书单
+            <input type="checkbox" name="checkbox[]" value="4"> 网站设置
+            <input type="checkbox" name="checkbox[]" value="5"> 第三方作品
+            <input type="checkbox" name="checkbox[]" value="6"> 接口管理
+            <!-- <input type="checkbox" name="checkbox[]" value="7"> 运营管理 -->
+            <input type="checkbox" name="checkbox[]" value="8"> 财务管理
+            <input type="checkbox" name="checkbox[]" value="9"> 网站统计
+            <input type="checkbox" name="checkbox[]" value="10"> 管理员管理
+            <input type="checkbox" name="checkbox[]" value="11"> 系统管理
+        
+        </td>
+      </tr>      
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" id="" value="确认添加" class="saveBtn"></td>
+      </tr>
+    </table>
+    </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

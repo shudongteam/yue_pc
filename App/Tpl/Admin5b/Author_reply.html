@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>留言回复- <{:C('WebName')}></title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+ <script language="javascript">
+function CheckPost()
+{
+  if (mform.title.value=="")
+  {
+    alert("留言标题不可为空");
+    mform.title.focus();
+    return false;
+  }
+    if (mform.content.value=="")
+  {
+    alert("留言内容不可为空");
+    mform.content.focus();
+    return false;
+  }
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>留言回复 >> <{$user.pen_name}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> 
+<form action="" name="mform" method="post" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">标题：</td>
+        <td><input name="title" type="text" class="shuruTxt"  maxlength="20" placeholder="请输入留言标题"/></td>
+      </tr>        
+      <tr>
+        <td class="contenta">内容：</td>
+        <td><textarea name="content"  class="textarea" style='height: 300px;' placeholder="请输入留言内容"></textarea></tr>      
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td style=""><input type="submit" value="确认发表" class="saveBtn">
+        <input type="button" value="统计字数" id="wordCount" class="resetBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

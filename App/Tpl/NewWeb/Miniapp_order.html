@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>订单统计</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" /></head>
+  
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" /></div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script>
+      <include file="Sidebar:include" />
+<div class="main-content">
+
+                    
+
+        
+        <div class="breadcrumbs" id="breadcrumbs">
+          <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+          </script>
+
+          <ul class="breadcrumb">
+            <li>
+              <i class="ace-icon fa fa-home home-icon"></i>
+              <a href="/backend/notices">Home</a>
+            </li>
+            <li class="active">小程序</li>
+          </ul><!-- /.breadcrumb -->
+
+          <!-- /section:basics/content.searchbox -->
+        </div>
+
+        <!-- /section:basics/content.breadcrumbs -->
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+
+                <!--/span-->
+                <!-- left menu ends -->
+
+
+
+                
+
+    <div class="well">
+        <h4><i class="fa fa-info-circle"></i> 推广链接: </h4>
+        <p>
+            <code>https://c28365.818tu.com/miniapp/code</code>
+            <i class="fa fa-copy" title="" data-toggle="copy" data-clipboard-text="https://c28365.818tu.com/miniapp/code" style="cursor:pointer" data-original-title="点击复制"></i>
+            <a type="button" data-toggle="generate-image" data-url="https://c28365.818tu.com/miniapp/code" class="btn btn-primary btn-xs">获取推广海报</a>
+
+            <span style="padding-left:10px;">
+            (
+            <b>推广教程:</b>
+            1. <a target="_blank" href="http://mp.weixin.qq.com/s/YyguMKCW-jF6qb4Nxsfrbg">模板消息教程</a>;
+            2. <a target="_blank" href="http://mp.weixin.qq.com/s/NfO2MK8zx1jnui-BVs_yPA">小说服务号群发教程</a>
+            )
+        </span>
+
+        </p>
+        <div style="margin:8px 0">
+            <b>注意事项:</b>
+        </div>
+        <div>
+            1、小程序用户具有唯一性，粉丝如果同时关注多个服务号，以第一个扫码进小程序为主;<br>
+            2、推广一定是要用后台的推广地址，不要推二维码！！！<br>
+            3、小程序将保持渠道分成比例;
+        </div>
+    </div>
+
+    <div id="genarate-qrcode-image-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">保存下方图片放到素材中</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group qrcode_image" style="overflow: auto;margin-top: 3px;">
+                    <img src="/backend/miniapp/get_channel_qrcode_image" style="height: 100%; width: 100%">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-bind="click: close" class="btn btn-primary">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script>
+
+    var GenarateQrcodeImageModal = function () {
+        var self = this;
+        self.model = {
+            qrcode_image_url: ko.observable('/backend/miniapp/get_qrcode_image'),
+            subDomain: ko.observable(''),
+            close :function () {
+               $('#genarate-qrcode-image-modal').modal('hide');
+            }
+
+        };
+
+        this.show = function () {
+            $('#genarate-qrcode-image-modal').modal('show');
+        };
+
+        this.load = function (options) {
+            ko.applyBindings(self.model, document.getElementById('genarate-qrcode-image-modal'));
+        };
+    };
+
+    GenarateQrcodeImageModal.instance = new GenarateQrcodeImageModal();
+
+</script>
+    <script>
+      $(function () {
+        GenarateQrcodeImageModal.instance.load();
+
+        $('[data-toggle="copy"]').tooltip().each(function () {
+          new Clipboard(this).on('success', function (e) {
+            e.clearSelection();
+            toastr.success('复制成功');
+          });
+        });
+
+        $(document).on('click','[data-toggle="generate-image"]',function () {
+          var url = $(this).data('url');
+          GenarateQrcodeImageModal.instance.show(url);
+        })
+      });
+    </script>
+
+<div style="margin-bottom:10px">
+    <ul class="nav nav-tabs">
+        <li class="">
+            <a href="/backend/miniapp/index">用户统计</a>
+        </li>
+        <li class="active">
+            <a href="/backend/miniapp/order_stats">订单统计</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="row" id="order-stats-summary-panel">
+    <div class="col-sm-4">
+        <div class="well">
+            <b>
+                今日充值
+                <span data-bind="visible: today.updated_at" class="text-muted" style="font-size: 12px; font-weight: normal;">(<span data-bind="text: today.updated_at">2017-10-18 16:56:03</span> 更新)</span>
+            </b>
+            <div class="text-primary" style="font-size:32px;margin:5px 0">
+                <span data-bind="price: today.paid_amount">0.00</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="well">
+            <b>
+                昨日充值
+            </b>
+            <div class="text-primary" style="font-size:32px;margin:5px 0">
+                <span data-bind="price: yesterday.paid_amount">0.00</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="well">
+            <b>
+                累计充值 (不含当日)
+            </b>
+            <div class="text-primary" style="font-size:32px;margin:5px 0">
+                <span data-bind="price: all.paid_amount">0.00</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  (function () {
+    var viewModel = {
+      today: createStatModel(),
+      yesterday: createStatModel(),
+      all: createStatModel()
+    };
+
+    function createStatModel() {
+      return {
+        paid_amount: ko.observable(),
+        paid_order_count: ko.observable(),
+        updated_at: ko.observable()
+      }
+    }
+
+    ko.applyBindings(viewModel, document.getElementById('order-stats-summary-panel'));
+
+    $.get('/backend/miniapp/api_get_order_stats_summary', function (data) {
+      ko.mapping.fromJS(data, {}, viewModel);
+    });
+
+  })(jQuery);
+</script>
+
+
+<h4>近30天订单统计</h4>
+
+<div id="order-trends-chart" style="height: 400px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent;" _echarts_instance_="ec_1508317182165"><div style="position: relative; overflow: hidden; width: 951px; height: 400px; padding: 0px; margin: 0px; border-width: 0px;"><canvas width="951" height="400" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 951px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+
+<script>
+  $(function () {
+    var chart;
+
+    initChart();
+    loadChartData();
+
+    function initChart() {
+      chart = echarts.init(document.getElementById('order-trends-chart'));
+      chart.setOption({
+        legend: {
+          data: ['订单金额', '订单数']
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        yAxis: {},
+        xAxis: { data: [] },
+        series: [
+          { name: '订单金额', type: 'line', data: [] },
+          { name: '订单数', type: 'line', data: [] }
+        ]
+      });
+    }
+
+    function loadChartData() {
+      var fromDate = moment().subtract(30, 'd').format('YYYY-MM-DD');
+      var toDate = moment().format('YYYY-MM-DD');
+      $.get('/backend/miniapp/api_get_order_stats', { from: fromDate, to: toDate }, function (stats) {
+        stats = fillZeroDataDates(fromDate, toDate, stats);
+        chart.setOption(convertStatsToChartData(stats));
+      });
+    }
+
+    function fillZeroDataDates(fromDate, toDate, stats) {
+      var tsFrom = moment(fromDate).valueOf();
+      var tsTo = moment(toDate).valueOf();
+      var tsCurrentDate = tsFrom;
+
+      var result = [];
+
+      while (tsCurrentDate <= tsTo) {
+        var date = moment(tsCurrentDate).format('YYYY-MM-DD');
+        var stat = _.find(stats, { 'date': date });
+        if (stat) {
+          result.push(stat);
+        } else {
+          result.push({
+            date: date,
+            paid_amount: 0,
+            paid_order_count: 0
+          });
+        }
+
+        tsCurrentDate += 86400 * 1000;
+      }
+
+      return result;
+    }
+
+    function convertStatsToChartData(stats) {
+      var series = [
+        {
+          name: '订单金额',
+          type: 'line',
+          data: _.map(stats, function (it) { return it['paid_amount'] / 100; })
+        },
+        {
+          name: '订单数',
+          type: 'line',
+          data: _.map(stats, 'paid_order_count')
+        }
+      ];
+
+      return {
+        xAxis: {
+          data: _.map(stats, 'date')
+        },
+        series: series
+      }
+    }
+
+  });
+</script>
+
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content-area -->
+                </div><!-- /.page-content -->
+            </div>
+      <!-- /.main-content --></div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <include file="Script:include" /></body>
+
+</html>

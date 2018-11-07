@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <title>公告编辑</title> 
+  <meta name="description" content="" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> 
+ </head>
+ <body class="no-skin">
+  <include file="Head:include" />  
+  <!-- #section:basics/navbar.layout --> 
+  <div id="navbar" class="navbar navbar-default"> 
+   <include file="Navbar:include" />
+  </div> 
+  <div class="main-container" id="main-container"> 
+   <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script> 
+   <include file="Sidebar:include" /> 
+   <div class="main-content"> 
+    <include file="bread:include" /> 
+    <div class="page-content"> 
+     <div class="page-content-area"> 
+      <div class="row"> 
+       <div class="col-xs-12"> 
+        <!-- PAGE CONTENT BEGINS --> 
+        <!--/span--> 
+        <!-- left menu ends --> 
+        <form id="main-form" class="form-horizontal" novalidate="novalidate"> 
+         <h4>公告信息</h4> 
+         <div class="form-group"> 
+          <label class="col-sm-3 control-label no-padding-right">标题</label> 
+          <div class="col-sm-9"> 
+           <input type="text" name="title" class="col-xs-10 col-sm-5" data-bind="value: title" data-val-required="请输入标题" data-val="true"/> 
+            <p class="help-block help-block-error" data-valmsg-for="title" data-valmsg-replace="true"></p>
+          </div> 
+         </div>
+            <div class="form-group"> 
+            <label class="col-sm-3 control-label no-padding-right">内容</label> 
+            <div class="col-sm-9"> 
+             <textarea name="content" data-bind="value: content" rows="20" maxlength="500" class="col-xs-10 col-sm-5" data-val-required="请输入内容" data-val="true" style="padding-left:5px;"></textarea> 
+            <p class="help-block help-block-error" data-valmsg-for="content" data-valmsg-replace="true"></p>
+            </div> 
+           </div>  
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                  <button type="submit" class="btn btn-info" data-bind="click: submit, disable: submitting">确认</button>
+              </div>
+            </div>                   
+        </form>
+       <script>
+    var id = '<{$id}>';
+    var returnUrl = '/NewWeb/Notices/edit/'+id;   
+    //var id = 28428;
+    var isEdit = parseInt(id) > 0;
+
+    var viewModel = {
+        id: ko.observable(id),
+        is_edit: ko.observable(isEdit),
+        submitting: ko.observable(false),
+        title: ko.observable(),
+        content: ko.observable(),
+    };
+
+    viewModel.init = function () {
+
+    };
+
+    viewModel.submit = function () {
+        if (viewModel.submitting()) {
+            return false;
+        }
+
+        if (!$('#main-form').valid()) {
+            return false;
+        }
+
+        viewModel.submitting(true);
+        $.ajax({
+            url: '/NewWeb/Notices/api_save',
+            type: 'POST',
+            contentType: 'application/json',
+            data:JSON.stringify({
+              id: viewModel.id(),
+              title: viewModel.title(),
+              content: viewModel.content()
+            }),
+            success:function(data){
+                if (data) {
+                  toastr.success('保存成功');
+                } else {
+                  toastr.error('保存失败');
+                }
+            }            
+            //data: JSON.stringify(ko.mapping.toJS(viewModel))
+        })
+            .then(function (data) {
+                //location.href = returnUrl || '/NewWeb/Notices/edit/'+id;
+                location.href = '/NewWeb/Notices';
+            })
+            .fail(handleAjaxError)
+            .always(function () {
+                viewModel.submitting(false);
+            });
+    };
+
+    $(function () {
+        if (id) {
+            $.get('/NewWeb/Notices/api_get/'+"?id="+id, function (data) {
+                ko.mapping.fromJS(data, {}, viewModel);
+                viewModel.init();
+                ko.applyBindings(viewModel, document.getElementById('main-form'));
+            });
+        } else {
+            ko.applyBindings(viewModel, document.getElementById('main-form'));
+        }
+    });
+</script> 
+       <!-- PAGE CONTENT ENDS --> 
+      </div>
+      <!-- /.col --> 
+     </div>
+     <!-- /.row --> 
+    </div>
+    <!-- /.page-content-area --> 
+   </div>
+   <!-- /.page-content --> 
+  </div> 
+  <!-- /.main-content --> 
+  <!-- /.main-container --> 
+  <!-- basic scripts --> 
+  <include file="Script:include" /> 
+ </body>
+</html>

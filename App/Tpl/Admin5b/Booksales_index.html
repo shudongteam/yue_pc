@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>作品销售</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2><a href="<{:U('Book/index')}>" class="team-a">作品管理</a> <span class="en">&gt;</span> 作品销售 <span class="en">&gt;</span> <{$isbook.book_name}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+        <form id="form1" name="form1" method="post" action="" class="fomm1">
+           <input type="text" name='da' value='<{$da}>' readonly="true" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="keyword Wdate" style="width:120px;" placeholder="最小范围">
+           <input type="text" name='xiao' value='<{$xiao}>' readonly="true" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="keyword Wdate" style="width:120px;" placeholder="最大范围">
+          <span class="select-box inline">
+          <select name="web_id" class="select">
+      <volist name="webs"  id="vo">
+          <option value="<{$vo.web_id}>"><{$vo.web_name}></option>
+      </volist>
+          </select>
+          </span>           
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 点击查看</button>
+        </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+          <th>时间</th>
+          <th>销售</th>
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="zong" id="vo">
+              <tr>
+           <td><{$vo.time}></td>
+          <td><{$vo.consumption}></td>
+              </tr>
+             </volist>      
+            <tr>
+            <td colspan="2">总销售-阅读币：<{$money}></td>
+            </tr>          
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

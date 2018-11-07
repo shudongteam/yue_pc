@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>查看作品</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language='JavaScript'>
+function CheckAll(form){
+    if(form.suo.checked==true){
+    for (var i=0;i<form.elements.length;i++)
+   {
+      var e = form.elements[i];
+      e.checked = true;
+   }       
+    }else{
+     for (var i=0;i<form.elements.length;i++)
+   {
+      var e = form.elements[i];
+      e.checked = false;
+   }         
+        
+    }
+    
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>查看作品</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+<div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+  <form id="form1" name="form1" method="post" action="<{:U('Agentbook/index')}>" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" />
+    <span class="select-box inline" style="margin-right: 5px;">
+    <select name="search_type" class="select">
+        <option value="1">按书名</option>
+        <option value="2">按作者</option>
+        <option value="3">按公司</option>
+    </select>
+    </span>
+    <span class="select-box inline" style="margin-right: 5px;">
+    <select name="state" class="select">
+        <option value="">状态</option>
+        <option value="1">连载</option>
+        <option value="2">完结</option>
+    </select>
+    </span>
+    <span class="select-box inline">
+    <select name="type_id" class="select">
+        <option value="">全部分类</option>
+            <foreach name="type" item="vo">
+              <option value="<{$key}>"><{$vo}></option>
+            </foreach>
+    </select>
+    </span>    
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜作品</button>
+    <button class="search-button" type="button" onclick="window.location.href='<{:U('Agentbook/bookDump')}>'">导出所有</button>
+  </form>
+
+  </div>     
+  </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+        <form id="formDel" name="formDel" method="post" action="<{:U('Agentbook/webbook')}>">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>选择</th>
+                <th>书号</th>
+                <th>书名</th>
+                <th>作者</th>
+                <th>公司</th>
+                <th>显示</th>
+                <th>状态</th>
+                <th>审核</th>
+                <th>总字数</th>
+                <th>作品等级</th>
+                <th>创建时间</th>
+              </tr>
+            </thead>
+          <tbody>
+          <volist name="book"  id="vo">
+            <tr>
+                  <td><input type="checkbox" name="checkbox[]" value="<{$vo[fu_book]}>"></td>
+                  <td><{$vo.book_id}></td>
+                  <td><b><a href="http://www.ymzww.cn/books/<{$vo.book_id}>.html" target="_blank"><{$vo.book_name}></a></b></td>
+                  <td><{$vo.author_name}></td>
+                   <td><{$vo.cp_name}></td>
+                  <td><if condition="$vo[is_show]==1"><span class="label label-blue">显示</span>
+                      <else/>
+                      <span class="label label-red">隐藏</span></if></td>
+                  <td><if condition="$vo[state]==1"><span class="label label-blue">连载</span>
+                      <else/>
+                      <span class="label label-red">完本</span></if></td>
+                  <td><if condition="$vo[audit]==2"><span class="label label-blue">已审核</span>
+                      <elseif condition="$vo[audit]==1" />
+                      <span class="label label-green">未审核</span>
+                      <else/>
+                      <span class="label label-red">不通过</span></if></td>
+                  <td><{$vo.words}></td>
+                  <td><{$vo.level}>星</td>
+                  <td><{$vo.time}></td>
+            </tr>
+           </volist>
+            <tr>
+            <td><input type="checkbox" name="suo" onClick='CheckAll(this.form)'></td>
+              <td colspan="20" class="tabanniu"><volist name="topweb"  id="vo"><button name="web_id" class="btnis" type="submit" value="<{$vo.web_id}>"><i class="Hui-iconfont">&#xe600;</i> <{$vo.web_name}></button></volist></td>
+            </tr>
+          </tbody>
+        </table>
+       </form>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+        <gt name="count" value="15">
+        <div class="form-group" style="width: 450px; height: 34px; float: right; margin-top: -93px; /*margin-right: 405px; */position: relative; z-index: 999;">
+          <form action=""  method="get">
+            <span>每页显示</span>
+            <input name="nums" type="text" value="<{$nums}>" style="border: 1px solid #ddd; height: 33px; margin-left: 11px; width: 44px; text-align: center;" />
+            <span>条 <input class="btnis" type="submit" value="确定" /></span>
+            <span>跳到</span>
+            <input name="p" type="text" style="border: 1px solid #ddd; height: 33px; margin-left: 11px; width: 44px; text-align: center;" />
+            <span>页</span>
+            <input class="btnis" type="submit" value="跳转" />
+          </form>
+        </div>
+        </gt>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+ //删除那一条
+ function article_del(obj,id){
+	var is=confirm('确定要删除吗？');
+        if(is==true){
+          $.ajax({
+                url: "<{:U('Book/delete')}>",
+                type: "get",
+                data: 'book=' + id,
+                success: function (data) {
+                 if(data==1){
+                     $(obj).parents("tr").remove();
+                 }else{
+                     alert(data);
+                 }
+                }
+            });            
+        }
+}   
+</script>
+</body>
+</html>

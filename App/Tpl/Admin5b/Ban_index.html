@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>广告位置</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>广告位置</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">      
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>类型</th>
+                <th>连接</th>
+                <th>操作</th>      
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="ban"  id="vo">
+              <tr>
+                  <td><{$vo.type}></td>                  
+                  <td><{$vo.link}></td>                  
+                  <td><div class="btn"><a class="modify" href="<{:U('Ban/save', array('id'=>$vo[id]))}>">修改</a></div></td>
+                  </td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

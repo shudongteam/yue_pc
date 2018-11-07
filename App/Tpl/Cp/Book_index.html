@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>查看作品</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>我的作品</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+<div class="superCtab">
+    <div class="cg-title clearfix"> <a href="<{:U('Book/add')}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>新增作品</a>
+      <div class="searchBar">
+  <form id="form1" name="form1" method="post" action="<{:U('Book/index')}>" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" />
+    <span class="select-box inline">
+    <select name="type_id" class="select">
+        <option value="">全部分类</option>
+            <foreach name="type" item="vo">
+              <option value="<{$key}>"><{$vo}></option>
+            </foreach>
+    </select>
+    </span>
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜作品</button>
+  </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+        <form id="formDel" name="formDel" method="post" action="<{:U('Book/webbook')}>">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <!-- <th>书号</th> -->
+                <th>书名</th>
+                <th>作者</th>
+                
+                <th>作品状态</th>
+                <th>审核</th>
+                <th>收费类型</th>
+                <!-- <th>单本收费</th> -->
+                <th>章节数（章）</th>
+                <th>总字数（个）</th>
+                <!-- <th>作品等级</th> -->
+                <th>上架状态</th>
+                <th>创建时间</th>
+                <!-- <th>章节管理</th> -->
+                <th>书本管理</th>
+              </tr>
+            </thead>
+          <tbody>
+          <volist name="book"  id="vo">
+            <tr>
+                  <!-- <td><{$vo.book_id}></td> -->
+                  <td><b><a href="<{:U('Chapter/index',array('book'=>$vo[book_id]))}>"><{$vo.book_name}></a></b></td>
+                  <td><{$vo.author_name}></td>
+                  <td><if condition="$vo[state]==1"><span class="label label-blue">连载</span>
+                      <else/>
+                      <span class="label label-red">完本</span></if></td>
+                  <td><if condition="$vo[audit]==2"><span class="label label-blue">已审核</span>
+                      <elseif condition="$vo[audit]==1" />
+                      <span class="label label-green">未审核</span>
+                      <else/>
+                      <span class="label label-red">不通过</span></if></td>
+                  <td><switch name="vo[vip]">
+                      <case value="0"><span class="label label-blue">按章</span></case>
+                      <case value="1"><span class="label label-green">按本</span></case>
+                      <case value="2"><span class="label label-red">免费</span></case>
+                    </switch></td>
+                  <td><{$vo.chapter}></td>
+                  <td><{$vo.words}></td>
+                 <!--  <td><{$vo.level}>星</td> -->
+                 <td><if condition="$vo[is_show]==1"><span class="label label-blue">已上架</span>
+                      <else/>
+                      <span class="label label-red">未上架</span></if></td>
+                  <td><{$vo.time}></td>
+                  <!-- <td><div class="btn"><a class="modify" href="<{:U('Chapter/index',array('book'=>$vo[book_id]))}>">管理</a></div></td> -->
+                  <td><div class="btn"><a class="modify" href="<{:U('Book/save',array('book'=>$vo[book_id]))}>">信息修改</a> 
+                  <a class="modify" href="<{:U('Chapter/index',array('book'=>$vo[book_id]))}>">章节管理</a>
+                  <!-- <a class="delete" onClick="article_del(this,'<{$vo[book_id]}>')" href="javascript:;">删除</a> --></div></td>
+            </tr>
+           </volist>
+          </tbody>
+        </table>
+       </form>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+ //删除那一条
+ function article_del(obj,id){
+	var is=confirm('确定要删除吗？');
+        if(is==true){
+          $.ajax({
+                url: "<{:U('Book/delete')}>",
+                type: "get",
+                data: 'book=' + id,
+                success: function (data) {
+                 if(data==1){
+                     $(obj).parents("tr").remove();
+                 }else{
+                     alert(data);
+                 }
+                }
+            });            
+        }
+}   
+</script>
+</body>
+</html>

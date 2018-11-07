@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>渠道分类</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>渠道分类</h2>
+    <include file="Main:user"/> 
+ </div>
+  <!--header-->
+  <div class="superCtab">
+      <div class="cg-title clearfix"><a href="<{:U('Channel/typeadd')}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>添加分类</a></div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+        <volist name="mytype"  id="mytype">
+        <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+          <thead>
+            <tr>
+                <th align="left"><span style="float:left;"><b><{$mytype.type_name}>：</b></span> <a href="<{:U('Channel/typesave',array('pid'=>$mytype[type_id]))}>" class="btnis btnac"><i class="Hui-iconfont">&#xe6df;</i> 修改</a>  <a href="<{:U('Channel/tongji',array('pid'=>$mytype[type_id]))}>" class="btnis btnac"><i class="Hui-iconfont">&#xe61e;</i> 统计</a> <a href="javascript:;" onClick="xianshi(this,'<{$mytype.type_id}>')" style="float: right;" class="abt abtred"><i class="Hui-iconfont">&#xe6d5;</i> </a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style='margin: 0px;padding: 0px; display:none' id='tr<{$mytype[type_id]}>'></td>
+            </tr>
+          </tbody>
+         </volist>  
+        </table>
+        <!--pages S-->
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function xianshi(objc,pid){
+     if( $("#tr"+pid).css("display")=="none"){
+        $.get('<{:U('Channel/xianshi')}>', {pids:pid}, function (data) {   // 使用get方式调用ajax
+            if(data==''){
+                alert('该推荐位没有内容！');
+            }else{
+               $(objc).find('i').html("&#xe6d6;");
+               $("#tr"+pid).html(data); 
+               $("#tr"+pid).css("display", "block");
+            }
+           });
+       }else{
+           $(objc).find('i').html("&#xe6d5;");
+          $("#tr"+pid).css("display", "none");
+       }
+ } 
+ //删除那一条
+ function article_del(obj,id){
+	var is=confirm('确定要删除吗？');
+        if(is==true){
+          $.ajax({
+                url: "<{:U('Channel/delete')}>",
+                type: "get",
+                data: 'id=' + id,
+                success: function (data) {
+                 if(data==1){
+                     $(obj).parents("tr td tr").remove();
+                 }else{
+                     alert("系统错误");
+                 }
+                }
+            });            
+        }
+}   
+</script>
+</body>
+</html>

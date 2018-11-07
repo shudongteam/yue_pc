@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>阅明-cp管理系统</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<style type="text/css">
+.anniu {
+	position: absolute;
+	z-index: 99;
+	top: 50%;
+	right: 10px;
+	background-color: #313541;
+	height: 35px;
+	width: 20px;
+	left: 205px;
+	bottom: 0px;
+	line-height: 35px;
+	color: #FFF;
+}
+</style>
+</head>
+<body>
+<div class="anniu Hui-iconfont">&#xe67d;</div>
+<div class="superWrap clearfix" style="height: 754px;">
+  <div class="super-side-menu">
+      <iframe src="<{:U('Main/menu')}>" width="205" height="100%" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"></iframe>
+  </div>
+  <div class="superContent">
+    <div class="superCtab superCtabBot" style="height: 754px;">
+      <iframe src="<{:U('Main/main')}>" id="Mainindex" name="Mainindex" width="100%" height="100%" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+    </div>
+  </div>
+</div>
+<script>
+window.onresize = function () {
+    var winH = $(window).height();
+    $('.superWrap').height(winH);
+    $('.superCtabBot').height(winH);
+};
+$(window).resize();
+$(function () {
+    $('.anniu').click(function () {
+        var display = $('.super-side-menu').css('display');
+        if (display == 'none') {
+            $(this).css("left", "205px");
+            $(this).html("&#xe67d;");
+            $(".super-side-menu").css("display", "block");
+            $(".superContent").css("margin-left", "205px");
+        } else {
+            $(this).css("left", "0");
+            $(this).html("&#xe63d;");
+            $(".super-side-menu").css("display", "none");
+            $(".superContent").css("margin-left", "0");
+        }
+
+    });
+
+});
+</script>
+</body>
+</html>

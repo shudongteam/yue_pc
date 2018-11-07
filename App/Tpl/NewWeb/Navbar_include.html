@@ -1,0 +1,55 @@
+      <script type="text/javascript">try {
+          ace.settings.check('navbar', 'fixed')
+        } catch(e) {}</script>
+      <div class="navbar-container" id="navbar-container">
+        <!-- #section:basics/sidebar.mobile.toggle -->
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
+          <span class="sr-only">Toggle sidebar</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header pull-left">
+          <a href="javascript:void(0);" class="navbar-brand">
+            <small>
+              <i class="fa fa-cloud"></i> 小说分销平台</small>
+          </a>
+        </div>
+        <!-- #section:basics/navbar.dropdown -->
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+          <ul class="nav ace-nav" style="">
+            <li class="light-blue">
+              <a data-toggle="dropdown" href="/NewWeb/Notices" class="dropdown-toggle">
+                <img class="nav-user-photo" src="/Public/NewWeb/user.jpg" alt="Jason&#39;s Photo">
+                <span class="user-info">
+                  <small>你好,<php>echo session('user_name');</php></small><php>echo session('pen_name')</php></span>
+                <i class="ace-icon fa fa-caret-down"></i>
+              </a>
+              <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                <if condition="session('web_id') neq 0">
+                <li>
+                  <a href="/NewWeb/Profile/index">
+                    <i class="fa fa-fw fa-user-circle"></i>个人资料</a>
+                </li>
+                </if>
+                <li>
+                  <a href="/NewWeb/Profile/password">
+                    <i class="fa fa-fw fa-key"></i>修改密码</a>
+                </li>
+             <!--    <li class="divider"></li>
+                <li>
+                  <a href="/NewWeb/Profile/video">
+                    <i class="fa fa-fw fa-video-camera"></i>视频教程</a>
+                </li> -->
+                <li style="display: none" class="divider"></li>
+                <li style="display: none"></li>
+                <li class="divider"></li>
+                <li>
+                  <a href="/NewWeb/Login/exits">
+                    <i class="fa fa-fw fa-power-off"></i>安全退出</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>

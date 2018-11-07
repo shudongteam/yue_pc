@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>渠道统计</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>渠道统计 </h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-tongji">
+        <div id="container" style="min-width:700px;height:400px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/Public/AdminPublic/Highcharts/js/highcharts.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/Highcharts/js/modules/exporting.js"></script> 
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '<{$channel.type_name}>'
+        },
+        xAxis: {
+        	
+            categories: [<volist name="name"  id="vo">'<{$vo}>',</volist>]
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: '总充值: <b>{point.y} 元</b>'
+        },
+        series: [<volist name="data"  id="vo">{
+            name: '<{$vo.name}>',
+            data: <{$vo.val}>,
+        	dataLabels: {
+                enabled: true,
+                align: 'right',
+                format: '<{$vo.name}>:{point.y}', 
+            }
+        	},</volist>]
+    });
+});
+</script>
+</body>
+</html>

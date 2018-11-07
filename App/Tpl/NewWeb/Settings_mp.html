@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <title>公众号设置</title> 
+  <meta name="description" content="" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> 
+ </head>
+ <body class="no-skin">
+  <include file="Head:include" />  
+  <!-- #section:basics/navbar.layout --> 
+  <div id="navbar" class="navbar navbar-default"> 
+   <include file="Navbar:include" />
+  </div> 
+  <div class="main-container" id="main-container"> 
+   <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script> 
+   <include file="Sidebar:include" /> 
+   <div class="main-content"> 
+    <{$weixin_tps}>
+    <include file="Bread:include" /> 
+    <div class="page-content"> 
+     <div class="page-content-area"> 
+      <div class="row"> 
+       <div class="col-xs-12"> 
+        <!-- PAGE CONTENT BEGINS --> 
+        <!--/span--> 
+        <!-- left menu ends --> 
+        <div style="margin-bottom:30px"> 
+         <ul class="nav nav-tabs"> 
+          <li class="active"><a href="/NewWeb/Settings/mp">公众号设置</a></li> 
+          <li class=""><a href="/NewWeb/Settings/integrate">公众号接入</a></li> 
+          <li> <a href="/NewWeb/Settings/menu">微信菜单</a></li>   
+          <li class=""><a href="/NewWeb/Settings/automessage">消息回复</a></li>       
+         </ul> 
+        </div> 
+        <!-- <form id="main-form" class="form-horizontal" novalidate="novalidate">  -->
+           <form id="main-form" class="form-horizontal" novalidate="novalidate" action="/NewWeb/Settings/api_save_mp" method="POST"> 
+
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">类型</label> 
+          <div class="col-sm-9"> 
+           <label class="radio-inline"> <input type="radio" name="type" checked="checked" /> <span>认证服务号</span> </label> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3"><span class="required" aria-required="true">*</span> 原始ID</label> 
+          <div class="col-sm-9"> 
+           <input type="text" name="raw_id" class="col-sm-5 col-xs-10" data-bind="value: mp.raw_id" data-val="true" data-val-required="请输入原始ID" data-val-regex="原始ID格式有误" data-val-regex-pattern="^gh_\w+$" /> 
+           <p class="help-block help-block-error col-sm-7 col-xs-10" data-valmsg-for="raw_id" data-valmsg-replace="true"></p> 
+           <p class="help-block help-block-error col-sm-10 col-xs-10" style="color:red;padding-left:0"> 注意: 上线后请不要更改公众号，否则会影响先前的粉丝，如需换号请申请开新号 </p> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">微信号</label> 
+          <div class="col-sm-9"> 
+           <input type="text" name="username" class="col-sm-5 col-xs-10" data-bind="value: mp.username" /> 
+           <p class="help-block help-block-error col-sm-7 col-xs-10" data-valmsg-for="username" data-valmsg-replace="true"></p> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3"><span class="required" aria-required="true">*</span> 昵称</label> 
+          <div class="col-sm-9"> 
+           <input type="text" name="nickname" class="col-sm-5 col-xs-10" data-bind="value: mp.nickname" data-val="true" data-val-required="请输入昵称" /> 
+           <p class="help-block help-block-error col-sm-7 col-xs-10" data-valmsg-for="nickname" data-valmsg-replace="true"></p> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3"><span class="required" aria-required="true">*</span> App ID</label> 
+          <div class="col-sm-9"> 
+           <input type="text" name="app_id" class="col-sm-5 col-xs-10" data-bind="value: mp.app_id" data-val="true" data-val-required="请输入 App ID" /> 
+           <p class="help-block help-block-error col-sm-7 col-xs-10" data-valmsg-for="app_id" data-valmsg-replace="true"></p> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3"><span class="required" aria-required="true">*</span> App Secret</label> 
+          <div class="col-sm-9"> 
+           <input type="text" name="app_secret" class="col-sm-5 col-xs-10" data-bind="value: mp.app_secret" data-val="true" data-val-required="请输入 App Secret" /> 
+           <p class="help-block help-block-error col-sm-7 col-xs-10" data-valmsg-for="app_secret" data-valmsg-replace="true"></p> 
+          </div> 
+         </div> 
+<!--          <h4>关注设置</h4> 
+         <hr /> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">关注模式</label> 
+          <div class="col-sm-9"> 
+           <label class="checkbox-inline no-padding-left"> <input type="radio" name="follow_mode" data-bind="checked: site.follow_mode" value="1" /> 主动关注 </label> 
+           <label class="checkbox-inline"> <input type="radio" name="follow_mode" data-bind="checked: site.follow_mode" value="2" /> 强制关注 </label> 
+          </div> 
+         </div> 
+         <div class="form-group" data-bind="visible: site.follow_mode() == 2" style=""> 
+          <label class="control-label col-sm-3">引导关注链接地址</label> 
+          <div class="col-sm-9"> 
+           <input type="text" name="subscribe_url" class="col-sm-5 col-xs-10" data-bind="value: site.subscribe_url" placeholder="可选" /> 
+           <p class="help-block col-sm-12 col-xs-12 no-padding-left"> 如果不填，则默认使用公众号的二维码引导关注 </p> 
+          </div> 
+         </div>  -->
+         <div class="form-group"> 
+          <label class="control-label col-sm-3"><span class="required" aria-required="true">*</span>公众号二维码图片URL</label> 
+          <div class="col-sm-9"> 
+           <input type="text" class="col-sm-5 col-xs-10" name="kefu_qrcode_url" id="kefu_qrcode_url" data-bind="value: mp.kefu_qrcode_url" data-val="true" data-val-required="请输入 客服微信二维码图片URL"  /> 
+            <p class="help-block help-block-error col-sm-7 col-xs-10" data-valmsg-for="kefu_qrcode_url" data-valmsg-replace="true"></p> 
+           <p class="help-block col-sm-10 col-xs-10 no-padding-left"> 可使用<a target="_blank" href="http://photo.weibo.com/">微博</a>上传图片, 将上传后的图片地址填入本文框中 </p> 
+          </div> 
+         </div> 
+         <div class="clearfix form-actions"> 
+          <div class="col-md-offset-3 col-md-9"> 
+           <button type="submit" class="btn btn-info">保存</button> 
+          </div> 
+         </div> 
+        </form> 
+        <script>
+
+    var viewModel = {
+        //submitting: ko.observable(false),
+        mp: {
+            raw_id: ko.observable(),
+            username: ko.observable(),
+            nickname: ko.observable(),
+            token: ko.observable(),
+            app_id: ko.observable(),
+            app_secret: ko.observable(),
+            kefu_qrcode_url: ko.observable('')
+        },
+        site: {
+            subscribe_url: ko.observable(),
+            follow_mode: ko.observable()
+        }
+    };
+
+/*    viewModel.submit = function () {
+        if (viewModel.submitting()) {
+            return false;
+        }
+
+        if (!$('#main-form').valid()) {
+            return false;
+        }
+
+        viewModel.submitting(true);
+
+        // viewModel.saveSiteSettings()
+        //     .then(function () {
+        //         return viewModel.saveMpSettings();
+        //     })
+       viewModel.saveMpSettings()
+            // .then(function () {
+            //     toastr.success('保存成功');
+            // })
+            .fail(handleAjaxError)
+            .always(function () {
+                viewModel.submitting(false);
+            });
+    };*/
+
+    // viewModel.saveSiteSettings = function () {
+    //     return $.ajax({
+    //         url: '/NewWeb/Settings/api_save_site_settings',
+    //         type: 'POST',
+    //         contentType: 'application/json',
+    //         data: JSON.stringify(ko.mapping.toJS(viewModel.site))
+    //     });
+    // };
+
+/*    viewModel.saveMpSettings = function () {
+        return $.ajax({
+            url: '/NewWeb/Settings/api_save_mp',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(ko.mapping.toJS(viewModel.mp)),
+            success:function(data){
+                if (data) {
+                  toastr.success('保存成功');
+                  location.reload();
+                } else {
+                  toastr.error('保存失败');
+                }
+            }
+        });
+    };*/
+
+    $(function () {
+        ko.applyBindings(viewModel, document.getElementById('main-form'));
+
+        // $.get('/NewWeb/Settings/api_get_site_settings', function (data) {
+        //    ko.mapping.fromJS(data, {}, viewModel.site);
+        // });
+
+        $.get('/NewWeb/Settings/api_get_mp', function (data) {
+            ko.mapping.fromJS(data, {}, viewModel.mp);
+        });
+
+        // copy links
+        $('[data-toggle="copy').each(function () {
+            new Clipboard(this).on('success', function (e) {
+                e.clearSelection();
+                toastr.success('复制成功');
+            });
+        });
+    })
+</script> 
+        <!-- PAGE CONTENT ENDS --> 
+       </div>
+       <!-- /.col --> 
+      </div>
+      <!-- /.row --> 
+     </div>
+     <!-- /.page-content-area --> 
+    </div>
+    <!-- /.page-content --> 
+   </div> 
+   <!-- /.main-content -->
+  </div> 
+  <!-- /.main-container --> 
+  <!-- basic scripts --> 
+  <include file="Script:include" /> 
+ </body>
+</html>

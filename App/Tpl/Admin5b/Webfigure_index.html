@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>站点折线图</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>站点折线图 </h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-tongji">
+        <div id="container" style="min-width:700px;height:400px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/Public/AdminPublic/Highcharts/js/highcharts.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/Highcharts/js/modules/exporting.js"></script> 
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        title: {
+            text: '站点折线图',
+        },
+        subtitle: {
+            text: '本次统计时间为：<{$timess[0]}> 到 <{$lastday}>',
+        },
+        xAxis: {
+        	
+            categories: [<volist name="timess"  id="vo">'<{$vo}>',</volist>]
+        },
+        yAxis: {
+        	title: {
+                text: '充值金额'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ' 元'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [<volist name="arr"  id="vo">{
+            name: '<{$vo.name}>',
+            data: <{$vo.value}>
+        },</volist>]
+    });
+});
+</script>
+</body>
+</html>

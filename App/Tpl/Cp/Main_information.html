@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>收款信息</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{ 
+ 	if (mform.phone.value=="")
+	{
+		alert("联系电话不可为空！");
+		mform.phone.focus();
+		return false;
+	}  
+ 	if (mform.qq.value=="")
+	{
+		alert("联系qq不可为空！");
+		mform.qq.focus();
+		return false;
+	}   
+ 	if (mform.email.value=="")
+	{
+		alert("email不可为空！");
+		mform.email.focus();
+		return false;
+	}   
+ 	if (mform.name.value=="")
+	{
+		alert("开户人不可为空！");
+		mform.name.focus();
+		return false;
+	}   
+ 	if (mform.bank.value=="")
+	{
+		alert("银行不可为空！");
+		mform.bank.focus();
+		return false;
+	}   
+ 	if (mform.bank_number.value=="")
+	{
+		alert("银行卡号不可为空！");
+		mform.bank_number.focus();
+		return false;
+	}  
+
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>收款信息</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain">
+      <form class="form form-horizontal" id="form" action="" method="post" name="mform" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">联系电话：</td>
+        <td><input name="phone" type="text" class="shuruTxt" placeholder="联系电话" value="<{$user.phone}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">联系QQ：</td>
+        <td><input name="qq" type="text" class="shuruTxt" placeholder="联系qq"  value="<{$user.qq}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">email：</td>
+        <td><input name="email" type="text" class="shuruTxt" placeholder="联系emaill"  value="<{$user.email}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">开户人：</td>
+        <td><input name="name" type="text" class="shuruTxt" placeholder="开户人名称"  value="<{$user.name}>" /></td>
+      </tr>        
+      <tr>
+        <td class="contenta">银行：</td>
+        <td><input name="bank" type="text" class="shuruTxt" placeholder="银行名称"  value="<{$user.bank}>"/></td>
+      </tr>
+      <tr>
+        <td class="contenta">银行卡号：</td>
+        <td><input name="bank_number" type="text" class="shuruTxt" placeholder="银行卡号"  value="<{$user.bank_number}>" /></td>
+      </tr>     
+      <tr>
+        <td class="contenta">开户点地址：</td>
+        <td><input name="open_account" type="text" class="shuruTxt" placeholder="没有留空就行" value="<{$user.open_account}>" /></td>
+      </tr>  
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" value="确认" class="saveBtn">
+        <input type="reset" value="重置" class="resetBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

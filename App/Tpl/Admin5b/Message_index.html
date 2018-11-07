@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>书评管理- <{:C('WebName')}></title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>书评管理</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="cgsuperCtab">
+    <div class="Mian-cont-wrap">
+        <div class="pubMain">
+            <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+            <tr>
+                <th>留言标题</th>
+                <th>留言内容</th>
+                <th>留言时间</th>
+                <th>留言人</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="message" id="message">
+            <tr>
+                <td><b><{$message.title}></b></td>
+                <td><{$message.content}></td>
+                <td><{$message.time}></td>
+                <td><{$message.pen_name}></td>
+                <td><{$message.state}><if condition="$message[top]==1"><font color="blue">[置顶]</font></if> <if condition="$message[good]==1"><font color="red">[精华]</font></if></td>
+                <td>
+                  <a class="team-a" href="<{:U('Message/audit',array('id'=>$message.f_d))}>">审核通过</a>┆
+                  <a class="team-a" href="<{:U('Message/topok',array('id'=>$message.f_d))}>">置顶</a>┆
+                  <a class="team-a" href="<{:U('Message/goodok',array('id'=>$message.f_d))}>">精华</a>┆
+                  <a class="team-a" href="<{:U('Message/topno',array('id'=>$message.f_d))}>">取消置顶</a>┆
+                  <a class="team-a" href="<{:U('Message/goodno',array('id'=>$message.f_d))}>">取消置顶</a>┆
+                  <a class="team-a" href="<{:U('Message/del',array('id'=>$message.f_d))}>">删除</a>
+                </td>
+            </tr>
+            <volist name="message.zmesg" id="mess">
+              <tr>
+                <td><b>└</b></td>
+                <td><{$mess.content}></td>
+                <td><{$mess.time}></td>
+                <td><{$mess.pen_name}></td>
+                <td><if condition="$mess.state == 1"><font color=red>[未审核]</font><else/><font color=blue>[已审核]</font></if></td>
+                <td>
+                  <a class="team-a" href="<{:U('Message/audit',array('id'=>$mess.f_d))}>">审核通过</a>┆
+                  <a class="team-a" href="<{:U('Message/zdel',array('id'=>$mess.f_d))}>">删除</a>
+                </td>
+              </tr>
+            </volist>
+          </volist>
+          </tbody>
+          </table>
+          <{$page}>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

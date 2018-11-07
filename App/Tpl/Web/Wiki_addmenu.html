@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title><{$title}>公众号菜单(<{$wiki.name}>)- <{:C('WebName')}></title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<!-- <link rel="stylesheet" href="http://admin.ymbook.cn/Public/AdminPublic/css/style.css"> -->
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+  error = true;
+  if (!$("#mform").find("input[name=\'name\']").val())
+    {
+        alert("菜单名称不可为空！");
+        $("#mform").find("input[name=\'name\']").focus();
+        return false;
+    }
+    
+    var type = $("#mform").find("[name=\'type\']").val();
+    
+    if( (type == 'view') && !$("#mform").find("input[name=\'url\']").val()) {
+      alert("链接不可为空！");
+        $("#mform").find("input[name=\'url\']").focus();
+        return false;
+    } else if((type == 'click') && !$("#mform").find("textarea[name=\'content\']").val())
+    {
+      alert("回复内容不可为空！");
+      $("#mform").find("textarea[name=\'content\']").focus();
+      return false;
+    } else if((type == 'click_promote') && !$("#mform").find("input[name=\'promote_id\']:checked").val()) {
+            alert("请选择推荐位！");
+          $("#mform").find("input[name=\'promote_id\']").focus();
+      return false;
+      } else if((type == 'click_news')){
+        nohave = true
+      $(".table tbody tr").each(function() {
+        if(($(this).html().indexOf('input') != -1)) {
+          $(this).find('input').each(function() {
+            if(!$(this).val()) {
+              name = $(this).attr("name");
+              if(((name).indexOf('pic') != -1) && (typeof(($(this).prev()).attr('name')) == 'undefined')) {
+                alert("图片不能为空!!");
+                error = false
+                return false;             
+              } else if(((name).indexOf('pic') == -1)) {
+                alert("图文信息有空值!!");
+                error = false
+                return false;
+              }
+            }
+          })
+          if(!error)
+          {
+            return false;
+          }
+          nohave = false;
+        }
+      });
+      
+      if(nohave) {
+        alert("请设置图文信息!!");
+        error = false
+        return false;
+      }
+    }
+    var promote_id = $("#mform").find("input[name=\'promote_id\']:checked").val();
+
+    if (promote_id) {
+         $.ajax({
+             async: false,
+             type: "POST",
+             url: "<{:U('Wiki/checkPromote')}>",
+             data: 'promote_id='+promote_id,
+             success: function(data){
+                if (data == 0) {
+                  alert("该推荐位下没有数据！请前往添加！");
+                  error = false;
+                }
+              }
+         });
+    }
+    return error;
+}
+
+</script>
+<style type="text/css">
+  .select {
+    padding: 0px;
+    text-indent: 0px;
+  }
+  .table {
+    width: 100%;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-top-style: solid;
+    border-left-style: solid;
+    border-top-color: #dddddd;
+    border-left-color: #dddddd;
+    line-height: 20px;
+}
+.table th, .table td {
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-right-color: #dddddd;
+    border-bottom-color: #dddddd;
+    padding: 5px;
+    line-height: 30px;
+}
+.sub-button {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 31px;
+    border: 0;
+    cursor: pointer;
+    float: left;
+    margin-left: 5px;
+    font-family: "微软雅黑";
+    font-size: 15px;
+    border-radius: 4px 4px 4px 4px;
+}
+.btblue {
+    color: #ffffff;
+    background-color: #5a98de;
+}
+</style>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2><{$title}>公众号菜单</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> <a href="<{:U('Wiki/menu', array('id' => $wiki[wiki_id]))}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form class="form form-horizontal" id="mform" action="" enctype="multipart/form-data" method="post" name="mform" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass" >
+
+      <tr>
+        <td class="contenta">菜单名称：</td>
+        <td><input name="name" type="text" class="shuruTxt" value="<{$wikiMeun.name}>" placeholder="请填写菜单名称" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">排序：</td>
+        <td><input name="sort_order" type="text" class="shuruTxt" value="<{$wikiMeun.sort_order}>" placeholder="请填写排序" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">上一级菜单：</td>
+        <td>
+          <span class="select-box inline">
+            <select name="parent_id" class="select" <if condition="($wikiMeun[parent_id] eq -1) and ($hasChild neq 0)">disabled</if>>
+            <option value="-1">无</option>
+            <volist name="wikiMenus"  id="vo">
+            <option value="<{$vo.menu_id}>" <if condition="($wikiMeun[parent_id] eq $vo[menu_id])">selected="selected"</if> ><{$vo.name}></option>
+            </volist>
+            </select>
+          </span>         
+        </td>
+      </tr>
+      <tr class="type">
+        <td class="contenta">响应类型：</td>
+        <td>
+          <span class="select-box inline">
+            <select name="type" class="select"  <if condition="($hasChild gt 0)">disabled</if>>
+            <volist name="types"  id="vo">
+            <option value="<{$vo.val}>" <if condition="($wikiMeun[type] eq $vo[val])">selected="selected"</if>><{$vo.name}></option>
+            </volist>
+            </select>
+          </span>         
+        </td>
+      </tr>      
+      <tr <if condition="($wikiMeun.type eq view)"> style="display:none;" </if> class="url">
+        <td class="contenta">跳转URL：</td>
+        <td>
+          <input name="url" class="shuruTxt" type="text" name="url" value="<{$wikiMeun.url}>"/>
+        </td>
+      </tr>
+      <tr <if condition="($wikiMeun.type eq click)"> style="display:none;" </if> class="click">
+        <td class="contenta"  valign="top">回复内容：</td>
+        <td>
+          <textarea name="content" class="shuruTxt" style="height: 180px;"><{$wikiMeun.content}></textarea>
+        </td>
+      </tr>
+      <tr <if condition="($wikiMeun.type eq click_news)"> style="display:none;" </if> class="click_news">
+        <td class="contenta"  valign="top">图文：</td>
+        <td>
+          <table  style="width: 80%;" border="0" cellpadding="0" cellspacing="0" class="table">
+            <thead>
+            <tr>
+              <td>标题</td>
+              <td>描述</td>
+              <td>图片</td>
+              <td>链接</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+            </thead>
+            <tbody>
+              <volist name="content" id="vo" key="k">
+              <tr>
+                <td><input name="piccontent[<{$k}>][title]" value="<{$vo.title}>" class="shuruTxt" /></td>
+                <td><input name="piccontent[<{$k}>][description]" value="<{$vo.description}>" class="shuruTxt" /></td>
+                <td>
+                  <span>
+                  <img src="/Upload/weixin/<{$vo.img}>" style="width: 140px;"/>
+                  </span>
+                  <input name="piccontent[<{$k}>][img]" value="<{$vo.img}>" type="hidden"  />
+                  <input name="pic[<{$k}>]" type="file"  />               
+                </td>
+                <td><input name="piccontent[<{$k}>][url]" value="<{$vo.url}>" class="shuruTxt" /></td>
+                <td><a class="sub-button btblue" title="删除" onclick="del(this);"><i class="Hui-iconfont Hui-iconfont-del2"></i></a></td>
+              </tr>
+              </volist>
+              <tr>
+                <td colspan="4"></td>
+                <td><a class="sub-button btblue add" onclick="add();"><i class="Hui-iconfont Hui-iconfont-add"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+      <tr <if condition="($wikiMeun.type eq click_promote)"> style="display:none;" </if> class="click_promote">
+        <td class="contenta"  valign="top">推荐位：</td>
+        <td>
+          <volist name="promote" id="vo" key="k">
+              <label><input name="promote_id" type="radio" value="<{$vo.promote_id}>" <if condition="$vo.promote_id eq $promote_id">checked</if>/><{$vo.type_name}></label> &nbsp;
+          </volist>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" value="确定" class="saveBtn"></td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$("#mform select[name='type']").change(function(){
+  switch($(this).val())
+  {
+    case 'click':
+      $(".url").hide();
+      $(".sub_button").hide();
+      $(".click_news").hide();
+      $(".click_promote").hide();       
+      $(".click").show();
+      break;
+    case 'view':
+      $(".sub_button").hide();
+      $(".click_news").hide();
+      $(".click").hide();
+      $(".click_promote").hide();        
+      $(".url").show();
+      break;
+    case 'click_news':
+      $(".sub_button").hide();
+      $(".click").hide();
+      $(".url").hide();  
+      $(".click_promote").hide();    
+      $(".click_news").show();      
+      break;
+    case 'click_promote':
+      $(".sub_button").hide();
+      $(".click").hide();
+      $(".url").hide();     
+      $(".click_news").hide();      
+      $(".click_promote").show();      
+      break;
+    default:
+      $(".click").hide();
+      $(".sub_button").hide();
+      $(".url").hide();
+      $(".click_news").hide();
+      $(".click_promote").hide(); 
+  }
+});
+
+$("#mform select[name='type']").trigger("change");
+
+$("#mform select[name='parent_id']").change(function(){
+  if($(this).val()) {
+    $(".type").show();
+  } else {
+    $(".type").show();
+  }
+});
+count = <{$count}>+1 ;
+function add()
+{
+  if($('.table tbody tr').length >=9) {
+    alert('最多只能添加8个图文!');
+  } else {
+    html = '<tr>';
+    html += '<td>';
+    html += '<input name="piccontent[' + count + '][title]" value="" class="shuruTxt" />';
+    html += '</td>';
+    html += '<td>';
+    html += '<input name="piccontent[' + count + '][description]" class="shuruTxt" value="" />';
+    html += '</td>';
+    html += '<td>';
+    html += '<input name="pic[' + count + ']" type="file"  />';
+    html += '</td>';
+    html += '<td>';
+    html += '<input name="piccontent[' + count + '][url]" class="shuruTxt"  value="" />';
+    html += '</td>';
+    html += '<td>';
+    html += '<a class="sub-button btblue" title="删除" onclick="del(this);"><i class="Hui-iconfont Hui-iconfont-del2"></i></a>';
+    html += '</td>';
+    html += '</tr>';
+    $('.table tbody tr:last').before(html);
+    
+    if($('.table tbody tr').length ==9)  {
+      $(".table tbody tr a.add").hide();
+    }
+    
+    count++;
+  }
+}
+
+function del(object)
+{
+  $(object).parent().parent().remove();
+  if($('.table tbody tr').length < 9)  {
+    $(".table tbody tr a.add").show();
+  }
+}
+</script>
+</body>
+</html>

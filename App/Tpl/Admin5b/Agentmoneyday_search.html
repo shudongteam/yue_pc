@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>代理账单管理</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>代理账单管理</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+        <form id="form1" name="form1" method="post" action="<{:U('Agentmoneyday/add')}>" class="fomm1">
+          <input readonly="true" type="text" name='time' onFocus="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'%y-%M-{%d-1}'})" id="pubDate" class="keyword Wdate" style="width:110px;" placeholder="选择定时时间">
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe61f;</i> 生成账单</button>
+        </form>
+      </div>
+      <div class="searchBar searchBar1">
+        <form id="form1" name="form1" method="post" action="<{:U('Agentmoneyday/search')}>" >
+          <select name="searchname" style="height:31px;">
+              <option value="">请选择代理</option>
+              <volist name="web_id" id="vo">
+                <option value="<{$vo.web_id}>"><{$vo.pen_name}></option>
+              </volist>
+          </select>
+          <button  style="margin-left:5px;background-color:#5eb95e;color: #ffffff;width:90px;height:31px;"  type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜代理</button>
+        </form>
+      </div>
+      <div class="searchBar searchBar3">
+      <button class="search-button" style="width:150px"type="submit" onclick="window.location.href='<{:U('Agentmoneyday/moneyDump')}>'"><i class="Hui-iconfont">&#xe61f;</i>导出所有数据</button>
+      </div>
+      <div class="searchBar searchBar4">
+          <form id="form1" name="form1" method="post" action="<{:U('Agentmoneyday/moneyDump')}>" class="fomm1">
+            <input type="text" name='da' value='<{$da}>' readonly="true" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="keyword Wdate" style="width:120px;" placeholder="最小范围">
+            <input type="text" name='xiao' value='<{$xiao}>' readonly="true" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="keyword Wdate" style="width:120px;" placeholder="最大范围">      
+            <span class="select-box inline">
+            <select name="cpsname" class="select">
+            <volist name="web_id"  id="vo">
+              <option value="<{$vo.web_id}>"><{$vo.pen_name}></option>
+            </volist>
+            </select>
+            </span>
+            <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe621;</i> 导出数据</button>
+          </form>
+      </div>
+      <div class="searchBar">
+        <form id="form1" name="form1" method="post" action="<{:U('Agentmoneyday/index')}>" class="fomm1">
+          <input readonly="true" type="text" name='time' onFocus="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'%y-%M-{%d-1}'})" id="pubDate" class="keyword Wdate" style="width:110px;" placeholder="搜索时间">
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜时间</button>
+        </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-tongji">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tongji">
+          <tr>
+            <td><div class="xinxi"><b><{$tongji.money_zuo}></b><br>
+                昨日总充值</div></td>
+            <td>&nbsp;</td>
+            <td><div class="xinxi"><b><{$tongji.money_day}></b><br>
+                今日总充值</div></td>
+          </tr>
+        </table>
+      </div>
+      <div class="Mian-cont-btn tp-cnt-btn clearfix" style=' padding-top: 0px; padding-bottom: 10px;'>
+        <div class="operateBtn"> <a href="javascript:;" onclick='shuaxin()' class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe68f;</i>数据刷新</a> </div>
+      </div>
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>代理名称</th>
+                <th>所属站点ID</th>
+<!--                 <th>类型</th>
+                <th>分成比例</th>
+ -->                <th>总充值</th>
+                <th>分成后</th>
+                <th>账单日期</th>
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="money"  id="vo">
+              <tr>
+                <td><{$vo.pen_name}></td>
+                <td><{$vo.web_id}></td>
+<!--                 <td><switch name="vo[type]">
+                    <case value="1"><span class="label label-red">一级代理(站长)</span></case>
+                    <case value="2"><span class="label label-blue">二级代理</span></case>
+                    <case value="3"><span class="label label-green">提成</span></case>
+                  </switch></td>
+                <td><{$vo.proportion}>/成</td> -->
+                <td><{$vo.money_total}></td>
+                <td><{$vo['money']}></td>
+                <td><{$vo.time}></td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+          <input  type="hidden" name="searchname" value="<{$searchname}>">
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+function shuaxin() {
+$.ajax({
+        url: "<{:U('Agentmoneyday/newtongji')}>",
+        type: "get",
+        success: function (data) {
+            if(data==1){
+                location.replace(location.href);
+            }else{
+                alert("系统错误");
+            }
+        }
+    });
+} 
+</script>
+</body>
+</html>

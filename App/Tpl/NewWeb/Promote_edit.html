@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>
+      <{$title}></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" /></head>
+  
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" /></div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script>
+      <include file="Sidebar:include" />
+      <div class="main-content">
+        <include file="bread:include" />
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!--/span-->
+                <!-- left menu ends -->
+                <form id="main-form" class="form-horizontal" novalidate="novalidate" method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">序号</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="xu" value="<{$data.xu}>" class="col-xs-10 col-sm-5" maxlength="20" data-val="true" placeholder="请输入序号" data-val-required="请输入序号">
+                      <p class="help-block help-block-error" data-valmsg-for="xu" data-valmsg-replace="true"></p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">书号</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="book_id" value="<{$data.book_id}>" class="col-xs-10 col-sm-5" data-val="true" placeholder="请输入书号(书籍ID)" data-val-required="请输入书号(书籍ID)"  data-val-length-min="6" data-val-length-max="24">
+                      <p class="help-block help-block-error" data-valmsg-for="book_id" data-valmsg-replace="true"></p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">自定义书名</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="book_name" value="<{$data.book_name}>" class="col-xs-10 col-sm-5" placeholder="请输入自定义书名,不填采用原书名">
+                    </div>
+                  </div>  
+                  <div class="form-group" style="display: none;" id="upload_img">
+                    <label class="col-sm-3 control-label no-padding-right">上传首页轮播图</label>
+                    <div class="col-sm-9">
+                      <input type="file" name="upload_img" class="col-xs-10 col-sm-5" id="input-b9">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">推荐位</label>
+                    <div class="col-sm-9">
+                        <select  data-placeholder="推荐位名称" name="promote_id" tabindex="-1" style="height: 34px;width: 100px;" onchange="show_t(this)">
+                            <option value="">全部</option>
+                            <volist name="type" id="vo">
+                            <option value="<{$vo.promote_id}>" <if condition="$data['promote_id'] eq $vo['promote_id']">selected</if>><{$vo.type_name}></option>
+                          </volist>
+                        </select>
+                    </div>
+                  </div>
+                  <input type="hidden" name="id" value="<{$data.id}>">
+                  <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                      <button type="submit" class="btn btn-info">提交</button></div>
+                  </div>
+                </form>
+                <!-- PAGE CONTENT ENDS --></div>
+              <!-- /.col --></div>
+            <!-- /.row --></div>
+          <!-- /.page-content-area --></div>
+        <!-- /.page-content --></div>
+      <!-- /.main-content --></div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <script type="text/javascript">
+      function show_t(obj) {
+        if (obj.value == 17) {
+          $('#upload_img').show();
+        } else {
+          $('#upload_img').hide();
+        }
+      }
+    </script>
+    <include file="Script:include" /></body>
+</html>

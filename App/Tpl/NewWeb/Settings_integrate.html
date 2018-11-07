@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <title>公众号接入</title> 
+  <meta name="description" content="" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> 
+ </head>
+ <body class="no-skin">
+  <include file="Head:include" />  
+  <!-- #section:basics/navbar.layout --> 
+  <div id="navbar" class="navbar navbar-default"> 
+   <include file="Navbar:include" />
+  </div> 
+  <div class="main-container" id="main-container"> 
+   <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script> 
+   <include file="Sidebar:include" /> 
+   <div class="main-content"> 
+    <include file="Bread:include" /> 
+    <div class="page-content"> 
+     <div class="page-content-area"> 
+      <div class="row"> 
+       <div class="col-xs-12"> 
+        <!-- PAGE CONTENT BEGINS --> 
+        <!--/span--> 
+        <!-- left menu ends --> 
+        <div style="margin-bottom:30px"> 
+         <ul class="nav nav-tabs"> 
+          <li class=""> <a href="/NewWeb/Settings/mp">公众号设置</a></li> 
+          <li class="active"> <a href="/NewWeb/Settings/integrate">公众号接入</a></li> 
+          <li> <a href="/NewWeb/Settings/menu">微信菜单</a></li>
+          <li class=""><a href="/NewWeb/Settings/automessage">消息回复</a></li> 
+         </ul> 
+        </div> 
+        <div class="alert alert-info">
+         注意: 接入公众号必须是&quot;认证服务号&quot;
+        </div> 
+        <div class="form-horizontal">
+         <h4>公众号回复 <small>(微信后台 &gt; 基本配置)</small></h4> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">URL(服务器地址):</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-integrate-url">http://weixin.ymzww.cn/Wei/index/wiki/<{$agent_id}></span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-integrate-url"></i> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">Token(令牌):</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-token">weixin</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-token"></i> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">EncodingAESKey(消息加解密密钥):</label> 
+          <div class="col-sm-9 form-control-static">
+           随机生成
+          </div>
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">消息加解密方式:</label> 
+          <div class="col-sm-9 form-control-static">
+           明文模式
+          </div>
+         </div>
+          <div class="form-group"> 
+          <label class="control-label col-sm-3">IP白名单:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-iplist-url">116.62.126.107<br>120.55.47.192</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-iplist-url"></i> 
+          </div> 
+         </div> 
+         <h4>公众号菜单<small>(参考菜单)</small></h4> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">网站首页:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-index-url">http://<{$web_url}></span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-index-url"></i> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">小说排行:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-ranking-url">http://<{$web_url}>/Rankinglist/index.html</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-ranking-url"></i> 
+          </div> 
+         </div>
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">阅读记录:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-reading-url">http://<{$web_url}>/Bookcase/reading.html</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-reading-url"></i> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">书架:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-bookcase-url">http://<{$web_url}>/Bookcase/index.html</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-bookcase-url"></i> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">个人中心:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-personal-url">http://<{$web_url}>/User/info.html</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-personal-url"></i> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">充值页:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-pay-url">http://<{$web_url}>/Pay/index.html</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-pay-url"></i> 
+          </div> 
+         </div>
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">每日签到送礼:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-sign-url">http://<{$web_url}>/Sign/index.html</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-sign-url"></i> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">领取微信礼包:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-weixin-url">http://<{$web_url}>/Gift/weixin.html</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-weixin-url"></i> 
+          </div> 
+         </div>
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">领取首充礼包:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-shouchong-url">http://<{$web_url}>/Gift/shouchong.html</span> 
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-shouchong-url"></i> 
+          </div> 
+         </div>  
+         <div class="form-group"> 
+          <label class="control-label col-sm-3">PS:文字连接格式:</label> 
+          <div class="col-sm-9 form-control-static"> 
+           <span id="link-ps-url"><xmp><a href="连接地址">名称</a></xmp></span>
+           <i class="fa fa-copy" title="点击复制" style="cursor:pointer" data-toggle="copy-link" data-clipboard-target="#link-ps-url"></i> 
+          </div> 
+         </div>                             
+        </div> 
+        <script>
+            var generating = false;
+
+                  $(function() {
+
+                    $('[data-toggle="copy-link"]').each(function() {
+                      new Clipboard(this).on('success',
+                      function(e) {
+                        e.clearSelection();
+                        toastr.success('复制成功');
+                      });
+                    });
+
+                    $('#btn-generate-menu').click(function() {
+                      if (generating) {
+                        return false;
+                      }
+
+                      generating = true;
+
+                      $.ajax({
+                        url: '/NewWeb/Settings/api_generate_menu?weixin_id='+<{$weixin_id}>,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        success:function(data){
+                            if (data) {
+                              toastr.success('菜单生成成功，大约5分钟后生效');
+                            } else {
+                              toastr.error('菜单生成失败');
+                            }
+                        }
+                      }).fail(handleAjaxError).always(function() {
+                        generating = false;
+                      });
+
+                      return false;
+                    });
+                  });
+        </script> 
+        <!-- PAGE CONTENT ENDS -->
+       </div> 
+       <!-- /.col -->
+      </div> 
+      <!-- /.row -->
+     </div> 
+     <!-- /.page-content-area -->
+    </div> 
+    <!-- /.page-content -->
+   </div> 
+   <!-- /.main-content -->
+  </div> 
+  <!-- /.main-container --> 
+  <!-- basic scripts --> 
+  <include file="Script:include" /> 
+ </body>
+</html>

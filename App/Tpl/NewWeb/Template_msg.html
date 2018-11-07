@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>
+            模板消息
+        </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <include file="Head:include" />
+    </head>
+    <body class="no-skin">
+        <!-- #section:basics/navbar.layout -->
+        <div id="navbar" class="navbar navbar-default">
+            <include file="Navbar:include" />
+        </div>
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('main-container', 'fixed')
+                } catch(e) {}
+            </script>
+            <include file="Sidebar:include" />
+            <div class="main-content">
+                <{$weixin_tps}>
+                <include file="Bread:include" />
+                    <!-- /section:basics/content.searchbox -->
+                <!-- /section:basics/content.breadcrumbs -->
+                <div class="page-content">
+                    <div class="page-content-area">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <!--/span-->
+                                <!-- left menu ends -->
+                                <ul class="nav nav-tabs" style="margin-bottom:10px !important;">
+                                    <li class="active">
+                                        <a href="/NewWeb/Template/msg">
+                                            模板消息
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/NewWeb/Template/kefu">
+                                            图文客服消息
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="actions-bar">
+                                    <a href="/NewWeb/Template/edit" class="btn btn-primary">
+                                        <i class="fa fa-plus">
+                                        </i>
+                                        添加任务
+                                    </a>
+                                    <span class="text-info" style="display: inline-block;margin-left:10px;">
+                                        <i class="fa fa-info-circle">
+                                        </i>
+                                        模板消息仅用于公众号向用户发送重要的服务通知(慎用!!!)
+                                    </span>
+                                </div>
+                                <table class="table table-striped table-bordered table-hover responsive">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                任务名称
+                                            </td>
+                                            <td>
+                                                发送时间
+                                            </td>
+                                            <td>
+                                                发送状态
+                                            </td>
+                                            <td>
+                                                操作
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      <volist name="data" id="vo" empty="$empty">
+                                        <tr>
+                                          <td class="task-name"><{$vo.task_name}></td>
+                                          <td><{$vo.timing_time}></td>
+                                          <td>
+                                              <switch name="vo.state">
+                                                <case value="2">等待发送</case>
+                                                <case value="3">发送中</case>
+                                                <case value="4">发送结束</case>
+                                                <default />错误
+                                            </switch>
+                                          </td>
+                                          <td><span  class="btn-xs btn-danger" data-toggle="delete-task" data-id="<{$vo.id}>">删除</span></td>       
+                                        </tr>            
+                                      </volist>
+                                    </tbody>
+                                </table>
+                                <{$page}>
+                                <script>
+                                    $(function() {
+                                        $('[data-toggle="delete-task"]').click(function() {
+                                            var id = $(this).data('id');
+                                            var name = $(this).closest('tr').find('.task-name').text().trim();
+
+                                            Modal.confirm({
+                                                title: '删除确认',
+                                                message: '确定要删除任务"' + name + '"吗?'
+                                            }).then(function() {
+                                                $.ajax({
+                                                    url: '/NewWeb/Template/msg_del/?id=' + id,
+                                                    type: 'GET',
+                                                    contentType: 'application/json'
+                                                }).then(function() {
+                                                    toastr.success('删除成功');
+                                                    reloadPage(500);
+                                                }).fail(handleAjaxError);
+                                            });
+
+                                            return false;
+                                        });
+                                    });
+                                </script>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.page-content-area -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+            <!-- /.main-content -->
+        </div>
+        <!-- /.main-container -->
+        <!-- basic scripts -->
+        <include file="Script:include" />
+    </body>
+
+</html>

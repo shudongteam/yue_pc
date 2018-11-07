@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>修改书单作品</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+	if (mform.book_name.value=="")
+	{
+		alert("书名不可为空！");
+		mform.book_name.focus();
+		return false;
+	}
+	if (mform.author_name.value=="")
+	{
+		alert("作者名称不可为空！");
+		mform.author_name.focus();
+		return false;
+	}
+ 	if (mform.keywords.value=="")
+	{
+		alert("关键字不可为空！");
+		mform.keywords.focus();
+		return false;
+	}     
+ 	if (mform.book_brief.value=="")
+	{
+		alert("作品简介不可为空！");
+		mform.book_brief.focus();
+		return false;
+	}           
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>修改书单作品</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> <a href="<{:U('Webbook/index',array('web'=>$isbook[web_id]))}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+<form action="" name="mform" method="post" enctype="multipart/form-data" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">书名：</td>
+        <td><input name="book_name" type="text" class="shuruTxt" size="12" maxlength="20" placeholder="请输入作品名称" value="<{$isbook.book_name}>"/></td>
+      </tr>
+
+      <tr>
+        <td class="contenta">作者：</td>
+        <td><input name="author_name" type="text" class="shuruTxt" size="12" maxlength="15" readOnly="true" placeholder="请输入作者名称" value="<{$isbook.author_name}>" /></td>
+      </tr>    
+      <tr>
+        <td class="contenta">书籍模式：</td>
+        <td><input type="radio" name="is_show" value="0" <if condition="$isbook[is_show]==0">checked="checked"</if>/>
+                隐藏
+                <input type="radio" name="is_show" value="1" <if condition="$isbook[is_show]==1">checked="checked"</if> />
+                显示</td>
+      </tr>         
+      <tr>
+        <td class="contenta">关键字：</td>
+        <td><input name="keywords" type="text" class="shuruTxt" placeholder="请输入作品关键字" value="<{$isbook.keywords}>"/></td>
+      </tr>
+      <tr>
+        <td valign="top" class="contenta">作品简介：</td>
+        <td><textarea name="book_brief" cols="12" class="textarea" placeholder="请输入作品简介"><{$isbook.book_brief}></textarea></td>
+      </tr> 
+      <tr>
+        <td class="contenta">上传封面：</td>
+        <td><input name="upload_img" type="file" /></td>
+      </tr>           
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" value="确认修改" class="saveBtn">
+        <input type="reset" value="重置" class="resetBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

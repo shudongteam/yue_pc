@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>代理管理</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" /></head>
+  
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" /></div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script>
+      <include file="Sidebar:include" />
+      <div class="main-content">
+      <{$weixin_tps}>
+      <include file="Bread:include" /> 
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!--/span-->
+                <!-- left menu ends -->
+                <div class="actions-bar">
+                  <eq name="flag" value="1">
+                  <a href="/NewWeb/Agent/edit" class="btn btn-primary">
+                    <i class="fa fa-plus"></i>添加代理</a>
+                  </eq>
+                </div>
+                <nav>
+                  <form class="form-inline search-form">
+                    <div class="input-group pull-left">
+                      <input type="hidden" name="upline_uid" value="">
+                      <select data-ui="user-search-box" data-user-type="agent" data-upline-uid="" data-placeholder="代理名称" name="agent_id" style="width: 310px;" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true"></select>
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </form>
+<!--                   <ul class="nav nav-tabs pull-left" style="margin-right:25px">
+                    <li class="active">
+                      <a href="/backend/users/affiliates">当前代理</a></li>
+                    <li class="">
+                      <a href="/backend/users/affiliates?status=deactivated">已禁止代理</a></li>
+                  </ul>
+                  <ul class="nav nav-pills nav-pills-sm pull-left" style="margin-left:0">
+                    <li class="active">
+                      <a href="/backend/users/affiliates">全部</a></li>
+                    <li class="">
+                      <a href="/backend/users/affiliates?level=3">优</a></li>
+                    <li class="">
+                      <a href="/backend/users/affiliates?level=2">良</a></li>
+                    <li class="">
+                      <a href="/backend/users/affiliates?level=1">差</a></li>
+                    <li class="">
+                      <a href="/backend/users/affiliates?level=0">待定</a></li>
+                  </ul> -->
+                </nav>
+                <table class="table table-striped table-bordered table-hover responsive">
+                  <thead>
+                    <tr>
+                      <td>代理名称</td>
+                      <td>手机</td>
+                      <td>佣金比例</td>
+                      <td class="hidden-xs">注册时间</td>
+                      <td>用户名</td>
+                      <td>网址</td>
+                      <td>操作</td></tr>
+                  </thead>
+                  <tbody>
+                      <volist name="data" id="vo" empty="$empty">
+                    <tr>
+                      <td class="nickname"><a href="/NewWeb/Agent/edit/<{$vo.agent_id}>" style="text-decoration: none"><{$vo.pen_name}></a></td>
+                      <td><{$vo.mobile}></td>
+                      <td><{$vo.proportion}></td>
+                      <td class="hidden-xs"><{$vo.time}></td>
+                      <td>
+                        <!-- <span data-ui="inline-user-info" data-uid="28365"> -->
+                          <span><{$vo.user_name}></span></span>
+                      </td>
+                      <td>http://<{$vo.web_url}></td>
+                      <td>
+                        <a class="btn btn-xs btn-success" href="/NewWeb/Stats/index?agent_id=<{$vo.agent_id}>">
+                          <i class="fa fa-bar-chart-o"></i>数据统计</a>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown">更多
+                            <span class="caret"></span></button>
+                          <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                              <a href="/NewWeb/Links/index?agent_id=<{$vo.agent_id}>">
+                                <i class="fa fa-fw fa-list"></i>推广链接</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                              <a href="/NewWeb/Agent/edit/<{$vo.agent_id}>">
+                                <i class="fa fa-fw fa-edit"></i>修改资料</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                              <a data-id="<{$vo.agent_id}>" data-toggle="reset-password" href="#" class="text-danger">
+                                <i class="fa fa-fw fa-key"></i>重置密码</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                  </volist>
+                  </tbody>
+                </table>
+                <{$page}>
+                <div id="payment-gateway-panel" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span></button>
+                        <span>
+                          <h4 class="modal-title">修改支付网关</h4>
+                          <span style="color: blue;" data-bind="html: panelTitle"></span>
+                        </span>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="form-group" style="overflow: auto;margin-top: 3px;">
+                            <label class="col-sm-3 control-label no-padding-right">支付网关</label>
+                            <div>
+                              <select data-bind="options: paymentGateways, optionsText: 'name', optionsValue: 'pay_gateway', value: payGateway" class="col-xs-10 col-sm-5">
+                                <option value="1">微信支付</option>
+                                <option value="2">福铁支付</option>
+                                <option value="3">银联支付</option>
+                                <option value="4">钱方支付</option></select>
+                            </div>
+                          </div>
+                          <div class="form-group" data-bind="visible: payGateway() == 1" style="overflow: auto; margin-top: 10px;">
+                            <label class="col-sm-3 control-label no-padding-right">支付商户</label>
+                            <div>
+                              <select data-bind="options: paymentWeixinMps, optionsText: 'nickname', optionsValue: 'raw_id', value: payRawId, optionsCaption: '未设置'" class="col-xs-10 col-sm-5">
+                                <option value="">未设置</option>
+                                <option value="gh_09e268d15eda">掌中云阅</option>
+                                <option value="gh_b568f1d3caab">掌中小说汇</option>
+                                <option value="gh_9029d273499c">掌中云</option></select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" data-bind="click: save" class="btn btn-primary">保存</button></div>
+                    </div>
+                    <!-- /.modal-content --></div>
+                  <!-- /.modal-dialog --></div>
+                <script>var PaymentGatewayPanel = function() {
+                    var self = this;
+                    self.model = {
+                      panelTitle: ko.observable(''),
+                      isMpsSelectVisible: ko.observable(true),
+                      paymentGateways: ko.observable([]),
+                      paymentWeixinMps: ko.observable([]),
+                      channelIds: ko.observable([]),
+                      payRawId: ko.observable(''),
+                      payGateway: ko.observable(0),
+                      //保存按钮点击事件
+                      save: function() {
+                        if (!self.model.payGateway()) {
+                          Modal.alert({
+                            title: '错误提示',
+                            message: '请先选择支付网关'
+                          });
+                          return;
+                        }
+
+                        var channelCount = self.model.channelIds().length;
+                        if (channelCount <= 0) {
+                          Modal.alert({
+                            title: '错误提示',
+                            message: '请先选择渠道'
+                          });
+                          return;
+                        }
+                        Modal.confirm({
+                          title: '修改支付网关确认',
+                          message: '您确定为' + channelCount + '个渠道修改支付网关?'
+                        }).then(function() {
+                          $.ajax({
+                            url: '/backend/users/api_change_channels_pay_gateway',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                              channel_ids: self.model.channelIds(),
+                              pay_raw_id: self.model.payRawId() || null,
+                              pay_gateway: self.model.payGateway()
+                            })
+                          }).then(function(result) {
+                            toastr.success('修改成功');
+                            reloadPage(1000);
+
+                          }).fail(handleAjaxError);
+                        });
+                      }
+                    };
+
+                    // this.loadPaymentGateData = function() {
+                    //   return $.get('/backend/users/api_get_payment_gateway_list',
+                    //   function(data) {
+                    //     self.model.paymentGateways(data);
+                    //     self.model.paymentWeixinMps(data[0]['pay_mps']);
+                    //   });
+                    // };
+
+                    this.showPanel = function(ids, title) {
+                      self.model.channelIds(ids);
+                      self.model.panelTitle(title);
+                      $('#payment-gateway-panel').modal('show');
+                    };
+
+                    this.init = function() {
+                      // self.loadPaymentGateData();
+                    };
+
+                    this.load = function() {
+                      ko.applyBindings(self.model, document.getElementById('payment-gateway-panel'));
+                      self.init();
+                    };
+                  };
+
+                  PaymentGatewayPanel.instance = new PaymentGatewayPanel();</script>
+                <div id="change-sub-domain-panel" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span></button>
+                        <span>
+                          <h4 class="modal-title">修改子域</h4>
+                          <span style="color: blue;" data-bind="html: panelTitle"></span>
+                        </span>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="form-group" style="overflow: auto;margin-top: 3px;">
+                            <label class="col-sm-3 control-label no-padding-right">子域名</label>
+                            <div>
+                              <input class="col-xs-10 col-sm-5" type="text" data-bind="value: subDomain"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" data-bind="click: saveBtnClick" class="btn btn-primary">保存</button></div>
+                    </div>
+                    <!-- /.modal-content --></div>
+                  <!-- /.modal-dialog --></div>
+                <script>var ChangeSubDomainPanel = function() {
+                    var self = this;
+                    self.model = {
+                      panelTitle: ko.observable(''),
+                      channelId: ko.observable(0),
+                      subDomain: ko.observable(''),
+                      //保存按钮点击事件
+                      saveBtnClick: function() {
+                        if (!self.model.subDomain()) {
+                          Modal.alert({
+                            title: '错误提示',
+                            message: '请先填写子域名'
+                          });
+                          return;
+                        }
+                        if (!self.model.channelId()) {
+                          Modal.alert({
+                            title: '错误提示',
+                            message: '请先选择渠道'
+                          });
+                          return;
+                        }
+                        $.ajax({
+                          url: '/backend/users/api_change_sub_domain/' + self.model.channelId() + "?sub_domain=" + self.model.subDomain(),
+                          type: 'POST',
+                          contentType: 'application/json'
+                        }).then(function(result) {
+                          toastr.success('修改成功');
+                          reloadPage(1000);
+
+                        }).fail(handleAjaxError);
+                      }
+                    };
+
+                    this.showPanel = function(id, title) {
+                      self.model.channelId(id);
+                      self.model.panelTitle(title);
+                      $('#change-sub-domain-panel').modal('show');
+                    };
+
+                    this.load = function(options) {
+                      ko.applyBindings(self.model, document.getElementById('change-sub-domain-panel'));
+                    };
+                  };
+
+                  ChangeSubDomainPanel.instance = new ChangeSubDomainPanel();</script>
+                <script>$(function() {
+
+                    //加载修改支付网关模块
+                    PaymentGatewayPanel.instance.load();
+
+                    //加载修改子域模块
+                    ChangeSubDomainPanel.instance.load();
+
+                    $('[data-toggle="tooltip"]').tooltip();
+
+                    $(document).on('click', '[data-toggle="reset-password"]',
+                    function() {
+                      var nickname = $(this).closest('tr').find('.nickname').text();
+                      var id = $(this).data('id');
+
+                      Modal.confirm({
+                        title: '重置密码',
+                        message: '确定要重置 ' + nickname + ' 的密码吗?'
+                      }).then(function() {
+                        $.ajax({
+                          url: '/NewWeb/Agent/api_reset_password/?agent_id=' + id,
+                          // type: 'POST',
+                          contentType: 'application/json'
+                        }).then(function(result) {
+                          Modal.alert({
+                            title: '密码重置成功',
+                            message: '<div style="margin:20px 0;font-size:18px;" class="text-center">' + '<p>新密码只显示一次，请现在复制:</p>' + '<div style="font-size:28px;margin:10px 0;" class="text-primary">' + result.new_password + '</div>' + '</div>'
+                          });
+                        }).fail(handleAjaxError);
+                      });
+
+                      return false;
+                    });
+
+                    $(document).on('click', '[data-toggle="deactivate-user"]',
+                    function() {
+                      var id = $(this).data('id');
+                      var nickname = $(this).closest('tr').find('.nickname').text();
+
+                      Modal.confirm({
+                        title: '禁止代理',
+                        message: '确定要禁止"' + nickname + '"吗?'
+                      }).then(function() {
+                        $.ajax({
+                          url: '/backend/users/api_deactivate/' + id,
+                          type: 'POST',
+                          contentType: 'application/json'
+                        }).then(function() {
+                          toastr.success('禁止成功');
+                          reloadPage(1000);
+                        }).fail(handleAjaxError);
+                      });
+
+                      return false;
+                    });
+
+                    $(document).on('click', '[data-toggle="activate-user"]',
+                    function() {
+                      var id = $(this).data('id');
+                      $.ajax({
+                        url: '/backend/users/api_activate/' + id,
+                        type: 'POST',
+                        contentType: 'application/json'
+                      }).then(function() {
+                        toastr.success('激活成功');
+                        reloadPage(1000);
+                      }).fail(handleAjaxError);
+
+                      return false;
+                    });
+
+                    //全选/取消全选操作
+                    $(document).on('click', '[data-toggle="channel-check"]',
+                    function() {
+                      var chk = $(this);
+                      if (chk.data("checkedflag") == 'all') {
+                        $('input[name="channel"]:checkbox').prop("checked", true);
+                        chk.html('取消全选');
+                        chk.data("checkedflag", "none");
+                        return;
+                      }
+                      if (chk.data("checkedflag") == 'none') {
+                        $('input[name="channel"]:checkbox').prop("checked", false);
+                        chk.html('全选');
+                        chk.data("checkedflag", "all");
+                        return;
+                      }
+                    })
+
+                    //批量修改支付平台
+                    $(document).on('click', '[data-toggle="update-payment_gateway"]',
+                    function() {
+                      var chk_value = [];
+                      $('input[name="channel"]:checked').each(function() {
+                        chk_value.push($(this).val());
+                      });
+                      if (chk_value.length <= 0) {
+                        Modal.alert({
+                          title: "错误提示",
+                          message: '请先选择渠道'
+                        });
+                        return;
+                      }
+                      var title = "已选中" + chk_value.length + "个渠道";
+                      //打开网关修改窗口
+                      PaymentGatewayPanel.instance.showPanel(chk_value, title);
+
+                      return false;
+                    });
+
+                    //单个修改支付平台
+                    $(document).on('click', '[data-toggle="change-payment-gateway"]',
+                    function() {
+                      var id = $(this).data('id');
+                      var name = $(this).data('name');
+                      PaymentGatewayPanel.instance.showPanel([id], name);
+                    });
+
+                    //修改子域
+                    $(document).on('click', '[data-toggle="change-sub-domain"]',
+                    function() {
+                      var id = $(this).data('id');
+                      var name = $(this).data('name');
+                      ChangeSubDomainPanel.instance.showPanel(id, name);
+                    });
+
+                    //标记打款/不打款
+                    $(document).on('click', '[data-toggle="set-pay-money-status"]',
+                    function() {
+                      var id = $(this).data('id');
+                      var isPayMoney = $(this).data('ispaymoney') ? 0 : 1;
+
+                      $.ajax({
+                        url: '/backend/users/api_set_pay_money_status/' + id + '/' + isPayMoney,
+                        type: 'POST',
+                        contentType: 'application/json'
+                      }).then(function() {
+                        toastr.success('操作成功');
+                        reloadPage(1000);
+                      }).fail(handleAjaxError);
+
+                      return false;
+                    });
+
+                  });</script>
+                <!-- PAGE CONTENT ENDS --></div>
+              <!-- /.col --></div>
+            <!-- /.row --></div>
+          <!-- /.page-content-area --></div>
+        <!-- /.page-content --></div>
+      <!-- /.main-content --></div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <include file="Script:include" /></body>
+
+</html>

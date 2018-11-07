@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>登录页</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /></head>
+  
+  <body class="login-layout">
+    <include file="Head:include" />
+    <div class="main-container" id="main-container">
+      <div class="main-content">
+        <div class="row" style="margin-top: 5%">
+          <div class="col-sm-10 col-sm-offset-1">
+            <div class="login-container">
+              <div class="center">
+                <h1>
+                  <i class="ace-icon fa fa-book green"></i>
+                  <span class="red">后台登录</span></h1>
+              </div>
+              <div class="space-6"></div>
+              <div class="position-relative">
+                <div id="login-box" class="login-box visible widget-box no-border">
+                  <div class="widget-body">
+                    <div class="widget-main">
+                      <h4 class="header blue lighter bigger">
+                        <i class="ace-icon fa fa-coffee green"></i>登录</h4>
+                      <div class="space-6"></div>
+                      <form class="form" role="form" method="post" action="/NewWeb/Login/doLogin" id="loginform">
+                        <fieldset>
+                          <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                              <input type="text" class="form-control" placeholder="用户名" name="name" id="username" autofocus="autofocus" />
+                              <i class="ace-icon fa fa-user"></i>
+                            </span>
+                          </label>
+                          <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                              <input type="password" class="form-control" placeholder="密码" name="password" />
+                              <i class="ace-icon fa fa-lock"></i>
+                            </span>
+                          </label>
+<!--                           <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                              <input type="yzm" class="form-control" placeholder="验证码" name="yzm" />
+                              <i class="ace-icon fa "><span class="yzm"><img id="imades" src="/Web/Login/yzm.html" onclick="this.src='/Web/Login/yzm.html'" style="cursor:pointer;" title="看不清可单击图片刷新"></i></span>
+                            </span>
+                          </label> -->
+                          <div class="space"></div>
+                          <div class="clearfix">
+                            <button type="button" class="width-35 pull-right btn btn-sm btn-primary loginbtn" id="loginbtn">
+                              <i class="ace-icon fa fa-key"></i>
+                              <span class="bigger-110">登录</span></button>
+                          </div>
+                          <div class="space-4"></div>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">jQuery(function($) {
+        $('#username').focus();
+        $(document).on('click', '.toolbar a[data-target]',
+        function(e) {
+          e.preventDefault();
+          var target = $(this).data('target');
+          $('.widget-box.visible').removeClass('visible'); //hide others
+          $(target).addClass('visible'); //show target
+        });
+        $('.loginbtn').click(function() {
+          $('#loginform').submit();
+        });
+        document.onkeydown = function(e) {
+          // 兼容FF和IE和Opera
+          var theEvent = e || window.event;
+          var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+          var activeElementId = document.activeElement.id; //当前处于焦点的元素的id
+          if (code == 13) {
+            $('#loginbtn').click();
+            return false;
+          }
+          return true;
+        }
+      });</script>
+    <include file="Script:include" /></body>
+
+</html>

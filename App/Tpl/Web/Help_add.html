@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title><{$title}>帮助</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<link rel="stylesheet" href="/Public/AdminPublic/kindeditor-4.1.10/themes/default/default.css" />
+<script charset="utf-8" src="/Public/AdminPublic/kindeditor-4.1.10/kindeditor-min.js"></script>
+<script charset="utf-8" src="/Public/AdminPublic/kindeditor-4.1.10/lang/zh_CN.js"></script>
+<script>
+var editor;
+KindEditor.ready(function (K) {
+    editor = K.create('textarea[name="content"]', {
+        allowFileManager: true
+    });
+    
+});
+function CheckPost()
+{
+	if (mform.title.value=="")
+	{
+		alert("标题不可为空！");
+		mform.title.focus();
+		return false;
+	}
+    if(editor.isEmpty()==true){
+         alert("帮助内容不可为空！");
+         mform.content.focus();
+        return false;
+    }
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2><{$title}>帮助</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="<{:U('Help/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+        <form class="form form-horizontal" id="form" action="" method="post" name="mform" onSubmit="return CheckPost();">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+            <tr>
+              <td class="contenta">添加标题：</td>
+              <td><input name="title" type="text" class="shuruTxt" placeholder="添加标题" value="<{$one.title}>" /></td>
+            </tr>        
+            <tr>
+              <td valign="top" class="contenta">公告内容：</td>
+              <td style=' padding-top: 10px; padding-bottom: 15px;'><textarea name="content" style="width:60%;height:400px;visibility:hidden;"><{$one.content}></textarea></td>
+            </tr>
+            <tr>
+              <td align="right">&nbsp;</td>
+              <td><input type="submit" id="" value="确认" class="saveBtn"></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

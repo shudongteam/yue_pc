@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>渠道充值记录</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>渠道充值记录</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+     <div class="searchBar searchBar2">
+      <form id="form1" name="form1" method="post" action="<{:U('Channel/daymoney')}>" class="fomm1">
+        <input readonly="true" type="text" name='time' onFocus="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'%y-%M-{%d-1}'})" id="pubDate" class="keyword Wdate" style="width:110px;" placeholder="搜索时间">
+        <input type="hidden" name="channel_id" value="<{$channel_id}>">
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜时间</button>
+      </form>
+      </div>
+    <!-- <a class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont"></i>渠道充值</a> -->
+    </div>      
+    <div class="pubMain"> <a href="<{:U('Channel/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a></div>     
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>渠道ID</th>
+                <!-- <th>充值ID</th>
+                <th>充值类型</th>
+                <th>订单号</th>
+                <th>交易号</th> -->
+                <th>充值金额（RMB）</th>
+                <th>充值时间</th> 
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="daymoney"  id="vo">
+              <tr>
+                  <td><{$vo.channel_id}></td>
+                 <!--  <td><{$vo.id}></td>
+                  <td><{$vo.type}></td>
+                  <td><{$vo.trade}></td>
+                  <td><{$vo.transaction}></td> -->
+                  <td><{$vo.money}></td>
+                  <td><{$vo.day}></td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+        <gt name="count" value="10">
+          <div class="form-group" style="width: 178px; height: 34px; float: right; margin-top: -96px; margin-right: 405px; position: relative; z-index: 999;">
+            <form action=""  method="get">
+              <span>跳到</span>
+              <input name="p" type="text" style="border: 1px solid #ddd; height: 33px; margin-left: 11px; width: 44px; text-align: center;" />
+              <span>页</span>
+              <input type="hidden" name="search_type" value="<{$search_type}>">
+              <input type="hidden" name="keyword" value="<{$keyword}>">
+              <input class="btnis" type="submit" value="跳转" />
+            </form>
+          </div>
+        </gt>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

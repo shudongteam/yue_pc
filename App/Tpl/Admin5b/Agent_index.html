@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>代理管理</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>代理管理</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix"> <a href="<{:U('Agent/add')}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>新增站长</a>
+      <div class="searchBar">
+  <form id="form1" name="form1" method="post" action="<{:U('Agent/index')}>" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" />
+    <span class="select-box inline">
+            <select name="search" class="select">
+                    <option value="user_name" <if condition="($search eq 'user_name')">selected="selected"</if>>代理账户</option>
+                    <option value="pen_name" <if condition="($search eq 'pen_name')">selected="selected"</if>>代理名称</option>
+            </select>
+    </span>    
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜代理</button>
+  </form>
+      </div>
+    </div>      
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                  <th>代理人ID</th>
+                  <th>所属网站ID</th>
+                  <th>代理账户</th>
+                  <th>代理名称</th>
+                  <th>代理类型</th>
+                  <th>本月充值</th>
+                  <th>总充值</th>
+                  <th>未结算RMB</th>
+                  <th>已结算RMB</th>
+                  <th>操作</th>        
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="user"  id="vo">
+              <tr>
+                  <td><{$vo.agent_id}></td>
+                  <td><{$vo.web_id}></td>
+                  <td><{$vo.user_name}></td>
+                  <td><{$vo.pen_name}></td>
+                  <td> <if condition="$vo[fu_agent]==0"><span class="label label-blue">一级代理（站长）</span><else /><span class="label label-green">二级代理</span> </if></td>
+                  <td><{$vo.money_month}></td>
+                  <td><{$vo.money_total}></td>
+                  <td><{$vo.money_settlement}></td>
+                  <td><{$vo.money_has}></td>
+                  <td><div class="btn"><a class ="modify" href="<{:U('Agent/save',array('id'=>$vo[agent_id]))}>">修改</a> <if condition="$vo[fu_agent]!=0"><a class ="modify" href="<{:U('Agent/upgrade',array('id'=>$vo[agent_id]))}>">升级代理</a></if></div></td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>用户统计</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" /></head>
+  
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" /></div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script>
+      <include file="Sidebar:include" />
+      <div class="main-content">
+        <include file="Bread:include" /> 
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!--/span-->
+                <!-- left menu ends -->
+                <div style="margin-bottom: 10px;">
+                  <ul class="nav nav-tabs">
+                    <li class="">
+                      <a href="/NewWeb/Stats/index<{$agent_url}>">订单统计</a></li>
+                    <li class="active">
+                      <a href="/NewWeb/Stats/members<{$agent_url}>">用户统计</a></li>
+                    <li style="display: none" class="">
+                      <a href="/NewWeb/Stats/novels">小说统计</a></li>
+                  </ul>
+                </div>
+                <script>var uid = '<{$agent_url}>';</script>
+                <div class="row" id="member-summary-stats-panel">
+                  <div class="col-md-3">
+                    <div class="well">
+                      <b>今日新增
+                        <span style="font-weight:normal;font-size:13px;color:#090" class="pull-right">
+                          <span data-bind="text: refresh_seconds_left">10</span>秒后刷新</span></b>
+                      <div class="text-primary" style="font-size:32px;margin:5px 0">
+                        <span data-bind="text: stats_today.new_member_count">0</span>
+                        <div style="font-size:13px;" class="text-muted">
+                          <b class="text-warning" data-bind="text: stats_today.male_count">0</b>男性,
+                          <b class="text-warning" data-bind="text: stats_today.female_count">0</b>女性,
+                          <b class="text-warning" title="用户未设置性别或未关注而无法获取性别" data-bind="text: stats_today.new_member_count() - stats_today.male_count() - stats_today.female_count()">0</b>未知</div></div>
+                      <div>
+                        <div>已付费:
+                          <b class="text-warning">
+                            <span data-bind="text: stats_today.paid_count">0</span></b>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="well">
+                      <b>昨日新增</b>
+                      <div class="text-primary" style="font-size:32px;margin:5px 0">
+                        <span data-bind="text: stats_otherDay.y_new_member_count">0</span>
+                        <div style="font-size:13px;" class="text-muted">
+                          <b class="text-warning" data-bind="text: stats_otherDay.y_male_count">0</b>男性,
+                          <b class="text-warning" data-bind="text: stats_otherDay.y_female_count">0</b>女性,
+                          <b class="text-warning" title="用户未设置性别或未关注而无法获取性别" data-bind="text: stats_otherDay.y_subscribed_count">0</b>未知</div></div>
+                      <div>
+                        <div>已付费:
+                          <b class="text-warning">
+                            <span data-bind="text: stats_otherDay.y_paid_count">0</span></b>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="well">
+                      <b>本月新增 (不含当日)
+                        <i class="fa fa-question-circle" title="不含当日，非实时，每天凌晨2:30左右更新"></i></b>
+                      <div class="text-primary" style="font-size:32px;margin:5px 0">
+                        <span data-bind="text: stats_otherDay.m_new_member_count">0</span>
+                        <div style="font-size:13px;" class="text-muted">
+                          <b class="text-warning" data-bind="text: stats_otherDay.m_male_count">0</b>男性,
+                          <b class="text-warning" data-bind="text: stats_otherDay.m_female_count">0</b>女性,
+                          <b class="text-warning" title="用户未设置性别或未关注而无法获取性别" data-bind="text: stats_otherDay.m_subscribed_count">0</b>未知</div></div>
+                      <div>
+                        <div>已付费:
+                          <b class="text-warning">
+                            <span data-bind="text: stats_otherDay.m_paid_count">0</span></b>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="well">
+                      <b>所有时间
+                        <i class="fa fa-question-circle" title="不含当日，非实时，每天凌晨2:30左右更新"></i></b>
+                      <div class="text-primary" style="font-size:32px;margin:5px 0">
+                        <span data-bind="text: stats_otherDay.t_new_member_count">1</span>
+                        <div style="font-size:13px;" class="text-muted">
+                          <b class="text-warning" data-bind="text: stats_otherDay.t_male_count">0</b>男性,
+                          <b class="text-warning" data-bind="text: stats_otherDay.t_female_count">0</b>女性,
+                          <b class="text-warning" title="用户未设置性别或未关注而无法获取性别" data-bind="text: stats_otherDay.t_subscribed_count">1</b>未知</div></div>
+                      <div>
+                        <div>已付费:
+                          <b class="text-warning">
+                            <span data-bind="text: stats_otherDay.t_paid_count">0</span></b>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <script>var MemberSummaryStatsPanel = function() {
+                    var self = this;
+                    var inited = false;
+                    var uid = '<{$agent_url}>';
+                    var countdownIntervalId = null;
+                    var refreshIntervalSeconds = 60;
+                    var model = {
+                      refresh_seconds_left: ko.observable(refreshIntervalSeconds),
+                      stats_today: createStats(),
+                      stats_otherDay: createStats2(),
+                    };
+
+                    this.init = function() {
+                      if (!inited) {
+                        ko.applyBindings(model, document.getElementById('member-summary-stats-panel'));
+                        inited = false;
+                      }
+                    };
+
+                    this.load = function(options) {
+                      self.init();
+
+                      uid = options && options.uid ? options.uid: null;
+
+                      $.when(self.loadStatsToday(), self.loadStatsOtherDay()).then(function() {
+                        self.startRefreshTimer();
+                      });
+                    };
+
+                    this.startRefreshTimer = function() {
+                      countdownIntervalId = setInterval(function() {
+                        model.refresh_seconds_left(model.refresh_seconds_left() - 1);
+
+                        if (model.refresh_seconds_left() === 0) {
+                          clearInterval(countdownIntervalId);
+                          self.loadStatsToday().then(function() {
+                            model.refresh_seconds_left(refreshIntervalSeconds);
+                            self.startRefreshTimer();
+                          });
+                        }
+                      },
+                      1000);
+                    };
+
+                    this.loadStatsToday = function() {
+                      return $.get('/NewWeb/Stats/api_get_members_today/' + (uid || ''),
+                      function(data) {
+                        ko.mapping.fromJS(data, {},
+                        model.stats_today);
+                      });
+                    };
+
+                    this.loadStatsOtherDay = function() {
+                      return $.get('/NewWeb/Stats/api_get_members_otherDay/' + (uid || ''),
+                      function(data) {
+                        ko.mapping.fromJS(data, {},
+                        model.stats_otherDay);
+                      });
+                    };
+
+                    function createStats() {
+                      return {
+                        new_member_count: ko.observable(),
+                        subscribed_count: ko.observable(),
+                        paid_count: ko.observable(),
+                        male_count: ko.observable(),
+                        female_count: ko.observable(),
+                        subscribe_rate: ko.observable(),
+                        pay_rate: ko.observable()
+                      }
+                    }
+                    function createStats2() {
+                      return {
+                        y_new_member_count: ko.observable(),
+                        y_subscribed_count: ko.observable(),
+                        y_paid_count: ko.observable(),
+                        y_male_count: ko.observable(),
+                        y_female_count: ko.observable(),
+                        y_subscribe_rate: ko.observable(),
+                        y_pay_rate: ko.observable(),
+
+                        m_new_member_count: ko.observable(),
+                        m_subscribed_count: ko.observable(),
+                        m_paid_count: ko.observable(),
+                        m_male_count: ko.observable(),
+                        m_female_count: ko.observable(),
+                        m_subscribe_rate: ko.observable(),
+                        m_pay_rate: ko.observable(),
+
+                        t_new_member_count: ko.observable(),
+                        t_subscribed_count: ko.observable(),
+                        t_paid_count: ko.observable(),
+                        t_male_count: ko.observable(),
+                        t_female_count: ko.observable(),
+                        t_subscribe_rate: ko.observable(),
+                        t_pay_rate: ko.observable(),
+                      }
+                    }
+                  };
+
+                  MemberSummaryStatsPanel.instance = new MemberSummaryStatsPanel();</script>
+                <div class="panel panel-default" id="member-daily-stats-panel">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <i class="fa fa-calendar"></i>近30天用户统计</h3>
+                  </div>
+                  <div class="loading-panel" data-bind="visible: loading" style="display: none;">
+                    <i class="fa fa-spinner fa-spin"></i>
+                  </div>
+                  <table class="table table-bordered table-striped" data-bind="visible: !loading()" style="">
+                    <thead>
+                      <tr>
+                        <th>日期</th>
+                        <th class="text-right">新增用户</th>
+                        <th class="text-right">已付费</th>
+                        <th class="text-right">男性</th>
+                        <th class="text-right">女性</th></tr>
+                    </thead>
+                    <tbody data-bind="foreach: stats">
+                      <tr>
+                        <td>
+                          <span data-bind="date: date">2017-10-16</span></td>
+                        <td class="text-right">
+                          <span data-bind="text: new_member_count">0</span></td>
+                        <td class="text-right">
+                          <span data-bind="text: paid_count">0</span></td>
+                        <td class="text-right">
+                          <span data-bind="text: male_count">0</span></td>
+                        <td class="text-right">
+                          <span data-bind="text: female_count">0</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <script>var MemberDailyStatsPanel = function() {
+                    var self = this;
+                    var inited = false;
+                    var model = {
+                      loading: ko.observable(true),
+                      stats: ko.observableArray()
+                    };
+
+                    this.init = function() {
+                      if (!inited) {
+                        ko.applyBindings(model, document.getElementById('member-daily-stats-panel'));
+                        inited = true;
+                      }
+                    };
+
+                    this.load = function(options) {
+                      self.init();
+
+                      model.loading(true);
+
+                      var uid = options && options.uid ? options.uid: null;
+
+                      $.get('/NewWeb/Stats/api_get_members_stats/' + (uid || ''),
+                      function(stats) {
+                        model.stats(stats);
+                        model.loading(false);
+                      });
+                    }
+                  };
+
+                  MemberDailyStatsPanel.instance = new MemberDailyStatsPanel();</script>
+                <script>$(function() {
+                    MemberSummaryStatsPanel.instance.load({
+                      uid: uid
+                    });
+
+                    MemberDailyStatsPanel.instance.load({
+                      uid: uid
+                    });
+                  });</script>
+                <!-- PAGE CONTENT ENDS --></div>
+              <!-- /.col --></div>
+            <!-- /.row --></div>
+          <!-- /.page-content-area --></div>
+        <!-- /.page-content --></div>
+      <!-- /.main-content --></div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <include file="Script:include" /></body>
+
+</html>

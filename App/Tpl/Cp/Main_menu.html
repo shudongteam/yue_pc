@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>菜单栏</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+</head>
+<body>
+<div class="super-side-menu">
+  <div class="logo"><a href="<{:U('Main/index')}>" target="_parent">CP方管理系统</a></div>
+  <div class="side-menu">     
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe639;</i>  书籍管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Book/index')}>" target="Mainindex">我的作品</a></li>
+        </ul>
+      </dd>
+    </dl>     
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe6ca;</i> 财务管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Moneyday/index')}>" target="Mainindex">销售数据</a></li>
+          <li><a href="<{:U('Settlement/index')}>" target="Mainindex">结算记录</a></li>            
+        </ul>
+      </dd>
+    </dl>      
+  </div>
+</div>
+<!--side E-->
+<script type="text/javascript">
+$(function () {
+    $('.side-menu dt').click(function () {
+        dd = $(this).next();
+        $(".side-menu dt").each(function () {
+            if ($(this).next().html() != dd.html()) {
+                $(this).removeClass('selected');
+                $(this).next().slideUp();
+            }
+        });
+        $(this).toggleClass('selected');
+        $(this).next().slideToggle();
+
+    });
+});
+$('.side-menu li>a').click(function () {
+    $('.side-menu li>a').removeClass('on');
+    $(this).addClass('on');
+})
+</script>
+</body>
+</html>

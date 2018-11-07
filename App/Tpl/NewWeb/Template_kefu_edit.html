@@ -1,0 +1,1040 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>
+      客服消息添加
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" />
+  </head>
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" />
+    </div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">
+        try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}
+      </script>
+      <include file="Sidebar:include" />
+      <div class="main-content">
+        <{$weixin_tps}>
+        <include file="Bread:include" />
+        <!-- /section:basics/content.breadcrumbs -->
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!--/span-->
+                <!-- left menu ends -->
+                <form class="form-horizontal" id="main-form" style="margin-top:20px">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="seller_name">
+                          任务名称
+                        </label>
+                        <div class="col-sm-9">
+                          <input type="text" name="name" id="name" class="col-xs-10 col-sm-5" data-bind="value: name"
+                          />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">
+                          消息类型
+                        </label>
+                        <div class="col-sm-9">
+                            <label class="radio-inline"> <input type="radio" name="type" checked="checked" value="1" onclick="show(1)" /> <span>文本消息</span> </label> 
+                            <label class="radio-inline"> <input type="radio" name="type" value="2" onclick="show(2)" /> <span>图文消息</span> </label> 
+                        </div>
+                    </div>
+                 <div class="form-group wenben"> 
+                  <label class="control-label col-sm-3">内容</label> 
+                  <div class="col-sm-9"> 
+                   <textarea name="content" maxlength="500" class="col-xs-10 col-sm-5" style="padding-left:5px;" data-val="true" data-val-required="请输入内容" rows="15"></textarea>
+                   <p class="help-block help-block-error col-sm-7 col-xs-10" data-valmsg-for="content" data-valmsg-replace="true"></p> 
+                  </div> 
+                 </div>
+                  <div class="form-group tuwen" style="display: none;">
+                    <div class="col-sm-9 col-sm-offset-3">
+                      <div style="background:#eee; padding:10px">
+                        <div id="rich-msg-editor" class="rich-msg-editor">
+                          <div class="msg-title">
+                            <span data-bind="text: param.main_article.title">
+                            </span>
+                            <i class="fa fa-edit" data-bind="click: editMainTitle" style="cursor: pointer">
+                            </i>
+                          </div>
+                          <div class="msg-meta"></div>
+                          <div class="msg-cover" style="position:relative">
+                            <img class="msg-cover-img" data-bind="attr: { src: param.main_article.picurl }"
+                            />
+                            <div class="msg-edit-pic-overlay">
+                              <span class="btn-edit-pic btn btn-success btn-xs" data-bind="click: editMainPic">
+                                <i class="fa fa-edit">
+                                </i>
+                                更换图片
+                              </span>
+                            </div>
+                          </div>
+                          <div class="msg-footer" data-bind="visible: param.sub_articles().length === 0">
+                            <i class="fa fa-chevron-right pull-right">
+                            </i>
+                            阅读全文
+                          </div>
+                          <div class="msg-sub-items">
+                            <!-- ko foreach: param.sub_articles -->
+                            <div class="msg-sub-item clearfix">
+                              <div class="pull-left">
+                                <span data-bind="text: title">
+                                </span>
+                                <a href="#" data-bind="click: $root.editSubArticle" title="修改">
+                                  <i class="fa fa-edit">
+                                  </i>
+                                </a>
+                                <a href="#" data-bind="click: $root.removeSubArticle.bind(this, $index(), $data)"
+                                title="删除" class="text-danger">
+                                  <i class="fa fa-trash-o">
+                                  </i>
+                                </a>
+                                <div class="msg-sub-item-meta">
+                                  <!-- ko if: url -->
+                                  <span>
+                                  </span>
+                                  <!-- /ko -->
+                                  <!-- ko ifnot: url -->
+                                  <span style="color:red">
+                                    链接未配置
+                                  </span>
+                                  <!-- /ko -->
+                                </div>
+                              </div>
+                              <div class="pull-right">
+                                <div class="msg-sub-item-img">
+                                  <img data-bind="attr: { src: picurl }" />
+                                  <div class="msg-sub-item-img-overlay">
+                                    <a href="#" data-bind="click: $root.editSubArticlePic">
+                                      更换
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- /ko -->
+                          </div>
+                        </div>
+                        <div class="add-sub-item-panel" data-bind="visible: param.sub_articles().length < 7">
+                          <a href="#" data-bind="click: addSubArticle">
+                            <i class="fa fa-plus">
+                            </i>
+                            添加次条
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+<!--                   <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">
+                      头条链接
+                    </label>
+                    <div class="col-sm-9">
+                      <div class="col-sm-5 col-xs-10 no-padding-left no-padding-right">
+                        <input type="text" name="url" id="url-input" data-val="true" data-val-required="请输入原文链接"
+                        data-bind="value: url" />
+                      </div>
+                      <p class="help-block no-padding-left col-xs-10">
+                        仅限您小说网站内部的链接
+                      </p>
+                      <div class="col-xs-10 no-padding-left" data-valmsg-for="url" data-valmsg-replace="true">
+                      </div>
+                    </div>
+                  </div> -->
+                  <hr/>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">
+                      发送时间
+                    </label>
+                    <div class="col-sm-9">
+                      <input type="text" name="scheduled_at" class="col-xs-10 col-sm-5" data-val="true"
+                      data-val-required="请设置发送时间" data-val-regex="格式错误。示例: 2017-04-25 12:30"
+                      data-val-regex-pattern="^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}$" data-bind="datetimepicker: scheduled_at, datetimepickerOptions: { minDate: moment().startOf('day') }"
+                      />
+                      <div class="col-xs-10 no-padding-left" style="margin-top:10px">
+                        <a href="#" data-bind="click: setScheduleTime.bind(this, 10, 'minutes')">
+                          10分钟后
+                        </a>
+                        <a href="#" data-bind="click: setScheduleTime.bind(this, 1, 'hour')">
+                          1小时后
+                        </a>
+                        <a href="#" data-bind="click: setScheduleTime.bind(this, 2, 'hours')">
+                          2小时后
+                        </a>
+                      </div>
+                      <div class="col-xs-10 no-padding-left" data-valmsg-for="scheduled_at"
+                      data-valmsg-replace="true">
+                      </div>
+                    </div>
+                  </div>
+                  <hr/>
+<!--                   <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">
+                      测试粉丝ID
+                    </label>
+                    <div class="col-sm-9">
+                      <input type="text" name="url" class="col-xs-10 col-sm-5" data-bind="value: test_member_id"
+                      maxlength="10" />
+                      <button type="button" style="margin-left:5px" class="btn btn-primary"
+                      data-bind="click: test">
+                        测试发送
+                      </button>
+                      <div class="help-block col-xs-10 no-padding-left">
+                        用测试粉丝帐号点公众号菜单 "粉丝导航" &gt; "个人中心"。
+                        <a href="javascript:;" class="btn-member-id-screen">
+                          查看示例
+                        </a>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                      <button type="submit" class="btn btn-primary" data-bind="click: submit, disable: processing">
+                        保存
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <div class="modal fade" id="edit-title-modal" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-bind="click: close" aria-label="Close">
+                          <span aria-hidden="true">
+                            &times;
+                          </span>
+                        </button>
+                        <h4 class="modal-title">
+                          设置主条
+                        </h4>
+                      </div>
+                      <div class="modal-body">
+                        <form class="form-horizontal">
+                          <div class="form-group">
+                            <label class="control-label col-sm-3">
+                              标题
+                            </label>
+                            <div class="col-sm-7">
+                              <div class="input-group">
+                                <input type="text" name="title" class="form-control" data-bind="value: title"
+                                />
+                                <span class="input-group-btn">
+                                  <a href="#" class="btn btn-default" data-bind="click: chooseTitle">
+                                    选择
+                                  </a>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-sm-3">
+                              链接地址
+                            </label>
+                            <div class="col-sm-7">
+                              <input type="text" name="main_url" class="form-control" data-bind="value: url"
+                               />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bind="click: submit">
+                          提交
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <script>
+                  (function() {
+
+                    var EditTitleModal = window.EditTitleModal = function() {
+                      var self = this;
+                      var $modal = null;
+                      var opts = {};
+                      var model = {
+                        title: ko.observable(),
+                        samples: ko.observableArray(),
+                        url: ko.observable(),
+                        chooseTitle: function() {
+                          ChooseTitleModal.instance.open({
+                            callbacks: {
+                              submit: function(title) {
+                                model.title(title);
+                              }
+                            }
+                          })
+                        },
+                        close: function() {
+                          self.close();
+                        },
+                        submit: function() {
+                          self.submit();
+                        }
+                      };
+
+                      this.open = function(options) {
+                        opts = options || {};
+                        model.title(opts.title || '');
+                        model.url(opts.url || '');
+
+                        if (!$modal) {
+                          $modal = $('#edit-title-modal');
+                          ko.applyBindings(model, $modal.find('.modal-content')[0]);
+                        }
+
+                        $modal.modal('show');
+                      };
+
+                      this.close = function() {
+                        $modal.modal('hide');
+                      };
+
+                      this.value = function() {
+                            return {
+                          title: model.title(),
+                          url: model.url()
+                        };
+                      };
+
+                      this.load = function() {
+                        return ChooseTitleModal.instance.load();
+                      };
+
+                      this.random = function() {
+                        return ChooseTitleModal.instance.random();
+                      };
+
+                      this.submit = function() {
+                        if (opts.callbacks && opts.callbacks.submit) {
+                          opts.callbacks.submit.apply(this, [this.value()]);
+                        }
+
+                        self.close();
+                      }
+
+                    };
+
+                    EditTitleModal.instance = new EditTitleModal();
+
+                  })(jQuery);
+                  function show(i) {
+                    if (i == 1) {
+                        $('.wenben').show();
+                        $('.tuwen').hide();
+                    } else {
+                        $('.wenben').hide();
+                        $('.tuwen').show();
+                    }
+                  }
+                </script>
+                <div class="modal fade" id="edit-sub-article-modal" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-bind="click: close" aria-label="Close">
+                          <span aria-hidden="true">
+                            &times;
+                          </span>
+                        </button>
+                        <h4 class="modal-title">
+                          修改次条
+                        </h4>
+                      </div>
+                      <div class="modal-body">
+                        <form class="form-horizontal">
+                          <div class="form-group">
+                            <label class="control-label col-sm-3">
+                              标题
+                            </label>
+                            <div class="col-sm-7">
+                              <div class="input-group">
+                                <input type="text" name="title" class="form-control" data-bind="value: title"
+                                />
+                                <span class="input-group-btn">
+                                  <a href="#" class="btn btn-default" data-bind="click: chooseTitle">
+                                    选择
+                                  </a>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-sm-3">
+                              链接地址
+                            </label>
+                            <div class="col-sm-7">
+                              <input type="text" name="url" class="form-control" data-bind="value: url"
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bind="click: submit">
+                          提交
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <script>
+                  (function() {
+
+                    var EditSubArticleModal = window.EditSubArticleModal = function() {
+                      var self = this;
+                      var $modal = null;
+                      var opts = {};
+                      var model = {
+                        title: ko.observable(),
+                        url: ko.observable(),
+                        chooseTitle: function() {
+                          ChooseTitleModal.instance.open({
+                            callbacks: {
+                              submit: function(title) {
+                                model.title(title);
+                              }
+                            }
+                          })
+                        },
+                        close: function() {
+                          self.close();
+                        },
+                        submit: function() {
+                          self.submit();
+                        }
+                      };
+
+                      this.open = function(options) {
+                        opts = options || {};
+                        model.title(opts.title || '');
+                        model.url(opts.url || '');
+
+                        if (!$modal) {
+                          $modal = $('#edit-sub-article-modal');
+                          ko.applyBindings(model, $modal.find('.modal-content')[0]);
+
+                          UIComponent.handlers['ref-link-search-box'].init([$modal.find('[name="url"]')]);
+                        }
+
+                        $modal.modal('show');
+                      };
+
+                      this.close = function() {
+                        $modal.modal('hide');
+                      };
+
+                      this.value = function() {
+                        return {
+                          title: model.title(),
+                          url: model.url()
+                        };
+                      };
+
+                      this.submit = function() {
+                        if (opts.callbacks && opts.callbacks.submit) {
+                          opts.callbacks.submit.apply(this, [this.value()]);
+                        }
+
+                        self.close();
+                      }
+
+                    };
+
+                    EditSubArticleModal.instance = new EditSubArticleModal();
+
+                  })(jQuery);
+                </script>
+                <div class="modal fade" id="choose-title-modal" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-bind="click: close" aria-label="Close">
+                          <span aria-hidden="true">
+                            &times;
+                          </span>
+                        </button>
+                        <h4 class="modal-title">
+                          选择标题
+                        </h4>
+                      </div>
+                      <div class="modal-body">
+                        <div style="max-height:400px;overflow:auto;">
+                          <div class="list-group" data-bind="foreach: samples">
+                            <div class="list-group-item" data-bind="click: $parent.selectTitle">
+                              <a href="javascript:;" data-bind="text: title">
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <script>
+                  (function() {
+
+                    var ChooseTitleModal = window.ChooseTitleModal = function() {
+                      var self = this;
+                      var $modal = null;
+                      var opts = {};
+                      var model = {
+                        title: ko.observable(),
+                        samples: ko.observableArray(),
+                        selectTitle: function(title) {
+                          model.title(title.title);
+                          self.submit();
+                        },
+                        close: function() {
+                          self.close();
+                        },
+                        submit: function() {
+                          self.submit();
+                        }
+                      };
+
+                      this.open = function(options) {
+                        opts = options || {};
+
+                        model.title(null);
+
+                        if (!$modal) {
+                          $modal = $('#choose-title-modal');
+                          ko.applyBindings(model, $modal.find('.modal-content')[0]);
+                        }
+
+                        $modal.modal('show');
+                      };
+
+                      this.close = function() {
+                        $modal.modal('hide');
+                      };
+
+                      this.value = function() {
+                        return model.title();
+                      };
+
+                      this.load = function() {
+                        var defer = $.Deferred();
+                        if (model.samples().length > 0) {
+                          defer.resolve();
+                        } else {
+                          $.get('/NewWeb/Api/api_get_titles', {
+                            type: 2
+                          },
+                          function(data) {
+                            model.samples(data);
+                            defer.resolve();
+                          });
+                        }
+
+                        return defer.promise();
+                      };
+
+                      this.random = function() {
+                        var sample = _.sample(model.samples());
+                        return sample ? sample.title: null;
+                      };
+
+                      this.submit = function() {
+                        if (opts.callbacks && opts.callbacks.submit) {
+                          opts.callbacks.submit.apply(this, [this.value()]);
+                        }
+
+                        self.close();
+                      }
+
+                    };
+
+                    ChooseTitleModal.instance = new ChooseTitleModal();
+                    ChooseTitleModal.instance.load();
+
+                  })(jQuery);
+                </script>
+                <div class="modal fade" id="choose-pic-modal" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-bind="click: close" aria-label="Close">
+                          <span aria-hidden="true">
+                            &times;
+                          </span>
+                        </button>
+                        <h4 class="modal-title">
+                          选择封面
+                        </h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="container-fluid">
+                          <div data-bind="foreach: pics" class="row">
+                            <div class="col-sm-3">
+                              <a href="javascript:;" data-bind="click: $parent.selectPic">
+                                <img data-bind="attr: { src: cover_url }" style="max-width:100%" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bind="click: submit">
+                          提交
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <script>
+                  (function() {
+
+                    var ChoosePicModal = window.ChoosePicModal = function() {
+                      var self = this;
+                      var opts = {};
+                      var $modal = null;
+                      var model = {
+                        picurl: ko.observable(),
+                        pics: ko.observableArray(),
+                        selectPic: function(pic) {
+                          model.picurl(pic.cover_url);
+                          self.submit();
+                        },
+                        submit: function() {
+                          self.submit();
+                        },
+                        close: function() {
+                          self.close();
+                        }
+                      };
+
+                      this.open = function(options) {
+                        opts = options || {};
+
+                        model.picurl(opts.picurl || '');
+
+                        if (model.pics().length === 0) {
+                          load();
+                        }
+
+                        if (!$modal) {
+                          $modal = $('#choose-pic-modal');
+                          ko.applyBindings(model, $modal.find('.modal-content')[0]);
+                        }
+
+                        $modal.modal('show');
+                      };
+
+                      this.close = function() {
+                        $modal.modal('hide');
+                      };
+
+                      this.value = function() {
+                        return model.picurl();
+                      };
+
+                      this.submit = function() {
+                        if (opts.callbacks && opts.callbacks.submit) {
+                          opts.callbacks.submit.apply(self, [self.value()]);
+                        }
+
+                        self.close();
+                      };
+
+                      this.random = function() {
+                        var sample = _.sample(model.pics());
+                        return sample ? sample.cover_url: null;
+                      };
+
+                      this.load = function() {
+                        var defer = $.Deferred();
+                        if (model.pics().length > 0) {
+                          defer.resolve();
+                        } else {
+                          $.get('/NewWeb/Api/api_get_covers', {
+                            type: 2
+                          },
+                          function(data) {
+                            model.pics(data);
+                            defer.resolve();
+                          });
+                        }
+
+                        return defer.promise();
+                      };
+                    };
+
+                    ChoosePicModal.instance = new ChoosePicModal();
+                    ChoosePicModal.instance.load();
+
+                  })(jQuery);
+                </script>
+                <script>
+                  $(function() {
+                    $('.btn-member-id-screen').webuiPopover({
+                      html: true,
+                      trigger: 'hover',
+                      placement: 'top',
+                      content: function() {
+                        return '<div style="width:240px;min-height:430px"><img style="max-width:100%" src="/Public/NewWeb/jietu.jpg" /></div>';
+                      }
+                    })
+                  });
+                </script>
+                <script>
+                  var taskId = null;
+
+                  var choosePicModal = ChoosePicModal.instance;
+                  var editTitleModal = EditTitleModal.instance;
+                  var editSubArticleModal = EditSubArticleModal.instance;
+
+                  var viewModel = {
+                    processing: ko.observable(false),
+
+                    param: {
+                      main_article: {
+                        title: ko.observable(),
+                        picurl: ko.observable(),
+                        url: ko.observable(),
+                      },
+                      sub_articles: ko.observableArray()
+                    },
+
+                    id: ko.observable(taskId),
+                    name: ko.observable(),
+                    url: ko.observable(),
+                    scheduled_at: ko.observable(),
+                    test_member_id: ko.observable(),
+                  };
+
+                  viewModel.editMainTitle = function() {
+                    editTitleModal.open({
+                      title: viewModel.param.main_article.title(),
+                      url: viewModel.param.main_article.url(),
+                      callbacks: {
+                        submit: function(data) {
+                          viewModel.param.main_article.title(data.title);
+                          viewModel.param.main_article.url(data.url);
+                        }
+                      }
+                    });
+                  };
+
+                  viewModel.editMainPic = function() {
+                    choosePicModal.open({
+                      picurl: viewModel.param.main_article.picurl(),
+                      callbacks: {
+                        submit: function(url) {
+                          if (url) {
+                            viewModel.param.main_article.picurl(url);
+                          }
+                        }
+                      }
+                    });
+                  };
+
+                  viewModel.addSubArticle = function() {
+                    viewModel.param.sub_articles.push({
+                      title: ko.observable(editTitleModal.random()),
+                      picurl: ko.observable(choosePicModal.random()),
+                      url: ko.observable()
+                    });
+                  };
+
+                  viewModel.editSubArticle = function(article) {
+                    editSubArticleModal.open({
+                      title: article.title(),
+                      url: article.url(),
+                      callbacks: {
+                        submit: function(data) {
+                          article.title(data.title);
+                          article.url(data.url);
+                        }
+                      }
+                    });
+                  };
+
+                  viewModel.editSubArticlePic = function(article) {
+                    choosePicModal.open({
+                      picurl: article.picurl(),
+                      callbacks: {
+                        submit: function(url) {
+                          if (url) {
+                            article.picurl(url);
+                          }
+                        }
+                      }
+                    });
+                  };
+
+                  viewModel.removeSubArticle = function(idx) {
+                    viewModel.param.sub_articles.splice(idx, 1);
+                  };
+
+                  viewModel.shortenUrl = function(url) {
+                    // http 比 https 短, 因此处理 https 即可
+                    var index = url.indexOf('/', 'https://'.length);
+                    return index >= 0 ? url.substr(index) : '/';
+                  };
+
+                  viewModel.setScheduleTime = function(value, unit) {
+                    viewModel.scheduled_at(moment().add(value, unit).format('YYYY-MM-DD HH:mm'));
+                  };
+
+                  viewModel.test = function() {
+                    if (viewModel.processing()) {
+                      return false;
+                    }
+                    if (!viewModel.name()) {
+                      viewModel.name(viewModel.param.main_article.title());
+                    }
+
+                    if (!viewModel.test_member_id() || !/^\d+$/.test(viewModel.test_member_id())) {
+                      toastr.error('测试粉丝ID必须为数字');
+                      return false;
+                    }
+
+                    var type = $('input[type="radio"]:checked').val();
+                    var data = viewModel.getPostData();
+                    data.test_member_id = viewModel.test_member_id();
+                    data.type = type;
+                    if (type == 2) {
+                        if (!viewModel.validate()) {
+                          return false;
+                        }
+                    } else {
+                        var scheduled_at = $('input[name="scheduled_at"]').val();
+                        var content = $('textarea').val();
+                        if (!scheduled_at){
+                          Modal.alert({
+                            title: '错误',
+                            message: '请设置发送时间'
+                          });
+                            return false;
+                        }
+
+                        if (!content){
+                          Modal.alert({
+                            title: '错误',
+                            message: '请输入内容'
+                          });
+                            return false;
+                        }
+                        data.content = content;
+                    }
+                    $.ajax({
+                      url: '/NewWeb/Template/kefu_edit',
+                      type: 'POST',
+                      data: JSON.stringify(data),
+                      contentType: 'application/json'
+                    }).then(function() {
+                      toastr.success('已发送, 如未收到，请检查各项参数是否填对');
+                    }).fail(handleAjaxError);
+
+                  };
+
+                  viewModel.validate = function() {
+                    if (!$('#main-form').valid()) {
+                      return false;
+                    }
+
+                    var errors = [];
+
+                    _.each(viewModel.param.sub_articles(),
+                    function(article, idx) {
+                      if (!article.title()) {
+                        errors.push('第 ' + (idx + 1) + ' 条次条缺少标题');
+                      }
+                      if (!article.url()) {
+                        errors.push('第 ' + (idx + 1) + ' 条次条未设置链接');
+                      }
+                    });
+
+                    if (errors.length > 0) {
+                      Modal.alert({
+                        title: '错误',
+                        message: errors.join('<br/>')
+                      });
+                      return false;
+                    }
+                    if (!viewModel.param.main_article.title()){
+                      Modal.alert({
+                        title: '错误',
+                        message: '主条缺少标题'
+                      });
+                        return false;
+                    }
+
+                    if (!viewModel.param.main_article.url()){
+                      Modal.alert({
+                        title: '错误',
+                        message: '主条缺少链接'
+                      });
+                        return false;
+                    }
+
+                    return true;
+                  };
+
+                  viewModel.submit = function() {
+
+                    var type = $('input[type="radio"]:checked').val();
+
+                    
+                    if (viewModel.processing()) {
+                      return false;
+                    }
+
+                    if (!viewModel.name()) {
+                      viewModel.name(viewModel.param.main_article.title());
+                    }
+                    if (type == 2) {
+                        if (!viewModel.validate()) {
+                          return false;
+                        }
+                        viewModel.processing(true);
+                        var data = viewModel.getPostData();
+                        data.type = 2;
+                        $.ajax({
+                          url: '/NewWeb/Template/kefu_edit',
+                          type: 'POST',
+                          data: JSON.stringify(data),
+                          contentType: 'application/json'
+                        }).then(function() {
+                          toastr.success('保存成功');
+                          setTimeout(function() {
+                            location.href = '/NewWeb/Template/kefu';
+                          },
+                          500);
+                        }).fail(handleAjaxError).always(function() {
+                          viewModel.processing(false);
+                        });
+                    } else {
+                        
+                        var scheduled_at = $('input[name="scheduled_at"]').val();
+                        var content = $('textarea').val();
+                        if (!scheduled_at){
+                          Modal.alert({
+                            title: '错误',
+                            message: '请设置发送时间'
+                          });
+                            return false;
+                        }
+
+                        if (!content){
+                          Modal.alert({
+                            title: '错误',
+                            message: '请输入内容'
+                          });
+                            return false;
+                        }
+                        viewModel.processing(true);
+                        $.ajax({
+                          url: '/NewWeb/Template/kefu_edit',
+                          type: 'POST',
+                          data: JSON.stringify({
+                            name: viewModel.name(),
+                            type: type,
+                            scheduled_at:scheduled_at,
+                            content:content
+                            }),
+                          contentType: 'application/json'
+                        }).then(function() {
+                          toastr.success('保存成功');
+                          setTimeout(function() {
+                            location.href = '/NewWeb/Template/kefu';
+                          },
+                          500);
+                        }).fail(handleAjaxError).always(function() {
+                          viewModel.processing(false);
+                        });
+                    }
+                  };
+
+                  viewModel.getPostData = function() {
+                    var articles = [ko.mapping.toJS(viewModel.param.main_article)];
+
+                    _.each(viewModel.param.sub_articles(),
+                    function(it) {
+                      articles.push(ko.mapping.toJS(it));
+                    });
+
+                    return {
+                      id: viewModel.id(),
+                      name: viewModel.name(),
+                      param: {
+                        articles: articles
+                      },
+                      url: viewModel.param.main_article.url(),
+                      scheduled_at: viewModel.scheduled_at(),
+                    };
+                  };
+
+                  $(function() {
+                    $.when(editTitleModal.load(), choosePicModal.load()).then(function() {
+                      if (taskId) {
+                        $.get('/NewWeb/Template/kefu_edit/api_get/' + taskId,
+                        function(data) {
+                          // 如果编辑的是一个已过期但未执行的任务, 则把时间置空, 让用户重新选择
+                          var tsNow = new Date().getTime();
+                          var tsScheduledAt = moment(data.scheduled_at, 'YYYY-MM-DD HH:mm:ss').valueOf();
+
+                          if (tsScheduledAt < tsNow) {
+                            data.scheduled_at = null;
+                          }
+
+                          var mainArticle = data.param.articles[0];
+                          data.param.articles.shift();
+                          var subArticles = data.param.articles;
+
+                          data.param = {
+                            main_article: mainArticle,
+                            sub_articles: subArticles
+                          };
+
+                          ko.mapping.fromJS(data, {},
+                          viewModel);
+
+                          bind();
+                        });
+                      } else {
+                        viewModel.param.main_article.title(editTitleModal.random());
+                        viewModel.param.main_article.picurl(choosePicModal.random());
+
+                        bind();
+                      }
+                    });
+
+                    function bind() {
+                      ko.applyBindings(viewModel, document.getElementById('main-form'));
+
+                      UIComponent.handlers['ref-link-search-box'].init([$('#url-input')]);
+                    }
+                  });
+                </script>
+                <!-- PAGE CONTENT ENDS -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.page-content-area -->
+        </div>
+        <!-- /.page-content -->
+        <!-- /.main-content -->
+      </div>
+      <!-- /.main-container -->
+      <!-- basic scripts -->
+      <include file="Script:include" />
+  </body>
+
+</html>

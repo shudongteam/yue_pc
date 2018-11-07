@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>作者管理</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>作者管理</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+  <form id="form1" name="form1" method="post" action="<{:U('Author/index')}>" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" />
+    <span class="select-box inline">
+    <select name="type" class="select">
+          <option value="1">账户</option>
+          <option value="2">笔名</option>
+          <option value="3">身份证</option>
+    </select>
+    </span>
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜作者</button>
+  </form>
+      </div>
+    </div>      
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                  <th>用户ID</th>
+                  <!-- <th>所属站ID</th> -->
+                  <th>账户</th>
+                  <th>笔名</th>
+<!--                   <th>vip等级</th> -->
+                  <!-- <th>票数</th> -->
+                  <th>vip推荐票</th>
+<!--                   <th>余额(阅读币)</th>
+                  <th>总充值RMB</th> -->
+                  <th>注册时间</th>
+                  <th>详情</th>                  
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="user"  id="vo">
+              <tr>
+                  <th><{$vo.user_id}></th>
+                  <!-- <td><{$vo.web_id}></td> -->
+                  <td><{$vo.user_name}></td>
+                  <td><{$vo.pen_name}></td>
+                  <!-- <td><img src="/Public/Vip/a<{$vo.mem_vip}>.gif" width="72" height="15" /></td> -->
+                  <!-- <td><{$vo.vote}></td> -->
+                  <td><{$vo.vipvote}></td>
+<!--                   <td><{$vo.alance}></td>
+                  <td><{$vo.money}></td> -->
+                  <td><{$vo.registration_time}></td>
+                  <td><div class="btn"><a class ="modify" href="<{:U('Author/lnformation',array('id'=>$vo[user_id]))}>">查看</a></div></td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>cp分成</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+	if (mform.consumption.value=="")
+	{
+		alert("检查到阅读币为0不可进行操作！");
+                return false;
+         }    
+	if (mform.money.value=="")
+	{
+		alert("收入不可为空！");
+		mform.money.focus();
+                return false;
+         }
+	// if (mform.beizhu.value=="")
+	// {
+	// 	alert("备注不可为空！");
+	// 	mform.beizhu.focus();
+ //                return false;
+ //         }         
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>cp分成</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+     <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+        <form id="form1" name="form1" method="post" action="<{:U('Cpstatistical/index')}>" class="fomm1">
+        <input type="text" readonly="true" name="month" id="d243" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM',maxDate:'%y-(%M-1)'})" class="keyword Wdate" value="<{$month}>" style="width:120px;"/>
+         <!--  <input type="text" name='da' value='<{$da}>' readonly="true" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="keyword Wdate" style="width:120px;" placeholder="最小范围">
+          <input type="text" name='xiao' value='<{$xiao}>' readonly="true" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="keyword Wdate" style="width:120px;" placeholder="最大范围">     -->  
+          <span class="select-box inline">
+          <select name="cp_id" class="select">
+          <!-- <option >选择cp</option> -->
+          <volist name="cps"  id="vo">
+              <option value="<{$vo.cp_id}>"><{$vo.pen_name}></option>
+          </volist>
+          </select>
+          </span>
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe621;</i> 统计</button>
+        </form>
+      </div>
+    </div>     
+    <div class="publishArt">
+      <div class="pubMain"> <a href="javascript:history.go(-1)" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+         <form id="form1" method="post" action="<{:U('Cpstatistical/add',array('cp'=>$mycp[cp_id],'month'=>$month))}>" class="fomm1" name="mform" onSubmit="return CheckPost();">
+             <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+             <if condition="$mycp neq null">
+             <th style="padding-top: 30px;"><{$mycp['pen_name']}>，<{$month}>数据如下：</th>
+             </if>
+            <tr>
+              <td class="contenta" style='padding-top: 15px;'>阅明阅读币：</td>
+              <td style='padding-top: 15px;'><input type="text" readonly="true" name="consumption1" placeholder=" 消费阅读币" style="width:100px" class="shuruTxt" value='<{$money}>'></td>
+            </tr>
+            <tr>
+              <td class="contenta" style='padding-top: 15px;'>缘梦阅读币：</td>
+              <td style='padding-top: 15px;'><input type="text" readonly="true" name="consumption2"  style="width:100px" class="shuruTxt" value='<{$ymmoney}>'></td>
+            </tr>
+            <tr>
+              <td class="contenta" style='padding-top: 15px;'>大地阅读币：</td>
+              <td style='padding-top: 15px;'><input type="text" readonly="true" name="consumption3"  style="width:100px" class="shuruTxt" value='<{$ddmoney}>'></td>
+            </tr>
+            <tr>
+              <td class="contenta" style='padding-top: 15px;'>总阅读币：</td>
+              <td style='padding-top: 15px;'><input type="text"  name="consumption" placeholder=" 总阅读币" style="width:100px" readonly="true" class="shuruTxt" value='<{$tmoney}>'></td>
+            </tr>
+            <tr>
+              <td class="contenta" style="width:350px">分成金额（扣除10%后，单位：元）：</td>
+              <td><input type="text" name="money"  placeholder=" 收入" style="width:100px" class="shuruTxt"  value='<{$money9}>'></td>
+            </tr>
+            <tr>
+              <td class="contenta">推广成本（元）：</td>
+              <td><input type="text" name="cost"  placeholder="推广成本" style="width:100px" class="shuruTxt"></td>
+            </tr>
+            <tr>
+              <td class="contenta">备注：</td>
+              <td><input type="text" name="beizhu"  placeholder=" 备注" style="width:250px" class="shuruTxt"></td>
+            </tr>         
+            <tr>
+              <td align="right">&nbsp;</td>
+              <td><input type="submit" id="" value="生成费用" class="saveBtn"></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div style="padding: 50px;color:red;">
+      *注：请选择日期，cp合作方，点击统计，系统会自动算出金额，推广成本需要手动核算填入，生成费用后可在cp打款中查看，当打款后点击cp打款确定，完成当月结算流程。
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

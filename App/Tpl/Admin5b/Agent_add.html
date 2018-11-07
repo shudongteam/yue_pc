@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>新增站长</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+	error = false;
+	$("#form-agent td").removeClass("error")
+	$('#form-agent tr').each(function(){
+		if(typeof($(this).find("input").val()) != 'undefined') {
+			if(!$(this).find("input").val()) {
+				alert($(this).find("input").attr('placeholder') + '!!');
+				$(this).find("input").focus();
+				error = true;
+				return false;
+			}
+			if(error)
+			{
+				return false;
+			}
+		}
+		
+		if(error)
+		{
+			return false;
+		}
+		
+	})
+	
+	if(error)
+	{
+		return false;
+	}
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>新增站长</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="<{:U('Agent/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form class="form form-horizontal" id="form-agent" action="" method="post" name="mform" onSubmit="return CheckPost();">
+   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">所属站点：</td>
+        <td><span class="select-box inline">
+       <select name="web_id" class="select select2">
+            <foreach name="webs" item="web">
+                <option value="<{$web.web_id}>"><{$web.web_name}></option>
+            </foreach>
+    </select>
+    </span>
+        </td>
+      </tr>
+      <tr>
+        <td class="contenta">代理账户：</td>
+        <td>
+        	<input name="user_name" type="text" class="shuruTxt" placeholder="请填写代理账户" />        	
+        </td>
+      </tr>    
+      <tr>
+        <td class="contenta">代理名称：</td>
+        <td><input name="pen_name" type="text" class="shuruTxt"  placeholder="请填写代理名称" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">代理密码：</td>
+        <td>
+        	<input name="user_pass" type="text" class="shuruTxt" placeholder="请填写代理密码" value="123456" />
+        </td>
+      </tr>
+      <tr>
+        <td class="contenta">联系电话：</td>
+        <td><input name="phone" type="text" class="shuruTxt" placeholder="联系电话" value="暂不填写" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">联系QQ：</td>
+        <td><input name="qq" type="text" class="shuruTxt" placeholder="联系qq" value="暂不填写" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">email：</td>
+        <td><input name="email" type="text" class="shuruTxt" placeholder="联系emaill" value="暂不填写" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">开户人：</td>
+        <td><input name="name" type="text" class="shuruTxt" placeholder="开户人名称" value="暂不填写" /></td>
+      </tr>        
+      <tr>
+        <td class="contenta">银行：</td>
+        <td><input name="bank" type="text" class="shuruTxt" placeholder="银行名称" value="暂不填写" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">银行卡号：</td>
+        <td><input name="bank_number" type="text" class="shuruTxt" placeholder="银行卡号" value="暂不填写" /></td>
+      </tr>
+      <tr>
+        <td class="contenta">开户点地址：</td>
+        <td><input name="open_account" type="text" class="shuruTxt" placeholder="开户地址" value="暂不填写" /></td>
+      </tr>          
+      <tr>
+        <td class="contenta">分成比例：</td>
+        <td><input name="proportion" type="text" class="shuruTxt" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="请填写分成比例" value="9"/></td>
+      </tr>  
+                  
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" id="" value="确认添加" class="saveBtn"></td>
+      </tr>
+    </table>
+    </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

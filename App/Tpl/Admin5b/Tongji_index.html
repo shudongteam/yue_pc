@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>运营统计</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain" id="RightMain">
+  <div class="super-header">
+    <h2>运营统计</h2>
+    <include file="Main:user"/> 
+    </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix"> <a href="javascript:;" onclick='shuaxin()' class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe68f;</i>数据刷新</a></div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-tongji">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tongji">
+          <tr>
+            <td><div class="xinxi"><b><{$tongji.total.money_today}></b><br>
+                当日充值</div></td>
+            <td>&nbsp;</td>
+            <td><div class="xinxi"><b><{$tongji.total.money_month}></b><br>
+                本月充值(分成后)</div></td>
+            <td>&nbsp;</td>
+            <td><div class="xinxi"><b><{$tongji.total.money_total}></b><br>
+                累计充值(分成后)</div></td>
+            <td>&nbsp;</td>
+            <td><div class="xinxi"><b><{$tongji.total.money_settlement}></b><br>
+                未结算分成</div></td>
+          </tr>
+        </table>
+      </div>
+        <div class="Mian-cont-wrap" style="margin-top: 20px;">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+            <tr>
+              <th colspan="7" scope="col"><b>站点统计</b></th>
+            </tr>
+              <tr>
+                  <th><b>站点名称</b></th>
+                  <th><b>站点域名</b></th>
+                  <th><b>当日充值</b></th>
+                  <th><b>本月充值</b></th>
+                  <th><b>累计充值</b></th>
+                  <th><b>未结算分成</b></th>             
+              </tr>
+            </thead>
+          <tbody>
+          <?php $count =count($tongji['web']) ?>
+          <if condition="$count eq 0">
+          		<tr>
+	              <td colspan="7">无结果</td>
+	            </tr>
+	       <else />
+	       	<volist name="tongji.web"  id="web">
+		           <tr>
+		            <td><{$web.web_name}></td>
+		            <td><{$web.web_url}></td>
+		            <td><{$web.money_today}></td>
+		            <td><{$web.money_month}></td>
+		            <td><{$web.money_total}></td>
+		            <td><{$web.money_settlement}></td>
+		          </tr>
+	         </volist>
+          		
+          	</if>
+            
+          </tbody>
+        </table>
+        </div>    
+        <div class="Mian-cont-wrap" style="margin-top: 20px;">
+        <table border="0" cellpadding="0" cellspacing="0" class="defaultTable">
+          <thead>
+            <tr>
+              <th colspan="7" scope="col"><b>代理统计</b></th>
+            </tr>
+          </thead>
+          <tbody>
+	          <tr>
+	            <th width="200"><b>账户名</b></th>           
+	            <th><b>当日充值</b></th>
+	            <th><b>本月充值</b></th>
+	            <th><b>累计充值</b></th>
+	            <th><b>未结算分成</b></th>
+	          </tr>
+	          <?php $agent =count($tongji['agent']) ?>
+	          <if condition="$agent eq 0">
+	          	<tr>
+	              <td colspan="7">无结果</td>
+	            </tr>
+	          <else/>
+	          <volist name="tongji.agent"  id="agent">
+	           <tr>
+	            <td width="200" align="left"><{$agent.user}></td>
+	            <td><{$agent.money_today}></td>
+	            <td><{$agent.money_month}></td>
+	            <td><{$agent.money_total}></td>
+	            <td><{$agent.money_settlement}></td>
+	          </tr>
+	          </volist>
+          		
+          	</if>
+          </tbody>
+        </table>
+        <!--pages E-->
+      </div>        
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+function shuaxin() {
+$.ajax({
+        url: "<{:U('Tongji/newtongji')}>",
+        type: "get",
+        success: function (data) {
+            if(data==1){
+                location.replace(location.href);
+            }else{
+                alert("系统错误");
+            }
+        }
+    });
+} 
+</script>     
+</body>
+</html>

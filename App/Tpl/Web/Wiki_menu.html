@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>公众号菜单</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>公众号菜单</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix"><a href="<{:U('Wiki/addmenu', array('id'=>$wiki[wiki_id]))}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>新增菜单</a>
+    </div> 
+    <div class="pubMain"> <a href="<{:U('Wiki/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a></div>     
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>菜单名称</th>
+                <th>菜单等级</th>
+                <th>排序</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="wikiMenu"  id="vo">
+              <tr>
+                <td><{$vo.name}></td>
+                <td><if condition="($vo.parent_id eq -1)">一级菜单<else/>二级菜单</if></td>
+                <td><{$vo.sort_order}></td>
+                <td>
+                  <a class="team-a" href="<{:U('Wiki/updatemenu',array('id'=>$vo[wiki_id], 'mid' => $vo[menu_id]))}>">修改</a> ┆
+                  <a class="team-a" href="<{:U('Wiki/delmenu',array('id'=>$vo[wiki_id], 'mid' => $vo[menu_id]))}>">删除</a>
+                </td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

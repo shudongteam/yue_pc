@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>生成渠道</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/layer/layer.js"></script> 
+<script language="javascript">
+function CheckPost()
+{
+	if (mform.name.value=="")
+	{
+		alert("渠道名称不可为空！");
+		mform.name.focus();
+		return false;
+	}
+        
+	if (mform.nums.value=="")
+	{
+		alert("粉丝数量不可为空！");
+		mform.nums.focus();                
+		return false;
+	} 
+        
+	if (mform.money.value=="")
+	{
+		alert("渠道成本不可为空！");
+		mform.money.focus();
+		return false;
+	} 
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>生成渠道</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain">
+        <form class="form form-horizontal" id="form" action="" method="post" name="mform" onSubmit="return CheckPost();">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass" style=" border-bottom: 1px solid #d8d8d8; margin-bottom: 10px;">
+            <tr>
+              <td class="contenta">最后一章：</td>
+              <td style="padding-bottom: 10px;"><span class="select-box inline">
+                <select name="num" class="select select2" id="select1">
+                  <volist name="content"  id="vo">
+                      <option value="<{$vo.num}>"><{$vo.title}></option>
+                  </volist>
+                </select>
+                </span></td>
+            </tr>
+          </table>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass" style=" border-bottom: 1px solid #d8d8d8; margin-bottom: 10px;">
+            <tr>
+              <td style="padding-bottom: 10px;" class="contenta">一键生成文案：</td>
+              <td style="padding-bottom: 10px;"><a href="javascript:;" onClick="lianjie()" class="btnis btnac">获取文案内容</a></td>
+            </tr>
+          </table> 
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass" style=" border-bottom: 1px solid #d8d8d8; margin-bottom: 10px;">
+            <tr>
+              <td style="padding-bottom: 10px;" class="contenta">强制关注章节：</td>
+              <td style="padding-bottom: 10px;"><span class="select-box inline">
+                <select name="focus" class="select select2" id="select2">
+                    <option value="0">不强制关注</option>
+                  <volist name="content"  id="vo">
+                      <option value="<{$vo.num}>"><{$vo.title}></option>
+                  </volist>
+                </select>
+                </span></td>
+            </tr>
+          </table>             
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass" >
+            <tr>
+              <td class="contenta">渠道分类：</td>
+              <td style="padding-bottom: 10px;"><span class="select-box inline">
+                <select name="type_id" class="select select2">
+                    <option value="0">不使用</option>
+                  <volist name="mytype"  id="vo">
+                      <option value="<{$vo.type_id}>"><{$vo.type_name}></option>
+                  </volist>
+                </select>
+                </span></td>
+            </tr>              
+            <tr>
+              <td class="contenta">渠道账号：</td>
+              <td><input name="agent_name" type="text" class="shuruTxt" placeholder="请输入您的渠道账号" /></td>
+            </tr>
+            <tr>
+              <td class="contenta">渠道名称：</td>
+              <td><input name="name" type="text" class="shuruTxt" placeholder="请输入您的渠道名称" /></td>
+            </tr>
+            <tr>
+              <td class="contenta">粉丝数量：</td>
+              <td><input name="nums" type="text" class="shuruTxt" placeholder="请输入粉丝数量" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" /></td>
+            </tr>
+            <tr>
+              <td class="contenta">渠道成本：</td>
+              <td><input name="money" type="text" class="shuruTxt" placeholder="请输入您的渠道成本" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" /></td>
+            </tr>
+            <tr>
+              <td align="right">&nbsp;</td>
+              <td><input type="submit" value="添加" class="saveBtn">
+                  <input type="reset" value="重置" class="resetBtn"><input name="book_id" type="hidden" value="<{$webbbok.fu_book}>" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+function lianjie() {
+    
+ var urls = "<{:U('Channel/generate')}>?num="+  $('select[name=\'num\']').val() +"&bookid="+  $('input[name=\'book_id\']').val() ;
+layer.open({
+  type: 2,
+  title: '文案内容',
+  shadeClose: true,
+  shade: 0.8,
+  area: ['80%', '80%'],
+  content: urls //iframe的url
+}); 
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>作品添加</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+	if (mform.book_name.value=="")
+	{
+		alert("书名不可为空！");
+		mform.book_name.focus();
+		return false;
+	}
+	if (mform.author_name.value=="")
+	{
+		alert("作者名称不可为空！");
+		mform.author_name.focus();
+		return false;
+	}
+ 	if (mform.keywords.value=="")
+	{
+		alert("关键字不可为空！");
+		mform.keywords.focus();
+		return false;
+	}     
+ 	if (mform.book_brief.value=="")
+	{
+		alert("作品简介不可为空！");
+		mform.book_brief.focus();
+		return false;
+	}   
+ 	if (mform.upload_img.value=="")
+	{
+		alert("请选择封面！");
+		mform.upload_img.focus();
+		return false;
+	}        
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>作品添加</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> <a href="<{:U('Book/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+<form action="" name="mform" method="post" enctype="multipart/form-data" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">书名：</td>
+        <td><input name="book_name" type="text" class="shuruTxt" size="12" maxlength="20" placeholder="请输入作品名称"/></td>
+      </tr>
+
+      <tr>
+        <td class="contenta">作者：</td>
+        <td><input name="author_name" type="text" class="shuruTxt" size="12" maxlength="15" placeholder="请输入作者名称" /></td>
+      </tr>     
+      <tr>
+        <td class="contenta">作品类型：</td>
+        <td><span class="select-box inline">
+       <select name="type_id" class="select select2">
+            <foreach name="type" item="vo">
+                <option value="<{$key}>"><{$vo}></option>
+            </foreach>
+    </select>
+    </span></td>
+      </tr>   
+      <tr>
+        <td class="contenta">签约类型：</td>
+        <td><span class="select-box inline">
+       <select name="signing" class="select select2">
+        <option value="SS">SS</option>
+        <option value="S">S</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        </select>
+    </span></td>
+      </tr>       
+      <tr>
+        <td class="contenta">收费模式：</td>
+        <td><span class="select-box inline">
+       <select name="vip" class="select select2">
+      <option value="0">按章收费</option>
+      <option value="1">按本收费</option>
+      <option value="2">免费书籍</option>
+    </select>
+    </span></td>
+      </tr>
+      <tr>
+        <td class="contenta">频道分类：</td>
+        <td><input type="radio" name="gender" value="1" checked="checked" />
+                男频
+                <input type="radio" name="gender" value="2" />
+                女频</td>
+      </tr>
+      <tr>
+        <td class="contenta">状态：</td>
+        <td><input type="radio" name="state" value="1" />
+                连载中
+                <input type="radio" name="state" value="2" checked="checked" />
+                已完本</td>
+      </tr>        
+      <tr>
+        <td class="contenta">单本价格：</td>
+        <td><input name="money" type="text" class="shuruTxt" value="0" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+      </tr>
+      <tr>
+        <td class="contenta">关键字：</td>
+        <td><input name="keywords" type="text" class="shuruTxt" placeholder="请输入作品关键字"/></td>
+      </tr>
+      <tr>
+        <td valign="top" class="contenta">作品简介：</td>
+        <td><textarea name="book_brief" cols="12" class="textarea" placeholder="请输入作品简介"></textarea></td>
+      </tr> 
+      <tr>
+        <td class="contenta">上传封面：</td>
+        <td><input name="upload_img" type="file" /></td>
+      </tr>            
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" value="确认发表" class="saveBtn">
+        <input type="reset" value="重置" class="resetBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

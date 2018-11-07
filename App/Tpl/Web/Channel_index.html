@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>渠道管理</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/layer/layer.js"></script> 
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>渠道管理</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+  <form id="form1" name="form1" method="post" action="<{:U('Channel/index')}>" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" />
+    <span class="select-box inline" style="margin-right: 5px;">
+    <select name="search_type" class="select">
+        <option value="1" <eq name="search_type" value="1">selected</eq>>渠道名称</option>
+        <option value="2" <eq name="search_type" value="2">selected</eq>>渠道账号</option>
+    </select>
+    </span>
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜渠道</button>
+  </form>
+      </div>
+        <div class="searchBar">
+    <form id="formSearch" name="formSearch" method="POST" action="<{:U('Channel/batchSearch')}>" enctype="multipart/form-data">
+        <input type="file" name="files" placeholder="上传文件" value="" onchange='$("#submit_button").addClass("sbtn").removeClass("dbtn")'/>
+        <button class="search-button dbtn" id="submit_button" onclick='if(!$("#submit_button").hasClass("sbtn")){return false;};$("#formSearch").submit();' > 导出搜索数据</button>
+        <style>
+        #formSearch input{float: left; margin: 5px 1px 10px 5px; width: 150px;;}
+        #formSearch button{width: 120px; }
+        .search-div{border: 1px solid #ddd;    display: inline-block;    height: 32px;    margin-left: 5px;    padding-right: 10px;    padding-top: 2px;}
+        .sbtn{background-color: #5eb95e;}
+        .dbtn{background-color:#ddd;}
+        </style>
+      </form>
+    </div> 
+    </div>      
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>渠道ID</th>
+                <th>渠道账号</th>
+                <th>渠道名称</th>
+                <th>所属渠道</th>
+                <th>粉丝数量</th>
+                <th>成本</th>
+                <th>总充值</th>
+                <th>充值笔数</th>
+                <th>总点击</th>
+                <th>充值/点击(千分比)</th>
+                <th>总注册</th>
+                <th>生成时间</th>
+                <th>操作</th>           
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="mychannel"  id="vo">
+              <tr>
+                  <td><{$vo.channel_id}></td>
+                  <td><{$vo.agent_name}></td>
+                  <td><{$vo.name}></td>
+                  <td><{$vo.type_name}></td>
+                  <td><{$vo.num}></td>
+                  <td><{$vo.money}></td>
+                  <td><{$vo.pay_total}></td>
+                  <td><{$vo.money_num}></td>
+                  <td><{$vo.click_total}></td>
+                  <td><{$vo.zhuanhua}></td>
+                  <td><{$vo.reg_total}></td>
+                  <td><{$vo.time}></td>
+                  <td>
+                  <a class ="team-a" href="<{:U('Channel/daymoney', array('channel_id' => $vo[channel_id]))}>" >日收入</a>┆
+                  <a class ="team-a" href="<{:U('Channel/edit', array('channel_id' => $vo[channel_id]))}>" >修改</a>┆<a href="javascript:;" class ="team-a" onClick="lianjie('<{$vo.link}>.html?agent=<{$to[agent_id]}>&channel=<{$vo.channel_id}>&focus=<{$vo.focus}>')" > 渠道连接</a>┆<a href="javascript:;" class ="team-a" onClick="lianjie2('<{$vo.link}>','.html?agent=<{$to[agent_id]}>&channel=<{$vo.channel_id}>&focus=<{$vo.focus}>')" > 模板连接</a>┆<a class ="team-a" onClick="article_del(this,'<{$vo[channel_id]}>')" href="javascript:;">删除</a></td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+        <gt name="count" value="15">
+          <div class="form-group" style="width: 178px; height: 34px; float: right; margin-top: -93px; margin-right: 405px; position: relative; z-index: 999;">
+            <form action=""  method="get">
+              <span>跳到</span>
+              <input name="p" type="text" style="border: 1px solid #ddd; height: 33px; margin-left: 11px; width: 44px; text-align: center;" />
+              <span>页</span>
+              <input type="hidden" name="search_type" value="<{$search_type}>">
+              <input type="hidden" name="keyword" value="<{$keyword}>">
+              <input class="btnis" type="submit" value="跳转" />
+            </form>
+          </div>
+        </gt>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+function lianjie(link) {
+    // link = get_short_url(link);
+    layer.open({
+        type: 1,
+        skin: 'layui-layer-rim', //加上边框
+          title: '连接地址为',
+        area: ['50%', '100px'],
+        content: "<div style='padding: 10px;line-height: 25px;'>" + link + '</div>'
+
+    });
+}
+
+function lianjie2(link, arg) {
+    var chapter = link.substr(link.lastIndexOf("/")+1, link.length);
+    if (chapter >1) {
+      chapter-=1;
+    }
+    var old_link = link.substr(0, link.lastIndexOf("/"));
+
+    var new_link = old_link + '/' + chapter + arg;
+      // new_link = get_short_url(new_link);
+    // alert(new_link);
+    layer.open({
+        type: 1,
+        skin: 'layui-layer-rim', //加上边框
+          title: '连接地址为',
+        area: ['50%', '100px'],
+        content: "<div style='padding: 10px;line-height: 25px;'>" + new_link + '</div>'
+
+    });
+}
+function article_del(obj,channel_id){
+  var is=confirm('确定要删除吗？');
+        if(is==true){
+          $.ajax({
+                url: "<{:U('Web/Channel/deleteanget')}>",
+                type: "get",
+                data: 'channel_id=' + channel_id,
+                success: function (data) {
+                 if(data==1){
+                     $(obj).parents("tr").remove();
+                 }else{
+                     alert("删除错误");
+                 }
+                }
+            });            
+        }
+}  
+
+function get_short_url(link){
+  var a;
+  $.ajax({
+        url: "<{:U('Web/Channel/get_short_url')}>",
+        type: "get",
+        data: 'link=' + encodeURIComponent(link),
+        async:false,
+        success: function (data) {
+         if(data){
+            a = data;
+         }else{
+             alert("获取失败");
+         }
+        }
+    });    
+  return a;
+} 
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>提现记录</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" /></head>
+  
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" /></div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script>
+      <include file="Sidebar:include" />
+      <div class="main-content">
+        <include file="Bread:include" />
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!--/span-->
+                <!-- left menu ends -->
+                <form style="margin-bottom:10px;" class="form-inline">
+                  <span id="date-range-picker">
+                    <div class="form-group">
+                      <div class="input-group date from-date-picker">
+                        <input type="text" class="form-control" placeholder="开始日期">
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group date to-date-picker">
+                        <input type="text" class="form-control" placeholder="结束日期">
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                      </div>
+                    </div>
+                  </span>
+                  <button type="submit" class="btn btn-primary" id="btn-search">查询</button></form>
+                <table class="table table-bordered table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>提交时间</th>
+                      <th>提现金额</th>
+                      <th>状态</th>
+                      <th>备注</th></tr>
+                  </thead>
+                  <tbody>
+                    <if condition="$data">
+                       <volist name="data" id="vo">
+                        <tr>
+                          <td><{$vo.time}></td>
+                          <td><{$vo.money}></td>
+                          <td>
+                            <if condition="$vo['state'] eq 2">
+                              已打款
+                            <else/>
+                              提现中
+                            </if>
+                          </td>
+                          <td><{$vo.remark}></td>
+                        </tr>
+                        </volist>
+                    <else/>
+                    <tr>
+                      <td colspan="100">
+                        <div class="no-record">
+                          <i class="fa fa-inbox no-record-icon"></i>
+                          <div class="no-record-text">找不到相应的提现记录</div></div>
+                      </td>
+                    </tr>                    
+                    </if>
+                  </tbody>
+                </table>
+                <{$page}>
+                <script>$(function() {
+                    var picker = DateRangePicker.create($('#date-range-picker'));
+
+                    $('#btn-search').click(function() {
+                      search();
+                      return false;
+                    });
+
+                    function search() {
+                      if (picker.timespan() > 90 * 24 * 60 * 60 * 1000) {
+                        Modal.alert({
+                          title: '日期范围过大',
+                          message: '日期范围不能超过 90 天'
+                        });
+
+                        return false;
+                      }
+
+                      var search = _.assign({},
+                      parseQueryString());
+
+                      delete search.from;
+                      delete search.to;
+
+                      _.assign(search, picker.value());
+
+                      location.href = location.pathname + buildQueryString(search);
+                    }
+                  });</script>
+                <!-- PAGE CONTENT ENDS --></div>
+              <!-- /.col --></div>
+            <!-- /.row --></div>
+          <!-- /.page-content-area --></div>
+        <!-- /.page-content --></div>
+      <!-- /.main-content --></div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <include file="Script:include" /></body>
+
+</html>

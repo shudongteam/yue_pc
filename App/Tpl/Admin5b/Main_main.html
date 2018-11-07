@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>后台首页</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>后台首页</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-tongji">
+        <table border="0" cellpadding="0" cellspacing="0" class="layui-table">
+          <thead>
+            <tr>
+              <th colspan="2" scope="col">系统信息</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th width="200" align="left">网站名字</th>
+              <td><{:C('WebName')}></td>
+            </tr>
+            <tr>
+              <td align="left">版本信息</td>
+              <td><{:C('WebName')}> 2.1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

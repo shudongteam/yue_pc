@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>批量添加</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script>
+function CheckPost()
+{
+	if (mform.upfile.value=="")
+	{
+		alert("请选择txt文档！");
+		return false;
+	}
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+      <h2><a href="<{:U('Chapter/index',array('book'=>$isbook[book_id]))}>" class="team-a">章节管理</a> <span class="en">&gt;</span> 批量添加 <span class="en">&gt;</span><{$isbook[book_name]}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="<{:U('Chapter/index',array('book'=>$isbook[book_id]))}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+   <form action="" name="mform" method="post" enctype="multipart/form-data" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">选择txt：</td>
+        <td><input name="upfile" type="file" /></td>
+      </tr>     
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td style="padding-top: 10px;"><input type="submit" value="确认上传" class="saveBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>订单统计</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" /></head>
+  
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" /></div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script>
+      <include file="Sidebar:include" />
+      <div class="main-content">
+    <{$weixin_tps}>
+    <include file="Bread:include" /> 
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!--/span-->
+                <!-- left menu ends -->
+                <div style="margin-bottom: 10px;">
+                  <ul class="nav nav-tabs">
+                    <li class="active">
+                      <a href="/NewWeb/Stats/index<{$agent_url}>">订单统计</a></li>
+                    <li class="">
+                      <a href="/NewWeb/Stats/members<{$agent_url}>">用户统计</a></li>
+                    <li style="display: none" class="">
+                      <a href="/NewWeb/Stats/novels">小说统计</a></li>
+                  </ul>
+                </div>
+                <script>
+                    var uid = '<{$agent_url}>';
+                </script>
+                <div class="row" id="order-summary-stats-panel">
+                  <div class="col-md-3">
+                    <div class="well">
+                      <b>今日充值
+                        <i class="fa fa-question-circle" title="非实时, 延迟 1 分钟左右"></i>
+                        <span style="font-weight:normal;font-size:13px;color:#090" class="pull-right">
+                          <span data-bind="text: refresh_seconds_left">60</span>秒后刷新</span></b>
+                      <div class="text-primary" style="font-size:32px;margin:5px 0">¥
+                        <span data-bind="price: stats_today.paid_amount">0.00</span></div>
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-sm-6" style="padding:0">
+                            <strong>普通充值</strong>
+                            <div>
+                              <b class="text-primary" data-bind="price: stats_today.welth_order_paid_amount">0.00</b></div>
+<!--                             <div>已支付:
+                              <b class="text-warning" data-bind="text: stats_today.welth_order_paid_count">0</b>笔</div>
+                            <div>未支付:
+                              <b class="text-warning" data-bind="text: stats_today.welth_order_unpaid_count">0</b>笔</div>
+                            <div>完成率:
+                              <b class="text-warning">
+                                <span data-bind="text: Math.round(stats_today.welth_order_completion_rate() * 100)">0</span>%</b></div> -->
+                          </div>
+                          <div class="col-sm-6" style="padding:0">
+                            <strong>年费VIP会员</strong>
+                            <div>
+                              <b class="text-primary" data-bind="price: stats_today.vip_order_paid_amount">0.00</b></div>
+<!--                             <div>已支付:
+                              <b class="text-warning" data-bind="text: stats_today.vip_order_paid_count">0</b>笔</div>
+                            <div>未支付:
+                              <b class="text-warning" data-bind="text: stats_today.vip_order_unpaid_count">0</b>笔</div>
+                            <div>完成率:
+                              <b class="text-warning">
+                                <span data-bind="text: Math.round(stats_today.vip_order_completion_rate() * 100)">0</span>%</b></div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="well">
+                      <b>昨日充值</b>
+                      <div class="text-primary" style="font-size:32px;margin:5px 0">¥
+                        <span data-bind="price: stats_otherDay.y_paid_amount">0.00</span></div>
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-sm-6" style="padding:0">
+                            <strong>普通充值</strong>
+                            <div>
+                              <b class="text-primary" data-bind="price: stats_otherDay.y_welth_order_paid_amount">0.00</b></div>
+<!--                             <div>已支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.y_welth_order_paid_count">0</b>笔</div>
+                            <div>未支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.y_welth_order_unpaid_count">0</b>笔</div>
+                            <div>完成率:
+                              <b class="text-warning">
+                                <span data-bind="text: Math.round(stats_otherDay.y_welth_order_completion_rate() * 100)">0</span>%</b></div> -->
+                          </div>
+                          <div class="col-sm-6" style="padding:0">
+                            <strong>年费VIP会员</strong>
+                            <div>
+                              <b class="text-primary" data-bind="price: stats_otherDay.y_vip_order_paid_amount">0.00</b></div>
+<!--                             <div>已支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.y_vip_order_paid_count">0</b>笔</div>
+                            <div>未支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.y_vip_order_unpaid_count">0</b>笔</div>
+                            <div>完成率:
+                              <b class="text-warning">
+                                <span data-bind="text: Math.round(stats_otherDay.y_vip_order_completion_rate() * 100)">0</span>%</b></div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="well">
+                      <b>本月充值 (不含当日)
+                        <i class="fa fa-question-circle" title="不含当日，非实时，每天凌晨2:30左右更新"></i></b>
+                      <div class="text-primary" style="font-size:32px;margin:5px 0">¥
+                        <span data-bind="price: stats_otherDay.m_paid_amount">0.00</span></div>
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-sm-6" style="padding:0">
+                            <strong>普通充值</strong>
+                            <div>
+                              <b class="text-primary" data-bind="price: stats_otherDay.m_welth_order_paid_amount">0.00</b></div>
+<!--                             <div>已支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.m_welth_order_paid_count">0</b>笔</div>
+                            <div>未支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.m_welth_order_unpaid_count">0</b>笔</div>
+                            <div>完成率:
+                              <b class="text-warning">
+                                <span data-bind="text: Math.round(stats_otherDay.m_welth_order_completion_rate() * 100)">0</span>%</b></div> -->
+                          </div>
+                          <div class="col-sm-6" style="padding:0">
+                            <strong>年费VIP会员</strong>
+                            <div>
+                              <b class="text-primary" data-bind="price: stats_otherDay.m_vip_order_paid_amount">0.00</b></div>
+<!--                             <div>已支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.m_vip_order_paid_count">0</b>笔</div>
+                            <div>未支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.m_vip_order_unpaid_count">0</b>笔</div>
+                            <div>完成率:
+                              <b class="text-warning">
+                                <span data-bind="text: Math.round(stats_otherDay.m_vip_order_completion_rate() * 100)">0</span>%</b></div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="well">
+                      <b>累计充值 (不含当日)
+                        <i class="fa fa-question-circle" title="不含当日，非实时，每天凌晨2:30左右更新"></i></b>
+                      <div class="text-primary" style="font-size:32px;margin:5px 0">¥
+                        <span data-bind="price: stats_otherDay.t_paid_amount">0.00</span></div>
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-sm-6" style="padding:0">
+                            <strong>普通充值</strong>
+                            <div>
+                              <b class="text-primary" data-bind="price: stats_otherDay.t_welth_order_paid_amount">0.00</b></div>
+                            <!-- <div>已支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.t_welth_order_paid_count">0</b>笔</div>
+                            <div>未支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.t_welth_order_unpaid_count">2</b>笔</div>
+                            <div>完成率:
+                              <b class="text-warning">
+                                <span data-bind="text: Math.round(stats_otherDay.t_welth_order_completion_rate() * 100)">0</span>%</b></div> -->
+                          </div>
+                          <div class="col-sm-6" style="padding:0">
+                            <strong>年费VIP会员</strong>
+                            <div>
+                              <b class="text-primary" data-bind="price: stats_otherDay.t_vip_order_paid_amount">0.00</b></div>
+<!--                             <div>已支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.t_vip_order_paid_count">0</b>笔</div>
+                            <div>未支付:
+                              <b class="text-warning" data-bind="text: stats_otherDay.t_vip_order_unpaid_count">0</b>笔</div>
+                            <div>完成率:
+                              <b class="text-warning">
+                                <span data-bind="text: Math.round(stats_otherDay.t_vip_order_completion_rate() * 100)">0</span>%</b></div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <script>var OrderSummaryStatsPanel = function() {
+                    var self = this;
+                    var inited = false;
+                    var uid = '<{$agent_url}>';
+                    var countdownIntervalId = null;
+                    var refreshIntervalSeconds = 60;
+                    var model = {
+                      refresh_seconds_left: ko.observable(refreshIntervalSeconds),
+                      stats_today: createStats(),
+                      stats_otherDay: createStats2(),
+                      // stats_yesterday: createStats(),
+                      // stats_all_time: createStats()
+                    };
+
+                    this.init = function() {
+                      if (!inited) {
+                        ko.applyBindings(model, document.getElementById('order-summary-stats-panel'));
+                        inited = false;
+                      }
+                    };
+
+                    this.load = function(options) {
+                      self.init();
+
+                      uid = options && options.uid ? options.uid: null;
+
+                      $.when(self.loadStatsToday(), self.loadStatsOtherDay()).then(function() {
+                        self.startRefreshTimer();
+                      });
+                    };
+
+                    this.startRefreshTimer = function() {
+                      countdownIntervalId = setInterval(function() {
+                        model.refresh_seconds_left(model.refresh_seconds_left() - 1);
+
+                        if (model.refresh_seconds_left() === 0) {
+                          clearInterval(countdownIntervalId);
+                          self.loadStatsToday().then(function() {
+                            model.refresh_seconds_left(refreshIntervalSeconds);
+                            self.startRefreshTimer();
+                          });
+                        }
+                      },
+                      1000);
+                    };
+
+                    this.loadStatsToday = function() {
+                      return $.get('/NewWeb/Stats/api_get_stats_today/' + (uid || ''),
+                      function(data) {
+                        ko.mapping.fromJS(data, {},
+                        model.stats_today);
+                      });
+                    };
+
+                    this.loadStatsOtherDay = function() {
+                      return $.get('/NewWeb/Stats/api_get_stats_otherDay/' + (uid || ''),
+                      function(data) {
+                        ko.mapping.fromJS(data, {},
+                        model.stats_otherDay);
+                      });
+                    };
+
+                    function createStats() {
+                      return {
+                        //今日
+                        paid_amount: ko.observable(),
+                        vip_order_paid_amount: ko.observable(),
+                        vip_order_paid_count: ko.observable(),
+                        vip_order_unpaid_count: ko.observable(),
+                        vip_order_completion_rate: ko.observable(),
+                        welth_order_paid_amount: ko.observable(),
+                        welth_order_paid_count: ko.observable(),
+                        welth_order_unpaid_count: ko.observable(),
+                        welth_order_completion_rate: ko.observable(),
+                      }
+                    }
+
+                  function createStats2() {
+                      return {
+                        //昨日
+                        y_paid_amount: ko.observable(),
+                        y_vip_order_paid_amount: ko.observable(),
+                        y_vip_order_paid_count: ko.observable(),
+                        y_vip_order_unpaid_count: ko.observable(),
+                        y_vip_order_completion_rate: ko.observable(),
+                        y_welth_order_paid_amount: ko.observable(),
+                        y_welth_order_paid_count: ko.observable(),
+                        y_welth_order_unpaid_count: ko.observable(),
+                        y_welth_order_completion_rate: ko.observable(),
+
+                        //本月
+                        m_paid_amount: ko.observable(),
+                        m_vip_order_paid_amount: ko.observable(),
+                        m_vip_order_paid_count: ko.observable(),
+                        m_vip_order_unpaid_count: ko.observable(),
+                        m_vip_order_completion_rate: ko.observable(),
+                        m_welth_order_paid_amount: ko.observable(),
+                        m_welth_order_paid_count: ko.observable(),
+                        m_welth_order_unpaid_count: ko.observable(),
+                        m_welth_order_completion_rate: ko.observable(),
+
+                        //总计
+                        t_paid_amount: ko.observable(),
+                        t_vip_order_paid_amount: ko.observable(),
+                        t_vip_order_paid_count: ko.observable(),
+                        t_vip_order_unpaid_count: ko.observable(),
+                        t_vip_order_completion_rate: ko.observable(),
+                        t_welth_order_paid_amount: ko.observable(),
+                        t_welth_order_paid_count: ko.observable(),
+                        t_welth_order_unpaid_count: ko.observable(),
+                        t_welth_order_completion_rate: ko.observable(),
+                      }
+                    }
+                  };
+
+                  OrderSummaryStatsPanel.instance = new OrderSummaryStatsPanel();</script>
+                <div class="panel panel-default" id="order-daily-stats-panel">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <i class="fa fa-calendar"></i>近30天充值统计</h3>
+                  </div>
+                  <div class="loading-panel" data-bind="visible: loading" style="display: none;">
+                    <i class="fa fa-spinner fa-spin"></i>
+                  </div>
+                  <table class="table table-bordered table-striped" data-bind="visible: !loading()" style="">
+                    <thead>
+                      <tr>
+                        <th>日期</th>
+                        <th class="text-right">充值金额</th>
+                        <th class="text-right">普通充值</th>
+                        <th class="text-right">普通充值支付订单数</th>
+                        <th class="text-right">年费VIP会员</th>
+                        <th class="text-right">年费VIP会员支付订单数</th></tr>
+                    </thead>
+                    <tbody data-bind="foreach: stats">
+                      <tr>
+                        <td>
+                          <span data-bind="date: date">2017-10-16</span></td>
+                        <td class="text-right">
+                          <b>¥
+                            <span data-bind="price: paid_amount">0.00</span></b>
+                        </td>
+                        <td class="text-right">
+                          <b>¥
+                            <span data-bind="price: welth_order_paid_amount">0.00</span></b>
+<!--                           <div class="text-muted" style="font-size:13px;margin-top:5px">充值人数:
+                            <span data-bind="text: welth_order_paid_user_count">0</span>, 人均: ¥
+                            <span data-bind="price: welth_order_avg_user_paid_amount">0.00</span></div> -->
+                        </td>
+                        <td class="text-right">
+                          <b>
+                            <span data-bind="text: welth_order_paid_count">0</span>笔</b>
+<!--                           <div class="text-muted" style="font-size:13px;margin-top:5px">
+                            <span data-bind="text: welth_order_unpaid_count">0</span>笔未支付, 完成率:
+                            <span data-bind="text: Math.round(welth_order_completion_rate * 100)">0</span>%</div> --></td>
+                        <td class="text-right">
+                          <b>¥
+                            <span data-bind="price: vip_order_paid_amount">0.00</span></b>
+<!--                           <div class="text-muted" style="font-size:13px;margin-top:5px">充值人数:
+                            <span data-bind="text: vip_order_paid_user_count">0</span>, 人均: ¥
+                            <span data-bind="price: vip_order_avg_user_paid_amount">0.00</span></div> -->
+                        </td>
+                        <td class="text-right">
+                          <b>
+                            <span data-bind="text: vip_order_paid_count">0</span>笔</b>
+<!--                           <div class="text-muted" style="font-size:13px;margin-top:5px">
+                            <span data-bind="text: vip_order_unpaid_count">0</span>笔未支付, 完成率:
+                            <span data-bind="text: Math.round(vip_order_completion_rate * 100)">0</span>%</div> --></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <script>var OrderDailyStatsPanel = function() {
+                    var self = this;
+                    var inited = false;
+                    var model = {
+                      loading: ko.observable(true),
+                      stats: ko.observableArray()
+                    };
+
+                    this.init = function() {
+                      if (!inited) {
+                        ko.applyBindings(model, document.getElementById('order-daily-stats-panel'));
+                        inited = true;
+                      }
+                    };
+
+                    this.load = function(options) {
+                      self.init();
+
+                      model.loading(true);
+
+                      var uid = options && options.uid ? options.uid: null;
+
+                      $.get('/NewWeb/Stats/api_get_daily_stats/' + (uid || ''),
+                      function(stats) {
+                        model.stats(stats);
+                        model.loading(false);
+                      });
+                    }
+                  };
+
+                  OrderDailyStatsPanel.instance = new OrderDailyStatsPanel();</script>
+                <script>OrderSummaryStatsPanel.instance.load({
+                    uid: uid
+                  });
+
+                  OrderDailyStatsPanel.instance.load({
+                    uid: uid
+                  });</script>
+                <!-- PAGE CONTENT ENDS --></div>
+              <!-- /.col --></div>
+            <!-- /.row --></div>
+          <!-- /.page-content-area --></div>
+        <!-- /.page-content --></div>
+      <!-- /.main-content --></div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <include file="Script:include" /></body>
+
+</html>

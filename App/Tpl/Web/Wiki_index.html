@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>公众号管理</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>公众号管理</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix"><a href="<{:U('Wiki/add')}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>添加公众号</a>
+<!--       <div class="searchBar">
+  <form id="form1" name="form1" method="post" action="<{:U('Automatic/index')}>" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" />
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜标题</button>
+  </form>
+      </div> -->
+    </div>      
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>公众号名</th>
+                <th>appid</th>
+                <th>密钥</th>
+                <th>登录账号</th>
+                <th>登录密码</th>
+                <th>管理员</th>
+                <th>最后修改时间</th>
+                <th>上次同步时间</th>
+                <th>详情</th>   
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="wikis"  id="wiki">
+              <tr>
+                <td><{$wiki.wiki_id}></td>
+                <td><{$wiki.name}></td>
+                <td><{$wiki.appid}></td>
+                <td><{$wiki.secret}></td>
+                <td><{$wiki.user}></td>
+                <td><{$wiki.passwd}></td>
+                <td><{$wiki.administrator}></td>
+                <td><{$wiki.update_time}></td>
+                <td><{$wiki.upload_time}></td>
+                <td>
+                  <a class="team-a" href="<{:U('Wiki/update',array('id'=>$wiki[wiki_id]))}>">修改</a> ┆            
+                  <a class="team-a" href="<{:U('Wiki/subscribe',array('id'=>$wiki[wiki_id]))}>">关注推送信息</a> ┆
+                  <a class="team-a" href="<{:U('Wiki/tempmessage',array('id'=>$wiki[wiki_id]))}>">模板消息</a> ┆
+                  <a class="team-a" href="<{:U('Wiki/menu',array('id'=>$wiki[wiki_id]))}>">自定义菜单</a> ┆
+                  <a class="team-a" href="<{:U('Wiki/uploadmenu',array('id'=>$wiki[wiki_id]))}>">同步菜单</a>
+              </td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">	
+	function del(object, id)
+	{
+		if(confirm('确定要删除吗？')) {
+			$.ajax({
+	            url: "<{:U('Automatic/delete')}>",
+	            type: "Post",
+	            data: 'id=' + id,
+	            success: function (data) {
+	            	if(data)
+	            	{
+	            		$(object).parents('tr').remove();
+	            	}
+	            }
+	        });
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>菜单栏</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+</head>
+<body>
+<div class="super-side-menu">
+  <div class="logo"><a href="<{:U('Main/index')}>" target="_parent"><{$Think.cookie.web_name}></a></div>
+  <div class="side-menu">
+    <eq name="fu_agent" value="0">   
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe60d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('User/index')}>" target="Mainindex">读者管理</a></li>
+          <li><a href="<{:U('Agent/index')}>" target="Mainindex">代理管理</a></li>          
+        </ul>
+      </dd>
+    </dl>
+    </eq>    
+    <eq name="fu_agent" value="0">   
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe639;</i>  作品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Promote/index')}>" target="Mainindex">推荐位</a></li>
+          <li><a href="<{:U('Ban/index')}>" target="Mainindex">广告位置</a></li> 
+        </ul>
+      </dd>
+    </dl>
+    </eq> 
+    <eq name="fu_agent" value="0">   
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe61a;</i>  充值管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Webfigure/index')}>" target="Mainindex">充值统计</a></li>
+          <eq name="fu_agent" value="0"> <li><a href="<{:U('Pay/add')}>" target="Mainindex">手动充值</a></li></eq> 
+        </ul>
+      </dd>
+    </dl>  
+    </eq> 
+    <eq name="fu_agent" value="0">      
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe62e;</i> 网站设置<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <eq name="fu_agent" value="0">
+          <li><a href="<{:U('Help/index')}>" target="Mainindex">用户帮助</a></li>
+          <li><a href="<{:U('Site/index')}>" target="Mainindex">站点配置</a></li>
+          <li><a href="<{:U('Main/remove')}>" target="Mainindex">清理缓存</a></li>
+          </eq>
+          <li><a href="<{:U('Wiki/index')}>" target="Mainindex">公众号管理</a></li>
+          <li><a href="<{:U('Automatic/index')}>" target="Mainindex">微信自动回复</a></li>
+          <li><a href="<{:U('Site/code')}>" target="Mainindex">微信二维码</a></li>
+        </ul>
+      </dd>
+    </dl>
+    </eq> 
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe720;</i> 云阅读<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Webbook/index')}>" target="Mainindex">图书管理</a></li>
+          <li><a href="<{:U('Channel/type')}>" target="Mainindex">渠道分类</a></li>
+          <li><a href="<{:U('Channel/index')}>" target="Mainindex">渠道管理</a></li>
+          <li><a href="<{:U('Pay/index')}>" target="Mainindex">充值明细</a></li>
+        </ul>
+      </dd>
+    </dl>      
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe6ca;</i> 财务管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Agentmoneyday/index')}>" target="Mainindex">每日账单</a></li>
+          <li><a href="<{:U('Money/settlement')}>" target="Mainindex">申请提现</a></li>
+          <li><a href="<{:U('Money/money')}>" target="Mainindex">提现记录</a></li>
+          <li><a href="<{:U('Money/information')}>" target="Mainindex">收款信息</a></li>
+        </ul>
+      </dd>
+    </dl>  
+    <dl>
+      <dt><i class="Hui-iconfont">&#xe63b;</i> 平台公告<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+      <dd>
+        <ul>
+          <li><a href="<{:U('Announcement/index')}>" target="Mainindex">平台公告</a></li>
+          <eq name="fu_agent" value="0"><li><a href="<{:U('Download/index')}>" target="Mainindex">管理文档下载</a></li></eq>
+        </ul>
+      </dd>
+    </dl>
+  </div>
+</div>
+<!--side E-->
+<script type="text/javascript">
+$(function () {
+    $('.side-menu dt').click(function () {
+        dd = $(this).next();
+        $(".side-menu dt").each(function () {
+            if ($(this).next().html() != dd.html()) {
+                $(this).removeClass('selected');
+                $(this).next().slideUp();
+            }
+        });
+        $(this).toggleClass('selected');
+        $(this).next().slideToggle();
+
+    });
+});
+$('.side-menu li>a').click(function () {
+    $('.side-menu li>a').removeClass('on');
+    $(this).addClass('on');
+})
+</script>
+</body>
+</html>

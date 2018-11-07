@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CP管理</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>CP管理</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+         <a href="<{:U('Cp/add')}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>新增cp</a>
+      <div class="searchBar">
+          <form id="form1" name="form1" method="post" action="<{:U('Cp/index')}>" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" />
+    <span class="select-box inline">
+    <select name="search" class="select">
+      <option value="user_name">账户</option>
+      <option value="pen_name">公司名</option>
+    </select>
+    </span>
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜cp</button>
+  </form>
+      </div>
+    </div>      
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                  <th>CpID</th>
+                  <th>账户</th>
+                  <th>公司名</th>
+                  <th>电话</th>
+                  <th>QQ</th>
+                  <th>EMAIL</th>
+                  <th>详情</th>               
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="cp"  id="vo">
+              <tr>
+                  <td><{$vo.cp_id}></td>
+                  <td><{$vo.user_name}></td>
+                  <td><{$vo.pen_name}></td>
+                  <td><{$vo.phone}></td>
+                  <td><{$vo.qq}></td>
+                  <td><{$vo.email}></td>
+                  <td><div class="btn"><a class ="modify" href="<{:U('Cp/lnformation',array('id'=>$vo[cp_id]))}>">查看</a></div></td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

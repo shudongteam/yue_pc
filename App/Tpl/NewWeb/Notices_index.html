@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <title>通知公告</title> 
+  <meta name="description" content="" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> 
+ </head>
+ <body class="no-skin">
+  <include file="Head:include" />   
+  <!-- #section:basics/navbar.layout --> 
+  <div id="navbar" class="navbar navbar-default"> 
+   <include file="Navbar:include" /> 
+  </div> 
+  <div class="main-container" id="main-container"> 
+   <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script> 
+   <include file="Sidebar:include" /> 
+   <div class="main-content"> 
+    <{$weixin_tps}>
+    <include file="Bread:include" />
+    <div class="page-content"> 
+     <div class="page-content-area"> 
+      <div class="row"> 
+       <div class="col-xs-12"> 
+        <!-- PAGE CONTENT BEGINS --> 
+        <!--/span--> 
+        <!-- left menu ends --> 
+        <eq name="flag" value="1">
+        <div class="actions-bar">
+          <a href="/NewWeb/Notices/edit" class="btn btn-primary">
+              <i class="fa fa-plus"></i> 添加公告
+          </a>
+        </div>
+        </eq>
+        <ul class="list-group" style="margin-left:0"> 
+          <volist name="data"  id="vo">
+            <li class="list-group-item notice-item"> 
+              <span><{$vo.time|substr=0,10}> |</span> 
+              <a href="#" data-toggle="view-notice" data-id="<{$vo.id}>" data-created-at="<{$vo.time|strtotime}>" class="notice-title"><{$vo.title}></a>
+              <eq name="flag" value="1">
+              <span><{$vo.time|substr=0,10}> |</span> 
+              <a class="btn btn-xs btn-success" href="/NewWeb/Notices/edit?id=<{$vo.id}>">修改</a>&nbsp;
+              <a class="btn btn-xs btn-danger" href="/NewWeb/Notices/delete?id=<{$vo.id}>">删除</a>
+              </eq>
+            </li>
+         </volist>
+        </ul> 
+        <{$page}>
+        <script>$(function() {
+                    var isAdmin = false;
+                    // 检查是否已读过最新通知
+                    // var id = "<{$data[0]['id']}>";
+                    var lastReadNoticeCookieKey = 'last_read_notice_id__23414';
+                    var lastReadNoticeId = Cookies.get(lastReadNoticeCookieKey) || 0;
+
+                    if (!isAdmin) {
+                      showNextUnreadNotice(collectUnreadNoticeIds(lastReadNoticeId));
+                    }
+
+                    function collectUnreadNoticeIds(lastReadNoticeId) {
+                      var noticeIds = [];
+
+                      $('.notice-item [data-toggle="view-notice"]').each(function() {
+                        var noticeId = parseInt($(this).data('id'), 10);
+                        var createdAt = parseInt($(this).data('created-at'));
+                        var now = Math.round(new Date().getTime() / 1000);
+                        var within10days = (now - createdAt) < 10 * 24 * 60 * 60;
+
+                        // 对于用户未读，且在10天内新发布的通知，将强制显示给用户
+                        if (noticeId > lastReadNoticeId && within10days) {
+                          noticeIds.push(noticeId);
+                        }
+                      });
+
+                      return noticeIds;
+                    }
+
+                    function showNextUnreadNotice(unreadNoticeIds) {
+                      if (unreadNoticeIds.length === 0) {
+                        return false;
+                      }
+
+                      var noticeId = unreadNoticeIds.pop();
+
+                      viewNotice(noticeId).then(function() {
+                        showNextUnreadNotice(unreadNoticeIds);
+                      });
+                    }
+
+                    function viewNotice(id) {
+                      var defer = $.Deferred();
+
+                      $.get('/NewWeb/Notices/api_get_notice/id/' + id,
+                      function(data) {
+                        return Modal.open({
+                          title: data.title,
+                          body: '<div style="line-height:1.8em;">' + plainTextToHtml(data.content) + '</div>',
+                          backdrop: 'static',
+                          keyboard: false,
+                          buttons: [{
+                            text: '我知道了',
+                            className: 'btn-primary',
+                            click: function() {
+                              this.close();
+                            }
+                          }],
+                          callbacks: {
+                            close: function() {
+                              if (!isAdmin && id > lastReadNoticeId) {
+                                Cookies.set(lastReadNoticeCookieKey, id, {
+                                  expires: 10 * 365 * 24 * 60 * 60
+                                });
+                                lastReadNoticeId = id;
+                              }
+
+                              defer.resolve();
+                            }
+                          }
+                        });
+                      });
+
+                      return defer.promise();
+                    }
+
+                    $(document).on('click', '[data-toggle="view-notice"]',
+                    function() {
+                      var id = $(this).data('id');
+                      viewNotice(id);
+                      return false;
+                    });
+                  })</script> 
+        <!-- PAGE CONTENT ENDS -->
+       </div> 
+       <!-- /.col -->
+      </div> 
+      <!-- /.row -->
+     </div> 
+     <!-- /.page-content-area -->
+    </div> 
+    <!-- /.page-content -->
+   </div> 
+   <!-- /.main-content -->
+  </div> 
+  <!-- /.main-container --> 
+  <!-- basic scripts --> 
+  <include file="Script:include" />  
+ </body>
+</html>

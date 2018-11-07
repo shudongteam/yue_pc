@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>查看章节</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+</head>
+<script language=javascript>
+document.onkeydown=nextpage
+function nextpage(event) {
+  event = event ? event : (window.event ? window.event : null); 
+if (event.keyCode==13) location="<{:U('Chapter/index',array('book'=>$content['book_id']))}>" 
+if (event.keyCode==37) location="<{:U('Chapter/look',array('book'=>$_GET[book],'id'=>$shang))}>" 
+if (event.keyCode==39) location="<{:U('Chapter/look',array('book'=>$_GET[book],'id'=>$xia))}>" 
+}
+</script>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+      <h2>章节管理<span class="en">&gt;</span> 查看章节 <span class="en">&gt;</span><{$books[book_name]}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> 
+   <form action="" name="mform" method="post" enctype="multipart/form-data" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td><{$conn.content}>
+            <div class="rightcon_con"> 
+            <div class="zhangjie">
+              <h2><{$content.title}></h2>
+              <div class="times">发布时间：<font color="#FF0000"><{$content.time}></font> 字数：<font color="#FF0000"><{$content.number}></font></div>
+                <div class="neirong"><{$content.content}></div>
+            </div>
+            <div class="pages">
+              <a class="team-a" href="<{:U('Chapter/look',array('book'=>$_GET[book],'num'=>$shang))}>" class="pre">上一章节</a> 
+              <a class="team-a" href="<{:U('Chapter/index',array('book'=>$books['book_id']))}>" title="<{$books.book_name}>" class="back">返回目录</a> 
+              <a class="team-a" href="<{:U('Chapter/look',array('book'=>$_GET[book],'num'=>$xia))}>"class="pre">下一章节</a> 
+              </div>
+              <p>小提示：按 回车[Enter]键 返回书目，按 ←键 返回上一页， 按 →键 进入下一页。</p>
+            </div>
+          </td>
+      </tr>      
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

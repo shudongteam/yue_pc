@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>修改广告</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+ 	if (mform.link.value=="")
+	{
+		alert("广告连接不可为空！");
+		mform.link.focus();
+		return false;
+	}    
+ 	if (mform.file.value=="")
+	{
+		alert("请选择图片！");
+		return false;
+	} 
+	
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>修改广告</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> <a href="<{:U('Ban/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form class="form form-horizontal" id="form" action="" method="post" name="mform" enctype="multipart/form-data" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">广告连接：</td>
+        <td><input name="link" type="text" class="shuruTxt" placeholder="请输入网站连接" value="<{$ban.link}>" /></td>
+      </tr>
+      <tr>
+        <td class="contenta" valign="top" >内容：</td>
+        <td><input name="file" type="file" /></td>
+      </tr>
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" value="确认" class="saveBtn">
+        <input type="reset" value="重置" class="resetBtn">
+</td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

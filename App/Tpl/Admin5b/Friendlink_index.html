@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>友情连接</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>友情连接</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix"> <a href="<{:U('Friendlink/add')}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>新增连接</a>
+      <div class="searchBar">
+        <form id="form1" name="form1" method="post" action="<{:U('Friendlink/index')}>" class="fomm1">
+          <input type="text" name="keyword" id="" placeholder=" 请输入搜索信息" style="width:250px" class="keyword keywords">
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜站名</button>
+        </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>网站名</th>
+                  <th>网址</th>
+                  <th>所属站</th>
+                  <th>详情</th>
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="alllink"  id="vo">
+              <tr>
+                  <td><{$vo.id}></td>
+                  <td><{$vo.name}></td>
+                  <td><{$vo.link}></td>
+                  <td><{$vo.web_name}></td>
+                  <td><div class="btn">
+                  	<a class ="modify" href="<{:U('Friendlink/lnformation',array('id'=>$vo[id]))}>">修改</a>
+                      <a class ="delete" href="javascript:;" onClick="del(this, <{$vo.id}>)">删除</a></div>
+                  </td>
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+function del(object, id)
+	{
+		if(confirm('确定要删除吗？')) {
+			$.ajax({
+	            url: "<{:U('Friendlink/delete')}>",
+	            type: "get",
+	            data: 'id=' + id,
+	            success: function (data) {
+	            	if(data)
+	            	{
+	            		$(object).parents("tr").remove();
+	            	}
+	            }
+	        });
+		}
+	}
+</script>    
+</body>
+</html>

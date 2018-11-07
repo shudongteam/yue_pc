@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>充值明细</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language='JavaScript'>
+function CheckAll(form){
+    if(form.suo.checked==true){
+    for (var i=0;i<form.elements.length;i++)
+   {
+      var e = form.elements[i];
+      e.checked = true;
+   }       
+    }else{
+     for (var i=0;i<form.elements.length;i++)
+   {
+      var e = form.elements[i];
+      e.checked = false;
+   }         
+        
+    }
+    
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>充值明细</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+<div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+  <form id="form1" name="form1" method="post" action="" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" />
+            <span class="select-box inline">
+          <select name="type" class="select">
+          <option value="1">读者账户</option>
+          <option value="2">读者昵称</option>
+          <option value="3">订单号</option>
+          </select>
+          </span>
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜订单</button>
+  </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+          <th>读者账户</th>
+           <th>读者昵称</th>
+          <th>充值类型</th>
+          <th>订单号</th>
+          <th>交易号</th>
+          <th>充值金额rmb</th>
+          <th>到账阅读币</th>
+          <th>状态</th>
+          <th>充值时间</th>
+              </tr>
+            </thead>
+          <tbody>
+          <volist name="charge"  id="charge">
+            <tr>
+          <td><{$charge.user_name}></td>
+          <td><{$charge.pen_name}></td>
+          <td><{$charge.type}></td>
+          <td><{$charge.trade}></td>
+          <td><{$charge.transaction}></td>
+          <td><{$charge.money}></td>
+          <td><{$charge.readmoney}></td>
+          <td><if condition="$charge[state]==2"><span class="label label-blue">充值成功</span><else/><span class="label label-red">充值失败</span></if></td>
+          <td><{$charge.time}></td>                
+        </tr>
+           </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

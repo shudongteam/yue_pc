@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>修改站点</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+	error = false;
+	$("#form-agent td").removeClass("error")
+	$('#form-agent tr').each(function(){
+		if(typeof($(this).find("input").val()) != 'undefined') {
+			if(!$(this).find("input").val()) {
+				alert($(this).find("input").attr('placeholder') + '!!');
+				$(this).find("input").focus();
+				error = true;
+				return false;
+			}
+			if(error)
+			{
+				return false;
+			}
+		}
+		
+		if(error)
+		{
+			return false;
+		}
+		
+	})
+	
+	if(error)
+	{
+		return false;
+	}
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>修改站点</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="<{:U('Web/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form class="form form-horizontal" id="form-agent" action="" method="post" name="mform" onSubmit="return CheckPost();">
+   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">网站名称：</td>
+        <td><input name="web_name" type="text" class="shuruTxt" placeholder="网站叫什么" value="<{$user.web_name}>" /></td>
+      </tr>     
+      <tr>
+        <td class="contenta">网站地址：</td>
+        <td><input name="web_url" type="text" class="shuruTxt" placeholder="域名的地址" value="<{$user.web_url}>" /></td>
+      </tr>     
+      <tr>
+        <td class="contenta">登录域名：</td>
+        <td><input name="login_url" type="text" class="shuruTxt" placeholder="登录接口域名"  value="<{$user.login_url}>" /></td>
+      </tr>         
+      <tr>
+        <td class="contenta">加载样式：</td>
+        <td><input name="preload" type="text" class="shuruTxt" placeholder="默认Wap" value="<{$user.preload}>"  /></td>
+      </tr>     
+      <tr>
+        <td class="contenta">客服电话：</td>
+        <td><input name="webphone" type="text" class="shuruTxt" placeholder="网站客服电话"value="<{$user.webphone}>"  /></td>
+      </tr>     
+      <tr>
+        <td class="contenta">客服qq：</td>
+        <td><input name="webqq" type="text" class="shuruTxt" placeholder="网站客服qq" value="<{$user.webqq}>" /></td>
+      </tr>     
+      <tr>
+        <td class="contenta">微信号：</td>
+        <td><input name="weixin" type="text" class="shuruTxt" placeholder="网站微信号" value="<{$user.weixin}>"  /></td>
+      </tr>  
+      <tr>
+        <td class="contenta">网站备案号：</td>
+        <td><input name="beian" type="text" class="shuruTxt" placeholder="网站备案号" value="<{$user.beian}>" /></td>
+      </tr>      
+      <tr>
+        <td class="contenta">qq登录id：</td>
+        <td><input name="qq_id" type="text" class="shuruTxt" placeholder="qq登录id" value="<{$user.qq_id}>" /></td>
+      </tr>  
+      <tr>
+        <td class="contenta">qq登录secret：</td>
+        <td><input name="qq_secret" type="text" class="shuruTxt" placeholder="qq登录secret" value="<{$user.qq_secret}>" /></td>
+      </tr>  
+      <tr>
+        <td class="contenta">微博登录id：</td>
+        <td><input name="wb_id" type="text" class="shuruTxt" placeholder="微博登录id" value="<{$user.wb_id}>" /></td>
+      </tr>  
+      <tr>
+        <td class="contenta">微博登录secret：</td>
+        <td><input name="wb_secret" type="text" class="shuruTxt" placeholder="微博登录secret" value="<{$user.wb_secret}>" /></td>
+      </tr>  
+      <tr>
+        <td class="contenta">微信登录id：</td>
+        <td><input name="wx_id" type="text" class="shuruTxt" placeholder="微信登录id" value="<{$user.wx_id}>" /></td>
+      </tr>  
+      <tr>
+        <td class="contenta">微信登录secret：</td>
+        <td><input name="wx_secret" type="text" class="shuruTxt" placeholder="微信登录secret" value="<{$user.wx_secret}>" /></td>
+      </tr>   
+      <tr>
+        <td class="contenta">是否启动PC：</td>
+        <td><input type="radio" name="pc" value="0" <if condition="$user[pc]==0">checked="checked"</if>/>
+                不启用
+                <input type="radio" name="pc" value="1"<if condition="$user[pc]==1">checked="checked"</if> />
+                启用</td>
+      </tr>
+      <tr>
+        <td class="contenta">启用自动登录：</td>
+        <td><input type="radio" name="automatic" value="0" <if condition="$user[automatic]==0">checked="checked"</if> />
+                不启用
+                <input type="radio" name="automatic" value="1" <if condition="$user[automatic]==1">checked="checked"</if> />
+                启用</td>
+      </tr>       
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" id="" value="确认修改" class="saveBtn"></td>
+      </tr>
+    </table>
+    </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

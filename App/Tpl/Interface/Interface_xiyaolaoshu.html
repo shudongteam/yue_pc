@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>授权书单</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>授权书单</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+<div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+  <form id="form1" name="form1" method="post" action="<{:U('Webbook/index',array('web'=>$_GET[web]))}>" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" />
+            <span class="select-box inline">
+          <select name="type_id" class="select">
+            <option value="">全部分类</option>
+            <foreach name="type" item="vo">
+              <option value="<{$key}>"><{$vo}></option>
+            </foreach>
+          </select>
+          </span>
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜作品</button>
+  </form>
+        <div>
+          <!-- <b><a href="/Interface/FengQi/booklist.html" target="_blank" class="search-button" style="line-height:31px;margin-left:20px;;font-size:20px;font-family:'楷体'">书籍采集</a></b> -->
+        </div>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>书号</th>
+                <th>书名</th>
+                <th>作者</th>
+                <th>公司</th>
+                <th>状态</th>
+                <th>总字数</th>
+                <th>创建时间</th>
+              </tr>
+            </thead>
+          <tbody>
+          <volist name="book"  id="vo">
+            <tr>
+                <td><{$vo.book_id}></td>
+                <td><{$vo.book_name}></td>
+                <td><{$vo.author_name}></td>
+                <td><{$vo.cp_name}></td>
+                <td><if condition="$vo[state]==1"><span class="label label-blue">连载</span>
+                  <else/>
+                  <span class="label label-red">完本</span></if>
+                </td>
+                <td><{$vo.words}></td>
+                <td><{$vo.time}></td>             
+            </tr>
+           </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

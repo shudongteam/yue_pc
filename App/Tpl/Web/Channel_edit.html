@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title><{$title}>渠道修改</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+  if (mform.name.value=="")
+  {
+    alert("渠道名称不可为空！");
+    mform.name.focus();
+    return false;
+  }
+	if (mform.type_name.value=="")
+	{
+		alert("分类名不可为空！");
+		mform.type_name.focus();
+		return false;
+	}    
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2><{$title}>渠道分类</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> <a href="<{:U('Channel/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form class="form form-horizontal" id="form" action="" enctype="multipart/form-data" method="post" name="mform" onSubmit="return CheckPost();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass" >
+
+      <tr>
+        <td class="contenta">渠道账号：</td>
+        <td>
+            <input name="agent_name" type="text" class="shuruTxt" placeholder="请输入您的账户名称" value="<{$channel.agent_name}>" />
+        </td>
+      </tr>  
+      <tr>
+        <td class="contenta">渠道名称：</td>
+        <td>
+            <input name="name" type="text" class="shuruTxt" placeholder="请输入您的渠道名称" value="<{$channel.name}>" />
+        </td>
+      </tr>        
+      <tr>
+        <td class="contenta">分类：</td>
+        <td>
+        <span class="select-box inline">
+            <select class="select select2" name="type_id">
+                <volist name="mytype"  id="vo">
+                    <option value="<{$vo.type_id}>" <if condition="$vo['type_id'] eq $channel['type_id']">selected</if>> 
+                      <{$vo.type_name}>
+                    </option>
+              </volist>
+            </select>
+            </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" value="确定" class="saveBtn"></td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

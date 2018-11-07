@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>充值统计</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>充值统计 </h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-tongji">
+        <div id="container" style="min-width:700px;height:400px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/Public/AdminPublic/Highcharts/js/highcharts.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/Highcharts/js/modules/exporting.js"></script> 
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            zoomType: 'x',
+            spacingRight: 20
+        },
+        title: {
+            text: '本次统计时间为：<{$timess[0]}> 到 <{$lasttime}>'
+        },
+        xAxis: {
+            type: 'datetime',
+            maxZoom: 24 * 3600 * 1000,
+            labels:{
+            	formatter:function(){
+            		date =  new Date(this.value)
+            		return date.getMonth() + '/' +  date.getDate();
+            	}
+            }
+        },
+        yAxis: {
+            title: {
+                text: '充值金额'
+            }
+        },
+        tooltip: {
+//            shared: true,
+            formatter: function() {
+            	date =  new Date(this.x)
+            	x = date.getFullYear() + '-' + date.getMonth() + '-' +  date.getDate();
+		        return '<b>' + x + '</b> <br/> <b>' + this.series.name + ':</b> '+ this.y;
+		    }
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            area: {
+                fillColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                    stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                    ]
+                },
+                lineWidth: 1,
+                marker: {
+                    enabled: false
+                },
+                shadow: false,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            }
+        },
+
+        series: [{
+            type: 'area',
+            name: '充值金额',
+            pointInterval: 24 * 3600 * 1000,
+            pointStart: Date.UTC(<{$tenday}>),
+            data: <{$arr}>
+        }]
+    });
+
+});
+</script>
+</body>
+</html>

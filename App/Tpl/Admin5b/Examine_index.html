@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>作品审核</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>作品审核</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+<div class="superCtab">
+    <div class="cg-title clearfix"> 
+      <div class="searchBar searchBar2">
+  <form id="form1" name="form1" method="post" action="<{:U('Examine/index')}>" class="fomm1">
+    <input type="text" name="keyword"  placeholder=" 请输入搜索信息"  size="12" class="keyword keywords"  value="" />
+        <span class="select-box inline">
+    <select name="search_type" class="select">
+        <option value="1" >按书名</option>
+        <option value="2">按作者</option>
+    </select>
+    </span>
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜作品</button>
+  </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+        <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+          <thead>
+            <tr>
+              <th>书号</th>
+              <th>书名</th>
+              <th>作者</th>
+              <th>类型</th>
+              <th>状态</th>
+              <th>收费类型</th>
+              <th>单本收费</th>
+              <th>总字数</th>
+              <th>创建时间</th>
+              <th>留言</th>
+               <th>留言</th>
+              <th>审核稿件</th>
+              <th>作者资料</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+           <volist name="arr"  id="vo">
+            <tr class="text-c">
+              <td><{$vo.book_id}></td>
+              <td><{$vo.book_name}></td>
+              <td><{$vo.author_name}></td>
+              <td><{$vo.type_name}></td>
+              <td><if condition="$vo[state]==1"><span class="label label-blue">连载</span><else/><span class="label label-read">完本</span></if></td>
+              <td><switch name="vo[vip]">
+                 <case value="0"><span class="label label-lv">按章</span></case>
+                 <case value="1"><span class="label label-blue">按本</span></case>
+                 <case value="2"><span class="label label-read">免费</span></case>
+                 </switch></td>
+              <td><{$vo.money}></td>
+              <td><{$vo.words}></td>
+              <td><{$vo.time}></td>
+              <td><a class="team-a" href="<{:U('/Admin5b/Author/reply',array('id'=>$vo['author_id']))}>" target="_blank">回复</a></td>
+              <td><a class="team-a" href="<{:U('/Admin5b/Author/message',array('id'=>$vo['author_id']))}>" target="_blank">查看</a></td>
+              <td><a class="team-a" href="<{:U('/Admin5b/Examine/view',array('book'=>$vo[book_id]))}>" target="_blank">查看</a></td>
+              <td><a class="team-a" href="<{:U('/Admin5b/Author/lnformation',array('id'=>$vo[author_id]))}>" target="_blank">查看</a></td>
+              <td><a class="team-a" href="<{:U('/Admin5b/Examine/xiazai',array('book'=>$vo[book_id]))}>">下载</a>┆<a class="team-a" onClick="article_ok(this,'<{$vo[book_id]}>')" href="javascript:;">通过</a>┆<a class="team-a" onClick="article_no(this,'<{$vo[book_id]}>')" href="javascript:;">不通过</a></td>
+            </tr>
+           </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+ //删除那一条
+ function article_ok(obj,id){
+  var is=confirm('通过该书吗？');
+        if(is==true){
+          $.ajax({
+                url: "<{:U('Examine/tonguo')}>",
+                type: "get",
+                data: 'book=' + id,
+                success: function (data) {
+                 if(data==1){
+                     $(obj).parents("tr").remove();
+                 }else{
+                     alert("系统错误");
+                 }
+                }
+            });            
+        }
+}   
+ //删除那一条
+ function article_no(obj,id){
+  var is=confirm('确定该书不通过吗？');
+        if(is==true){
+          $.ajax({
+                url: "<{:U('Examine/butonguo')}>",
+                type: "get",
+                data: 'book=' + id,
+                success: function (data) {
+                 if(data==1){
+                     $(obj).parents("tr").remove();
+                 }else{
+                     alert("系统错误");
+                 }
+                }
+            });            
+        }
+}   
+</script>
+</body>
+</html>

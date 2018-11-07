@@ -1,0 +1,30 @@
+<table border="0" cellpadding="0" cellspacing="0" class="defaultTable">
+    <thead>
+    <tr style='background-color: red'>
+                <th>渠道名称</th>
+                <th>粉丝数量</th>
+                <th>成本</th>
+                <th>总充值</th>
+                <th>回报率</th>
+                <th>总点击</th>
+                <th>总注册</th>
+                <th>生成时间</th>
+                <th>去除该渠道</th>
+    </tr>    
+    </thead>
+    <tbody>
+    <volist name="mychannel" id="vo"> 
+              <tr>
+                  <td><{$vo.name}></td>
+                  <td><{$vo.num}></td>
+                  <td><{$vo.money}></td>
+                  <td><{$vo.pay_total}></td>
+                  <td><{$vo.huibao}>%</td>
+                  <td><{$vo.click_total}></td>
+                  <td><{$vo.reg_total}></td>
+                  <td><{$vo.time}></td>
+                  <td><div class="btn"><a href="javascript:;" class ="delete" onClick="article_del(this,'<{$vo.channel_id}>')" target="_blank"> 去除</a></div></td>
+              </tr>
+    </volist>
+  </tbody>
+</table>

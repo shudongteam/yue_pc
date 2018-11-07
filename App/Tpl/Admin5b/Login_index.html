@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>后台登录 - <{:C('WebName')}></title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/login.css" />
+<script language="JavaScript" type="text/JavaScript">
+//重新获取验证字符 
+function reloadcode() 
+{ 
+document.getElementById("imades").src = '<{:U('Login/yzm')}>?' + Math.random();
+} 
+</script>
+</head>
+<body>
+<div class="superlogin"></div>
+<div class="loginBox">
+  <div class="loginMain">
+    <div class="tabwrap">
+      <form action="<{:U('Login/login')}>" id="loginform" method="post">
+        <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="title">用户名：</td>
+            <td><input type="text" name="username" class="form-control txt" placeholder="请输入您的账户" /></td>
+          </tr>
+          <tr>
+            <td class="title">密   码：</td>
+            <td><input type="password" name="password" class="form-control txt" placeholder="请输入您的密码" /></td>
+          </tr>
+          <tr>
+            <td class="title">验证码：</td>
+            <td><input type="text" name="yzm" class="form-control txt txt2" placeholder="验证码" />
+              <span class="yzm"><img id="imades" src="<{:U('Login/yzm')}>"></span></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td class="shuru"><button name="submit" class="loginbtn" type="submit"> 确认登录</button>
+              <button name="reset" class="resetbtn" type="reset"> 重新填写</button></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td class="forgetpsw"></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="footer">欢迎登录 <{:C('WebName')}> 书库监控管理系统</div>
+</body>
+</html>

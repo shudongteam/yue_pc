@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>申请提现</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{ 
+ 	if (mform.money.value=="")
+	{
+		alert("金额不可为空！");
+		mform.money.focus();
+		return false;
+	}  
+ 	if (mform.beizhu.value=="")
+	{
+		alert("您想对财务说些什么！");
+		mform.beizhu.focus();
+		return false;
+	}  
+
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>申请提现</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+     <div class="Mian-cont-tongji">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tongji">
+        <tr>
+          <td><div class="xinxi"><b><{$myweb.money_month}></b><br>本月充值</div></td>
+          <td>&nbsp;</td>
+          <td><div class="xinxi"><b><{$myweb.money_total}></b><br>总充值</div></td>
+          <td>&nbsp;</td>
+          <td><div class="xinxi"><b><{$myweb.money_settlement}></b><br>未提现</div></td>
+           <td>&nbsp;</td>
+          <td><div class="xinxi"><b><{$myweb.money_has}></b><br>已提现</div></td>          
+        </tr>
+      </table>  
+      </div>        
+      <div class="pubMain">
+        <form id="form1" method="post" action="" class="fomm1" name="myform" onSubmit="return CheckPost();">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td style=" width: 80px;" >提现金额：</td>
+        <td><input name="money" type="text" class="shuruTxt" style="width: 150px;" value="" placeholder="请输入提现金额" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+      </tr>
+      <tr>
+        <td style=" width: 80px;" >备注：</td>
+        <td><input name="beizhu" type="text" class="shuruTxt" value="" placeholder="您有什么想对财务说的吗？"/></td>
+      </tr>             
+            <tr>
+              <td align="right">&nbsp;</td>
+              <td><input type="submit" id="" value="申请提现" class="saveBtn"></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

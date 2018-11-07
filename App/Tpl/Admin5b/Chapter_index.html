@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>查看作品</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language='JavaScript'>
+function CheckAll(form){
+    if(form.suo.checked==true){
+    for (var i=0;i<form.elements.length;i++)
+   {
+      var e = form.elements[i];
+      e.checked = true;
+   }       
+    }else{
+     for (var i=0;i<form.elements.length;i++)
+   {
+      var e = form.elements[i];
+      e.checked = false;
+   }         
+        
+    }
+    
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>章节管理 <span class="en">&gt;</span> <{$isbook[book_name]}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+     <div class="cg-title clearfix"> <a href="<{:U('Chapter/add',array('book'=>$isbook[book_id]))}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>新增章节</a> <a href="<{:U('Chapter/piliang',array('book'=>$isbook[book_id]))}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>批量添加</a><!-- <a href="<{:U('Chapter/delAll',array('bookid'=>$isbook[book_id]))}>" onclick="return confirm('确定要删除所有章节吗？')" class="default-add-btn newPdBtn"><i class="ico-add  Hui-iconfont">&#xe6a6;</i>删除全部</a> -->
+     <if condition="($isbook[cp_id] eq 0) AND ($isbook[fu_web] eq 0) ">
+      <a href="<{:U('Chapter/addtimes',array('book'=>$isbook[book_id]))}>" class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe600;</i>章节时间</a> 
+      </if>
+
+    <!--  <button name="delall" class="btnis" type="submit" onclick="return confirm('确定要删除所有章节吗？')"><i class="Hui-iconfont">&#xe6a6;</i> 删除全部章节</button> -->
+        <a href="<{:U('Book/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+    </div>     
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+        <form id="formDel" name="formDel" method="post" action="<{:U('Chapter/operation')}>">
+        <input name='fu_book'  type='hidden'  value='<{$isbook.book_id}>'  />
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>选择</th>
+                <th>序号</th>
+                <th>章节名称</th>
+                <th>字数</th>
+                <th>VIP</th>
+                <th>点击次数</th>
+                <th>订阅次数</th>
+                <th>ARPU</th>
+                <th>定时发布</th>
+                <th>上传时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+          <tbody>
+          <volist name="content"  id="vo">
+            <tr>
+                  <td><input type="checkbox" name="checkbox[]" value="<{$vo[content_id]}>"></td>
+                  <td><{$vo.num}></td>
+                  <td><a class="team-a " style="text-decoration:none" href="<{:U('Chapter/look',array('book'=>$isbook[book_id],'num'=>$vo['num']))}>"><{$vo.title}></a></td>
+                  <td><{$vo.number}></td>
+                  <td><{$vo.the_price}></td>
+                  <td><{$vo.clicknum}></td>
+                  <td><{$vo.dycs}></td>
+                  <td><{$vo.arup}>%</td>
+                  <td><{$vo.attribute}></td>
+                  <td><{$vo.time}></td>
+                  <td><a class="team-a" href="javascript:void(0)" onClick="article_del(this,'<{:U('Chapter/del',array('connkid'=>$vo[content_id]))}>')">删除</a> ┆ <a class="team-a" href="<{:U('Chapter/save',array('connkid'=>$vo['content_id']))}>">修改</a> ┆ <a class="team-a" href="<{:U('Chapter/pailie',array('connkid'=>$vo['content_id']))}>">排序</a></td>                
+              </tr>
+           </volist>
+            <tr>
+            <td><input type="checkbox" name="suo" onClick='CheckAll(this.form)'></td>
+            <td colspan="12" class="tabanniu">
+              <button name="okvip" class="btnis" type="submit"><i class="Hui-iconfont">&#xe6a7;</i> VIP所选</button>
+              <button name="novip" class="btnis" type="submit"><i class="Hui-iconfont">&#xe6a6;</i> 取消VIP</button>
+              <button name="jiesuo" class="btnis" type="submit"><i class="Hui-iconfont">&#xe6a6;</i> 解锁章节</button>
+              <button name="jiesuoall" class="btnis" type="submit"><i class="Hui-iconfont">&#xe6a6;</i> 解锁全部章节</button>
+            </td>
+            </tr>
+          </tbody>
+        </table>
+       </form>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+        <gt name="count" value="15">
+        <div class="form-group" style="width: 178px; height: 34px; float: right; margin-top: -93px; margin-right: 405px; position: relative; z-index: 999;">
+          <form action=""  method="get">
+            <span>跳到</span>
+            <input name="p" type="text" style="border: 1px solid #ddd; height: 33px; margin-left: 11px; width: 44px; text-align: center;" />
+            <span>页</span>
+            <input class="btnis" type="submit" value="跳转" />
+          </form>
+        </div>
+        </gt>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+ //删除那一条
+ function article_del(obj,url){
+  // alert(url);
+  var is=confirm('确定要删除吗？');
+      if(is==true){
+          window.location.href = url;           
+       }
+}   
+</script>
+</body>
+</html>

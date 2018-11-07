@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>授权书单-书评管理</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+      <h2><a href="<{:U('Webbook/index',array('web'=>$books[web_id]))}>" class="team-a">授权书单</a> <span class="en">&gt;</span> 书评管理 <span class="en">&gt;</span> <{$books.book_name}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-tongji">
+        <volist name="message" id="fmessage">
+        <table border="0" cellpadding="0" cellspacing="0" class="layui-table">
+              <tr>
+                <td style="widtd: 150px;" class="sorting_1">留言标题：</td>
+                <td><if condition="$fmessage[top]==1"><font color="blue">[置顶]</font></if>
+                  <if condition="$fmessage[good]==1"><font color="red">[精华]</font></if>
+                  <b><{$fmessage.title}></b></td>
+                <td style="widtd: 150px;" class="sorting_1">留言时间：</td>
+                <td><{$fmessage.time}></td>
+                <td style="widtd: 150px;" class="sorting_1">操作：</td>
+                <td><a href="<{:U('Message/topok',array('id'=>$fmessage[f_id]))}>" class ="team-a">置顶</a> <a href="<{:U('Message/goodok',array('id'=>$fmessage[f_id]))}>" class ="team-a">精华</a> <a href="<{:U('Message/topno',array('id'=>$fmessage[f_id]))}>" class ="team-a">取消置顶</a> <a href="<{:U('Message/goodno',array('id'=>$fmessage[f_id]))}>" class ="team-a">取消精华</a> <a href="<{:U('Message/del',array('id'=>$fmessage[f_id]))}>" class ="team-a">删除</a></td>
+              </tr>
+              <tr>
+                <td valign="top" class="sorting_1">留言内容：</td>
+                <td colspan="5"><{$fmessage.content}></td>
+              </tr>
+              <tr>
+                <td valign="top" class="sorting_1">子回复：</td>
+                <td colspan="5"><if condition="$fmessage[zmesg]!=''">
+                    <table border="0" cellpadding="0" cellspacing="0" class="layui-table">
+                      <volist name="fmessage[zmesg]" id="zmessage">
+                        <tr>
+                          <td style="widtd: 150px;" class="sorting_1"><{$zmessage.pen_name}>：</td>
+                          <td><{$zmessage.content}></td>
+                          <td style="widtd: 150px;" class="sorting_1">操作：</td>
+                          <td><a href="<{:U('Message/zdel',array('id'=>$zmessage[f_id]))}>" class ="team-a">删除</a></td>
+                        </tr>
+                      </volist>
+                    </table>
+                  <else/>无</if></td>
+              </tr>
+        </table>
+                 </volist>
+          <{$page}> 
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>每日账单</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+  .bline{
+    border:1px solid #DDD; 
+    line-height: 29px;
+    height: 29px;
+    float: left;
+    padding-left: 5px;
+    margin-right: 5px;
+  }
+  .lb{
+    color:#FF3030;font-size: 20px;
+  }
+</style>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>销售数据</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+     <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+        <form id="form1" name="form1" method="post" action="<{:U('Moneyday/index')}>" class="fomm1">
+         <input readonly="true" type="text" name='time' onFocus="WdatePicker({dateFmt:'yyyy-MM', maxDate:'%y-{%M-1}'})" id="pubDate" class="keyword Wdate" style="width:100px;" placeholder="搜索时间" value="<{$month}>">  
+        <!-- <input id="d5221" name="start" class="Wdate bline" type="text" onclick="var d5222=$dp.$('d5222');WdatePicker({onpicked:function(){d5222.click();},maxDate:'#F{$dp.$D(\'d5222\')}'})"/ placeholder="<{$start}>">
+        <span style="float: left;line-height: 29px;padding: 0px 5px;">至</span>
+        <input id="d5222" name="end" class="Wdate bline" type="text" onclick="WdatePicker({minDate:'#F{$dp.$D(\'d5221\')}'})"/ placeholder="<{$end}>"> -->
+           <input type="text" name="keyword"  placeholder=" 请输入搜索信息" value="" size="12" class="keyword keywords" / value="<{$keyword}>">
+            <span class="select-box inline" style="margin-right: 5px;">
+            <select name="search_type" class="select">
+                <option value="1">按书名</option>
+                <option value="2">按作者</option>
+            </select>
+            </span>  
+           <!--  <span class="select-box inline">
+            <select name="cp_id" class="select">
+                <option value="">公司</option>
+                    <foreach name="cp" item="vo">
+                      <option value="<{$vo.cp_id}>"><{$vo.pen_name}></option>
+                    </foreach>
+            </select>
+            </span> -->
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+          
+        </form>
+        <button class="search-button" type="button" id="imports" >导出数据</button>
+        <!-- <button class="search-button" type="button" id="imports" onclick="window.location.href='<{:U('Moneyday/bookDump')}>'">导出数据</button> -->
+      </div>
+    </div>     
+    <div class="cgsuperCtab">
+    <div style="margin-left: 30px;"><if condition="$month neq null"><i class="Hui-iconfont lb">&#xe62f;</i>&nbsp;&nbsp;<span style="color:#FF3030">您在：<{$month}>期间收入明细</span></if></div>
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+              <!-- <th>站点ID</th> -->
+              <th>书名</th>
+              <th>作者</th>
+              <th>上架状态</th>
+              <!-- <th>阅读币</th> -->
+             <!--  <th>总订阅（阅读币）</th>
+              <th>总打赏（阅读币）</th> -->
+              <th>总收入（元）</th>
+              <th>分成后（元）</th>
+             <!--  <th>推广费（元）</th> -->
+              <th>结算金额（元）</th>
+              <th>版权方</th>
+              <th>时间段</th>
+              </tr>
+            </thead>
+          <tbody>
+          <empty name="settle">
+             <tr style="font-size: 20px;text-align: center;"><td>暂无数据</td></tr>
+          <else />
+           
+          <empty name="mymday">
+            <tr style="font-size: 20px;text-align: center;"><td>暂无数据</td></tr>
+          <else /> 
+            <volist name="mymday"  id="vo">
+              <tr>
+              <!-- <td><{$vo.web_id}></td> -->
+              <td><{$vo.book_name}></td>
+              <td><{$vo.author_name}></td>
+              <td><if condition="$vo.audit eq 2"><span style="color:green;">上架</span> <else /><span style="color:green;">未上架</span></if></td>
+             <!--  <td><{$vo.buy_total}></td>
+              <td><{$vo.exceptional_total}></td> -->
+            <!--  <td><{$vo.consumption}></td> -->
+               <!-- <td><{$vo.consumption}>*0.9</td> -->
+              <td><{$vo.cs}></td>
+              <th><{$vo.five}></th>
+              <!-- <th><{$vo.cost}></th> -->
+              <th><{$vo.pay}></th>
+
+              <th><{$_COOKIE[pen_name]}></th>
+              <td><{$month}></td>
+              </tr>
+            </volist>
+         
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+         <gt name="count" value="15">
+        <div class="form-group" style="width: 450px; height: 34px; float: right; margin-top: -93px; /*margin-right: 405px; */position: relative; z-index: 999;">
+          <form action="<{:U('Moneyday/index')}>"  method="get">
+          <input name="search_type" type="hidden" value="<{$search_type}>" />
+          <input name="keyword" type="hidden" value="<{$keyword}>" />
+          <input name="start" type="hidden" value="<{$_REQUEST['start']}>" />
+          <input name="end" type="hidden" value="<{$_REQUEST['end']}>" />
+          <input name="cp_id" type="hidden" value="<{$cp_id}>" />
+            <span>每页显示</span>
+            <input name="nums" type="text" value="<{$nums}>" style="border: 1px solid #ddd; height: 33px; margin-left: 11px; width: 44px; text-align: center;" />
+            <span>条 <input class="btnis" type="submit" value="确定" /></span>
+            <span>跳到</span>
+            <input name="p" type="text" style="border: 1px solid #ddd; height: 33px; margin-left: 11px; width: 44px; text-align: center;" />
+            <span>页</span>
+            <input class="btnis" type="submit" value="跳转" />
+          </form>
+        </div>
+        </gt>
+         </empty> 
+          </empty> 
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+    $("#imports").click(function(){
+      var v =$("#pubDate").val();
+      // alert(v)
+      if(!v){
+        alert("请选择日期")
+      }else{
+        window.location.href="/Cp/Moneyday/bookDump?month="+v;
+        // window.location.href='<{:U('Moneyday/bookDump',array('month'=>v))}>'
+      }
+    })
+</script>
+</html>

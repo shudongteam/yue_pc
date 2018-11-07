@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>修改密码</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language='JavaScript'>
+function CheckPost(){
+	error = true;
+	$("#form input").each(function(){
+		if(!$(this).val()) {
+			alert($(this).attr("placeholder") + '!!!');
+			$(this).focus();
+			error = false;
+			return false;
+		}
+	})
+	
+	if(error && ($("#form").find("input[name=\'new_passwd\']").val().length <= 5)) {
+		alert("请输入6位以上密码！")
+		error = false;
+	}
+	
+	if(error && ($("#form").find("input[name=\'new_passwd\']").val() != $("#form").find("input[name=\'passwd_confirm\']").val())) 
+	{
+		alert("两次密码不一致！")
+		error = false;
+	}
+	
+	return error;
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content">
+  <div class="super-header">
+    <h2>修改密码</h2>
+    <include file="Main:user"/> </div>
+  <div class="super-content">
+    <div class="superCtab">
+      <div class="ctab-title zxtop-title clearfix"><span>请保管好您的密码，以免发生损失！</span><a href="JavaScript:history.go(-1);" class="backlistBtn"><i class="ico-back"></i>返回上页</a></div>
+    </div>
+  </div>
+  <div class="superCtab">
+    <div class="publishArt">
+      <form class="form form-horizontal" id="form" action="" method="post" name="mform"  target="_parent" onSubmit="return CheckPost();">
+        <div class="pubMain">
+          <h5 class="pubtitle">旧密码</h5>
+          <div class="pub-txt-bar">
+            <input type="password" name="old_passwd" class="shuruTxt shuruTxt2" placeholder="请输入原始密码">
+          </div>
+          <h5 class="pubtitle">新密码<span>（数字、字母、符号组合，最少8个字符）</span></h5>
+          <div class="pub-txt-bar">
+            <input type="password" name="new_passwd" class="shuruTxt shuruTxt2" placeholder="请输入新的密码" >
+          </div>
+          <h5 class="pubtitle">确认密码</h5>
+          <div class="pub-txt-bar">
+            <input type="password" name="passwd_confirm" class="shuruTxt shuruTxt2" placeholder="请在输入一次密码">
+          </div>
+          <div class="pub-btn">
+            <button class="saveBtn" type="submit"><i class="Hui-iconfont">&#xe632;</i> 确认修改</button>
+            <button name="reset" class="resetBtn" type="reset"> <i class="Hui-iconfont">&#xe66b;</i> 重新填写</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

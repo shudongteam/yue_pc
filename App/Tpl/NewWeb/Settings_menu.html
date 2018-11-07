@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <title>微信菜单</title> 
+  <meta name="description" content="" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> 
+ </head>
+ <body class="no-skin">
+  <include file="Head:include" />  
+  <!-- #section:basics/navbar.layout --> 
+  <div id="navbar" class="navbar navbar-default"> 
+   <include file="Navbar:include" />
+  </div> 
+  <div class="main-container" id="main-container"> 
+   <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script> 
+   <include file="Sidebar:include" /> 
+   <div class="main-content"> 
+    <include file="Bread:include" /> 
+    <div class="page-content"> 
+     <div class="page-content-area"> 
+      <div class="row"> 
+       <div class="col-xs-12"> 
+        <!-- PAGE CONTENT BEGINS --> 
+        <!--/span--> 
+        <!-- left menu ends --> 
+        <div style="margin-bottom:30px"> 
+         <ul class="nav nav-tabs"> 
+          <li><a href="/NewWeb/Settings/mp">公众号设置</a></li> 
+          <li class=""><a href="/NewWeb/Settings/integrate">公众号接入</a></li> 
+          <li class="active"><a href="/NewWeb/Settings/menu">微信菜单</a></li>
+          <li class=""><a href="/NewWeb/Settings/automessage">消息回复</a></li>          
+         </ul> 
+        </div> 
+       <div class="actions-bar">
+          <a href="/NewWeb/Settings/edit" class="btn btn-primary">
+              <i class="fa fa-plus"></i> 添加菜单
+          </a>
+          <a href="/NewWeb/Settings/uploadmenu" class="btn btn-primary">
+              <i class="fa fa-refresh"></i> 更新菜单
+          </a>
+          <a href="/NewWeb/Settings/api_generate_menu" class="btn btn-primary">
+              <i class="fa fa-reply-all"></i> 恢复默认
+          </a>
+          </div>
+        <table class="table table-striped table-bordered table-hover responsive">
+          <thead>
+            <tr>
+              <td>菜单名称</td>
+              <td>菜单等级</td>
+              <td>排序</td>
+              <td>操作</td>
+            </tr>
+          </thead>
+          <tbody>
+              <volist name="data" id="vo" empty="$empty">
+            <tr>
+              <td><{$vo.name}></td>
+              <td><if condition="($vo.parent_id eq 0)">一级<else/>二级</if></td>
+              <td><{$vo.sort_order}></td>
+              <td>
+                <a class="btn btn-xs btn-success" href="/NewWeb/Settings/edit?id=<{$vo.menu_id}>" data-toggle="withdraw" data-id="1">修改</a>
+                <a class="btn btn-xs btn-danger" onclick="return confirm('确定删除该菜单吗？')" href="/NewWeb/Settings/delete/id/<{$vo.menu_id}>" data-toggle="withdraw" data-id="1">删除</a>
+              </td>
+            </tr>
+          </volist>
+          </tbody>
+        </table>        
+
+        <!-- PAGE CONTENT ENDS --> 
+       </div>
+       <!-- /.col --> 
+      </div>
+      <!-- /.row --> 
+     </div>
+     <!-- /.page-content-area --> 
+    </div>
+    <!-- /.page-content --> 
+   </div> 
+   <!-- /.main-content -->
+  </div> 
+  <!-- /.main-container --> 
+  <!-- basic scripts --> 
+  <include file="Script:include" /> 
+ </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>更新书籍</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript" src="__PUBLIC__/AdminPublic/js/jquery-1.6.min.js"></script>
+
+<script type="text/javascript">
+var xmlStrArr=new Array();  
+<foreach name="mycpbook" item="vo">
+     xmlStrArr[<{$key}>]="<{$vo.id}>";
+</foreach>    
+ 
+var times= xmlStrArr.length;
+//递归发送请求
+CloudiaTransfer_func(times,xmlStrArr);//xmlStrArr是我遍历的参数数组
+function CloudiaTransfer_func(times,xmlStrArr){
+
+    if(times <= 0){
+        $("#zuijia").append("数据采集结束");//追加数据
+        return;
+    }
+    var temp = times-1;
+   $.ajax({
+      url: "<{:U('FengQi/update')}>",
+      type: "get",
+      data: 'id=' + xmlStrArr[temp],            
+       success: function (data) {
+         $("#zuijia").append(data);//追加数据
+         gundong();//滚动菜单
+         times --;//时间减少一个
+         CloudiaTransfer_func(times,xmlStrArr); //递归调用
+       },
+      error : function(xhr,textStatus){
+          $("#zuijia").append(textStatus+xmlStrArr[temp]);//追加数据
+          times --;//时间减少一个
+          CloudiaTransfer_func(times,xmlStrArr); //递归调用         
+        }     
+       
+     });
+}
+//滚动效果
+function gundong(){
+   var h = $(document).height()-$(window).height();
+   $(document).scrollTop(h);   
+}
+</script>
+</head>
+<body>
+    <div id="zuijia"><font color="red">开始采集 >></font></br></div>
+</body>
+</html>

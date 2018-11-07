@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>修改角色</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+ 	if (mform.pen_name.value=="")
+	{
+		alert("名称不可为空！");
+		mform.pen_name.focus();
+		return false;
+	}
+	
+	if (((mform.position.value !=1) && (mform.position.value !=4)) && mform.web_id.value==0)
+	{
+		alert("请选择站点！");
+		mform.web_id.focus();
+		return false;
+	}
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>修改角色</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> <a href="<{:U('Permission/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form action="" name="mform" method="post" onSubmit="return CheckPost();">
+   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+   		<tr>
+	        <td class="contenta">账户名：</td>
+	        <td><{$myadmin.user_name}></td>
+	      </tr>
+       <tr>
+        <td class="contenta">名称：</td>
+        <td><input name="pen_name" type="text" class="shuruTxt" placeholder="请填写名称" value="<{$myadmin.pen_name}>"/></td>
+      </tr>              
+      <tr class="web_id">
+        <td class="contenta">站点：</td>
+        <td>
+        <span class=" select-box inline">
+        	<select name="web_id" style="height: 35px;text-indent: 2px;">
+        		<volist name="webs" id="vo">
+        		<option value="<{$vo.web_id}>" <if condition="($vo[web_id] eq $myadmin[web_id])">selected="selected"</if>><{$vo.web_name}></option>
+        		</volist>
+        	</select>
+        </span>
+        </td>
+      </tr>   
+     <tr>
+        <tr class="web_id">
+        <td class="contenta">权限：</td>        
+        <td>
+            <input type="checkbox" name="checkbox[]" value="1" <?php if (strstr($myadmin[position_list], '1')) { ?> checked="checked"<?php } ?>> 用户管理
+            <input type="checkbox" name="checkbox[]" value="2" <?php if (strstr($myadmin[position_list], '2')) { ?> checked="checked"<?php } ?>> 作品管理
+            <input type="checkbox" name="checkbox[]" value="3" <?php if (strstr($myadmin[position_list], '3')) { ?> checked="checked"<?php } ?>> 授权书单
+            <input type="checkbox" name="checkbox[]" value="4" <?php if (strstr($myadmin[position_list], '4')) { ?> checked="checked"<?php } ?>> 网站设置
+            <input type="checkbox" name="checkbox[]" value="5" <?php if (strstr($myadmin[position_list], '5')) { ?> checked="checked"<?php } ?>> 第三方作品
+            <input type="checkbox" name="checkbox[]" value="6" <?php if (strstr($myadmin[position_list], '6')) { ?> checked="checked"<?php } ?>> 接口管理
+            <input type="checkbox" name="checkbox[]" value="8" <?php if (strstr($myadmin[position_list], '8')) { ?> checked="checked"<?php } ?>> 财务管理
+            <input type="checkbox" name="checkbox[]" value="9" <?php if (strstr($myadmin[position_list], '9')) { ?> checked="checked"<?php } ?>> 网站统计
+            <input type="checkbox" name="checkbox[]" value="10" <?php if (strstr($myadmin[position_list], '10')) { ?> checked="checked"<?php } ?>> 管理员管理
+            <input type="checkbox" name="checkbox[]" value="11" <?php if (strstr($myadmin[position_list], '11')) { ?> checked="checked"<?php } ?>> 系统管理
+        
+        </td>  
+      </tr>
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" id="" value="确认修改" class="saveBtn"></td>
+      </tr>
+    </table>
+    </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+uid = '<{$myadmin.uid}>';
+  function change(id)
+  {
+  	$.ajax({
+  		url:'<{:U("Permission/ajaxposition")}>',
+  		data:'id=' + id,
+  		dataType:'json',
+  		success:function(data){
+  			if(data)
+  			{
+  				html = '';
+  				for(i in data){
+  					if(data[i]['uid'] == uid) {
+  						html += '<option value="' + data[i]['uid'] + '" selected="selected">' + data[i]['name'] + '</option>';
+  					} else {
+  						html += '<option value="' + data[i]['uid'] + '">' + data[i]['name'] + '</option>';
+  					}  					
+  				}
+  				$('select[name=\'uid\']').html(html);
+  			}
+  		}
+  	});
+  	
+  	if((id == 1) || (id == 4)) {
+  		$('.web_id').hide();
+  		$('select[name=\'web_id\']').val('');
+  	} else {
+  		$('.web_id').show();
+  	}
+  }
+  $('select[name=\'uid\']').load(change($('select[name=\'position\']').val()));
+</script>
+</body>
+</html>

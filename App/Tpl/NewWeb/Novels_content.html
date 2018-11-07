@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>参考文案</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/Public/NewWeb/bootstrap.min.css" rel="stylesheet">
+    <link href="/Public/NewWeb/font-awesome.min.css" rel="stylesheet">
+    <link href="/Public/NewWeb/toastr.min.css" rel="stylesheet">
+    <script src="/Public/NewWeb/jquery.js"></script>
+    <script src="/Public/NewWeb/lodash.min.js"></script>
+    <script src="/Public/NewWeb/toastr.min.js"></script>
+    <script src="/Public/NewWeb/handlebars.min.js"></script>
+    <script src="/Public/NewWeb/knockout-min.js"></script>
+    <script src="/Public/NewWeb/jquery.validate.min.js"></script>
+    <script src="/Public/NewWeb/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Public/NewWeb/bootstrap.min.js"></script>
+    <script src="/Public/NewWeb/clipboard.min.js"></script>
+    <!-- <script src="/Public/NewWeb/html2canvas.min.js"></script> -->
+        <!-- <script src="https://ommdq027l.qnssl.com/vendor/html2canvas/0.5.0-beta4/html2canvas.min.js"></script> -->
+        <script src="https://ommdq027l.qnssl.com/static/vendor/rasterizeHTML.allinone.js"></script>
+    <!-- <script src="https://ommdq027l.qnssl.com/static/vendor/qrcode.js"></script>         -->
+    <script>
+        toastr.options.positionClass = 'toast-bottom-right';
+    </script>
+    <script src="/Public/NewWeb/admin.js?v=10"></script>
+
+    <link rel="stylesheet" href="/Public/NewWeb/page_mp_article.css">
+    <link rel="stylesheet" href="/Public/NewWeb/page_mp_article_improve_combo.css">
+    <link rel="stylesheet" href="/Public/NewWeb/admin.css?v=5">
+
+    <!--[if lte IE 8]>
+    <script src="/Public/NewWeb/html5shiv.min.js"></script>
+    <script src="/Public/NewWeb/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+        #editor-bar .dropdown-menu {
+            height: auto;
+            max-height: 400px;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="rich_media">
+        <div class="rich_media_inner" style="padding-top:0">
+            <div class="rich_media_area_primary">
+                <h1 id="wx-article-title" class="rich_media_title"></h1>
+                <div class="rich_media_content">
+                    <div id="wx-article-content">
+                        <div id="wx-article-cover"></div>
+                        <div id="wx-article-body"></div>
+                        <div id="wx-article-footer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav id="editor-bar" class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#editor-menu" aria-expanded="false">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="editor-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-header"></i> 文案标题 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <!-- ko foreach: titles -->
+                            <li><a href="#" data-bind="text: title, click: $root.changeTitle"></a></li>
+                            
+                            <!-- /ko -->
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-image"></i> 文案封面 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <!-- ko foreach: covers -->
+                            <li>
+                                <a href="#" data-bind="click: $root.changeCover">
+                                    <img style="max-width:200px;max-height:40px;" data-bind="attr: { src: cover_url }" src="">
+                                </a>
+                            </li>
+                            <!-- /ko -->
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">正文模板 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <!-- ko foreach: body_templates -->
+                            <li style="border-bottom:#eee 1px solid;">
+                                <a href="#" data-bind="click: $root.changeBodyTemplate">
+                                    <img style="max-height: 40px;" data-bind="attr: { src: preview_img }" src="">
+                                </a>
+                            </li>
+                            <!-- /ko -->
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">原文引导模板 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <!-- ko foreach: footer_templates -->
+                            <li style="border-bottom:#eee 1px solid;">
+                                <a href="#" data-bind="click: $root.changeFooterTemplate">
+                                    <img style="max-height: 40px;" data-bind="attr: { src: preview_img }" src="">
+                                </a>
+                            </li>
+                            <!-- /ko -->
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-copy"></i> 复制 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">文字模式</li>
+                            <li>
+                                <a href="javascript:void(0);" data-toggle="copy-text" data-clipboard-target="#wx-article-title">复制标题</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" data-toggle="copy-text" data-clipboard-target="#wx-article-content">复制正文 (全部)</a>
+                            </li>
+                            <li class="divider"></li>
+
+                            <li class="dropdown-header">图片模式</li>
+                            <li>
+                                <a href="javascript:void(0);" data-toggle="copy-text" data-clipboard-target="#wx-article-cover">复制封面</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" id="btn-create-content-img">生成正文图片</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" data-toggle="copy-text" data-clipboard-target="#wx-article-footer">复制原文引导</a>
+                            </li>
+                        </ul>
+                    </li>
+<!--                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-copy"></i> 复制 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="javascript:void(0);" id="btn-copy-title" data-clipboard-target="#wx-article-title">复制标题</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" id="btn-copy-content" data-clipboard-target="#wx-article-content">复制正文</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" id="btn-create-content-img">生成正文图片</a>
+                            </li>                            
+                        </ul>
+                    </li> -->
+                </ul>
+
+                <div class="navbar-form navbar-right">
+                    <span data-bind="visible: is_novel_online" style="">
+                        <eq name="flag" value="1">
+                            <button type="button" class="btn btn-primary" data-bind="click: openReferralLinkModal">
+                                <i class="fa fa-link"></i> 生成渠道
+                            </button>
+                        </eq>
+                    </span>
+                    <span data-bind="visible: !is_novel_online()" style="display:none;">
+                        <button type="button" class="btn btn-disabled">小说已下架</button>
+                    </span>
+                </div>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="modal fade" id="create-referral-link-modal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-bind="click: close" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" data-bind="text: title"></h4>
+            </div>
+            <div class="modal-body">
+                <div data-bind="visible: loading" class="loading-panel">
+                    <i class="fa fa-spin fa-spinner"></i>
+                </div>
+                <form class="form-horizontal" style="display: none" data-bind="visible: !loading()" novalidate="novalidate">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3"><span class="required" aria-required="true">*</span> 派单渠道名称</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" maxlength="100" name="description" data-val="true" data-val-required="请填写派单渠道名称" data-bind="value: description">
+                            <p class="help-block help-block-error" data-valmsg-for="description" data-valmsg-replace="true"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3"><span class="required" aria-required="true">*</span> 是否强制关注</label>
+                        <div class="col-sm-7">
+                            <label class="radio-inline">
+                                <input type="radio" name="referrer_type" value="1" data-bind="checked: referrer_type" data-val="true" data-val-required="请选择是否开启强制关注">
+                                <span>是</span>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="referrer_type" value="2" data-bind="checked: referrer_type">
+                                <span>否</span>
+                            </label>
+                            <p class="help-block help-block-error" data-valmsg-for="referrer_type" data-valmsg-replace="true"></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bind="click: submit, text: id() ? '保存修改' : '生成渠道'"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var GetReferralLinkModal = function () {
+        var self = this;
+        var $modal = null;
+        var callbacks = null;
+        var defer = null;
+        var opts = null;
+        var link = null; // 生成的链接，{ id, url }
+        var next_num = '<{$next_num}>';
+        var model = {
+            loading: ko.observable(false),
+            submitting: ko.observable(false),
+
+            title: ko.observable(),
+
+            id: ko.observable(),
+            type: ko.observable(0),
+            article_id: ko.observable(),
+            novel_id: ko.observable(),
+            novel_avatar: ko.observable(),
+            novel_title: ko.observable(),
+            article_title: ko.observable(),
+            referrer_type: ko.observable(),
+            description: ko.observable(),
+            force_follow_chapter_idx: ko.observable(),
+            force_follow_chapter_id: ko.observable(),
+            force_follow_chapter_title: ko.observable(),
+
+            submit: function () {
+                self.submit();
+            },
+            close: function () {
+                self.close();
+            }
+        };
+
+        self.open = function (options) {
+            self.reset();
+
+            defer = $.Deferred();
+
+            opts = options;
+
+            if (!$modal) {
+                $modal = $('#create-referral-link-modal');
+                ko.applyBindings(model, $modal.find('.modal-content')[0]);
+
+                model.force_follow_chapter_idx.subscribe(function (idx) {
+                   if (!idx || !/^\d+$/.test(idx)) {
+                       model.force_follow_chapter_id(null);
+                       model.force_follow_chapter_title(null);
+                   } else {
+                       self.tryFetchForceFollowChapterInfo();
+                   }
+                });
+            }
+
+            callbacks = options.callbacks || {};
+
+            model.title(options.title || (options.id ? '修改渠道属性' : '生成渠道'));
+
+            if (options.type !== undefined) {
+                model.type(options.type);
+            }
+
+            model.loading(true);
+
+            var promise = $.Deferred().resolve().promise();
+
+            if (options.id) {
+                model.id(options.id);
+
+                promise = $.get('/backend/referral_links/api_get/' + options.id, function (result) {
+                    model.type(result.type);
+                    model.article_id(result.article_id);
+                    model.description(result.description);
+                    model.referrer_type(result.referrer_type);
+                    model.force_follow_chapter_idx(result.force_follow_chapter_idx);
+
+                    opts.wx_article_title_id = result.wx_article_title_id;
+                    opts.wx_article_cover_id = result.wx_article_cover_id;
+                    opts.wx_article_body_template_id = result.wx_article_body_template_id;
+                    opts.wx_article_footer_template_id = result.wx_article_footer_template_id;
+                });
+            } else {
+                model.article_id(options.article_id);
+            }
+
+            promise.then(function () {
+                self.tryFetchNovelArticleInfo();
+                self.tryFetchForceFollowChapterInfo();
+                model.loading(false);
+            });
+
+            $modal.modal('show');
+
+            return defer.promise();
+        };
+
+        self.tryFetchNovelArticleInfo = function () {
+            var articleId = model.article_id();
+            if (!articleId) {
+                return $.Deferred().resolve();
+            }
+
+            // return $.get('/NewWeb/Novels/api_get_short_article_info/fubook/' + articleId+'/num')
+            //     .then(function (result) {
+                    model.novel_id(articleId);
+                    // model.novel_avatar(result.novel.avatar);
+                    // model.novel_title(result.novel.title);
+                // });
+        };
+
+        self.tryFetchForceFollowChapterInfo = function () {
+            var idx = model.force_follow_chapter_idx();
+            if (idx) {
+                idx = parseInt(idx);
+            }
+
+            if (!idx) {
+                return false;
+            }
+
+            // 如果 novel_id 未加载，也忽略，novel_id 加载后会再触发一次获取关注章节信息
+            if (!model.novel_id()) {
+                return false;
+            }
+
+            $.get('/backend/articles/api_get_basic_info_by_idx', {
+                nid: model.novel_id(),
+                idx: model.force_follow_chapter_idx()
+            })
+                .then(function (result) {
+                    model.force_follow_chapter_id(result.id);
+                    model.force_follow_chapter_title(result.title);
+                })
+                .fail(handleAjaxError);
+        };
+
+        self.submit = function () {
+            if (model.submitting()) {
+                return false;
+            }
+
+            if (!$modal.find('form').valid()) {
+                return false;
+            }
+
+            model.submitting(true);
+
+            $.ajax({
+                url: '/NewWeb/Novels/api_save',
+                type: 'POST',
+                // contentType: 'application/json',
+                data: {
+                    id: model.id(),
+                    num: next_num,
+                    type: model.type(),
+                    novels_id: model.article_id(),
+                    referrer_type: model.referrer_type(),
+                    force_follow_chapter_idx: model.force_follow_chapter_idx(),
+                    description: model.description(),
+                    wx_article_title_id: opts.wx_article_title_id,
+                    wx_article_cover_id: opts.wx_article_cover_id,
+                    wx_article_body_template_id: opts.wx_article_body_template_id,
+                    wx_article_footer_template_id: opts.wx_article_footer_template_id
+                }
+            })
+                .then(function (result) {
+                    link = result;
+
+                    if (callbacks.link_generated) {
+                        callbacks.link_generated(result);
+                    }
+
+                    self.close();
+
+                    Modal.open({
+                        title: model.id() ? '保存成功' : '渠道生成成功',
+                        backdrop: 'static',
+                        keyboard: false,
+                        body:
+                            '<div>' +
+                                '<div>请复制下方推广链接，后续您可以在后台菜单的"渠道分析"中找到它并查看统计数据:</div>' +
+                                '<div style="margin:10px 0" class="text-primary">' + result.url + '</div>' +
+                                '<div style="margin:10px 0;color:red;font-weight:bold;"><i class="fa fa-info-circle"></i> 请务必使用此链接作为文案的原文链接，不要使用微信中点开后手工复制的链接</div>' +
+                            '</div>',
+                        callbacks: {
+                            close: function () {
+                                if (link) {
+                                    defer.resolve(link);
+                                } else {
+                                    defer.reject({ reason: 'cancel' });
+                                }
+                            }
+                        },
+                        buttons: [
+                            {
+                                text: '复制链接',
+                                className: 'btn-primary',
+                                clipboard: {
+                                    text: function () {
+                                        return link.url;
+                                    },
+                                    success: function () {
+                                        var $modal = this.$modal();
+                                        var $hint = $modal.find('.copy-success-hint');
+                                        if ($hint.length === 0) {
+                                            $modal.find('.modal-footer').prepend('<span style="display:inline-block;margin-right:10px;color:red;vertical-align:middle;" class="copy-success-hint"></span>');
+                                            $hint = $modal.find('.copy-success-hint');
+                                        }
+
+                                        $hint.html('复制成功!');
+                                    }
+                                }
+                            },
+                            {
+                                text: '关闭',
+                                click: function () {
+                                    this.close();
+                                }
+                            }
+                        ]
+                    })
+                })
+                .fail(handleAjaxError)
+                .always(function () {
+                    model.submitting(false);
+                });
+        };
+
+        self.close = function () {
+            $modal.modal('hide');
+        };
+
+        self.reset = function () {
+            link = null;
+
+            model.loading(false);
+            model.submitting(false);
+
+            model.id(null);
+            model.article_id(null);
+            model.novel_avatar(null);
+            model.novel_title(null);
+            model.article_title(null);
+            model.referrer_type(null);
+            model.force_follow_chapter_idx(null);
+            model.force_follow_chapter_id(null);
+            model.force_follow_chapter_title(null);
+            model.description(null);
+        }
+    };
+
+    GetReferralLinkModal.instance = new GetReferralLinkModal();
+
+    $(function () {
+        $(document).on('click', '[data-toggle="create-referral-link"]', function () {
+            GetReferralLinkModal.instance.open({
+                article_id: $(this).data('article-id')
+            });
+
+            return false;
+        });
+    });
+</script>
+<!--    <div class="modal fade" id="content-img-modal" tabindex="-1">
+    <div class="modal-dialog" role="document" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">正文图片</h4>
+            </div>
+            <div class="modal-body" style="max-height:650px;overflow:auto;">
+                <div class="loading" style="text-align:center;margin:100px 0 150px;">
+                    <i class="fa fa-spin fa-spinner" style="font-size:60px;color:#ddd"></i>
+                </div>
+                <div class="canvas-container"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-download-img"><i class="fa fa-download"></i> 下载图片</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="modal fade" id="content-img-modal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">正文图片</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group" data-bind="foreach: items">
+                    <li class="list-group-item">
+                        <span style="display:inline-block;margin-top:4px;">
+                            <span style="font-size:16px;" data-bind="text: name"></span>
+                            <span data-bind="visible: status() === 'generating'"><i class="fa fa-spin fa-spinner"></i></span>
+
+                            <span class="text-muted" style="display: none;" data-bind="visible: status() === 'generated'">
+                                (<span data-bind="text: width"></span> x <span data-bind="text: height"></span>)
+                            </span>
+                        </span>
+                        <button type="button" class="btn btn-sm btn-default pull-right" data-bind="visible: status() === 'generated', click: $root.download"><i class="fa fa-download"></i> 下载</button>
+
+                        <div style="color:red;display:none;" data-bind="visible: err_msg, html: err_msg"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // var ContentImgModal = function () {
+    //   var self = this;
+    //   var $modal = null;
+    //   var _canvas = null;
+
+    //   this.open = function () {
+    //     if (!$modal) {
+    //       $modal = $('#content-img-modal');
+    //       $modal.find('.btn-download-img').click(function () {
+    //         self.download();
+    //         return false;
+    //       });
+    //     }
+
+    //     $modal.find('.canvas-container').hide();
+    //     $modal.find('.loading').show();
+    //     $modal.modal('show');
+    //   };
+
+    //   this.setImage = function (canvas) {
+    //     _canvas = canvas;
+
+    //     canvas.style = 'display:block;margin:auto';
+
+    //     $modal.find('.canvas-container').html('').append(canvas);
+    //     $modal.find('.loading').hide();
+    //     $modal.find('.canvas-container').show();
+    //   };
+
+    //   this.download = function () {
+    //     if (!_canvas) {
+    //       return false;
+    //     }
+
+    //     if (!_canvas.toBlob && !window.URL.createObjectURL) {
+    //       toastr.error('请右击图片保存');
+    //       return false;
+    //     }
+
+    //     _canvas.toBlob(function (blob) {
+    //       var link = document.createElement('a');
+    //       link.href = window.URL.createObjectURL(blob);
+    //       link.download = +new Date + ".jpg";
+    //       link.click();
+    //     }, 'image/jpeg', 0.75);
+    //   }
+    // };
+
+    // ContentImgModal.instance = new ContentImgModal();
+
+    var ContentImgModal = function () {
+      var self = this;
+      var $modal = null;
+      var model = {
+        items: ko.observableArray(),
+        download: function (item) {
+          var canvas = item.canvas;
+          if (!canvas.toBlob && !window.URL.createObjectURL) {
+            alert('浏览器版本过低, 请更新版本或使用谷歌浏览器');
+            return false;
+          }
+
+          canvas.toBlob(function (blob) {
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = item.name + '.png';
+            link.click();
+          }, 'image/png');
+        }
+      };
+
+      this.open = function () {
+        ensureModal();
+        $modal.modal('show');
+      };
+
+      this.reset = function () {
+        model.items([]);
+      };
+
+      this.addItem = function (item) {
+        model.items.push({
+          id: item.id,
+          name: item.name,
+          status: ko.observable('generating'),
+          width: ko.observable(),
+          height: ko.observable(),
+          err_msg: ko.observable(),
+          canvas: null
+        })
+      };
+
+      this.markCompleted = function (itemId, canvas) {
+        var item = _.find(model.items(), function (it) {
+          return it.id === itemId;
+        });
+
+        item.status('generated');
+        item.canvas = canvas;
+        item.width(canvas.width);
+        item.height(canvas.height);
+      };
+
+      function ensureModal() {
+        if (!$modal) {
+          $modal = $('#content-img-modal');
+          ko.applyBindings(model, $modal.find('.modal-content')[0]);
+        }
+      }
+    };
+
+    ContentImgModal.instance = new ContentImgModal();
+</script>
+    <script>
+        $(function () {
+            var editor = new WxArticleEditor({
+                novel_id: <{$novel_id}>,
+                is_novel_online: true,
+                article_id: <{$article_id}>,
+                next_article_id: <{$novel_id}>,
+                category_id: 14,
+                referral_link_id: null,
+                title_id: null,
+                cover_id: null,
+                body_template_id: '',
+                footer_template_id: '',
+                num :<{$num}>
+            });
+
+            editor.init();
+
+            $('[data-toggle="copy-text"]').each(function () {
+              new Clipboard(this).on('success', function (e) {
+                e.clearSelection();
+                toastr.success('复制成功');
+              });
+            });
+
+            $('[data-toggle="copy-link"]').each(function () {
+                var clipboard = new Clipboard(this, {
+                    text: function () {
+                        return $('#txt-referral-link').val();
+                    }
+                });
+                clipboard.on('success', function (e) {
+                    e.clearSelection();
+                    toastr.success('链接复制成功');
+                });
+            });
+
+            // $('#btn-create-content-img').click(function () {
+            //   scrollToElement('#wx-article-content', { offset: 10 }, function () {
+            //     ContentImgModal.instance.open();
+
+            //     html2canvas(document.getElementById('wx-article-content'), {
+            //       proxy: "/NewWeb/Novels/proxy",
+            //       onrendered: function (canvas) {
+            //         ContentImgModal.instance.setImage(canvas);
+            //       }
+            //     });
+            //   });
+            // });
+           $('#btn-create-content-img').click(function () {
+              var modal = ContentImgModal.instance;
+              modal.reset();
+
+              var $chapters = editor.$body().find('.chapter');
+              $chapters.each(function (i) {
+                // alert(i);
+                modal.addItem({
+                  id: i + 1,
+                  name: '第' + (i + 1) + '章'
+                });
+              });
+
+              modal.open();
+
+              $chapters.each(function (i) {
+                editor.drawHTML($(this)).then(function (canvas) {
+                  modal.markCompleted(i + 1, canvas);
+                });
+              });
+
+              return false;
+            });            
+        });
+
+        var EditorBar = function (options) {
+            var self = this;
+            var editor = options.editor;
+            var model = {
+                is_novel_online: ko.observable(options.is_novel_online),
+                titles: ko.observableArray(options.titles),
+                covers: ko.observableArray(options.covers),
+                body_templates: ko.observableArray(options.body_templates),
+                footer_templates: ko.observableArray(options.footer_templates),
+                num: ko.observableArray(options.num),
+
+                changeTitle: function (title) {
+                    scrollToElement('#wx-article-title', { offset: 10 }, function () {
+                        editor.changeTitle(title.id);
+                    });
+                },
+
+                changeCover: function (cover) {
+                    scrollToElement('#wx-article-cover', { offset: 10 }, function () {
+                        editor.changeCover(cover.id);
+                    });
+                },
+
+                changeBodyTemplate: function (template) {
+                    scrollToElement('#wx-article-body', { offset: 10 }, function () {
+                        editor.changeBodyTemplate(template.id);
+                    });
+                },
+
+                changeFooterTemplate: function (template) {
+                    scrollToElement('#wx-article-footer', { offset: 10 }, function () {
+                        editor.changeFooterTemplate(template.id);
+                    });
+                },
+
+                openReferralLinkModal: function () {
+                    GetReferralLinkModal.instance
+                        .open({
+                            article_id: editor.nextArticleId,
+                            wx_article_title_id: editor.titleId,
+                            wx_article_cover_id: editor.coverId,
+                            wx_article_body_template_id: editor.bodyTemplateId,
+                            wx_article_footer_template_id: editor.footerTemplateId
+                        })
+                        .then(function (link) {
+                            // location.href = '/backend/wx_article_editor?referral_link_id=' + link.id;
+                        });
+                },
+
+                editReferralLink: function () {
+                    GetReferralLinkModal.instance
+                        .open({
+                            id: editor.referralLinkId,
+                            article_id: editor.nextArticleId,
+                            wx_article_title_id: editor.titleId,
+                            wx_article_cover_id: editor.coverId,
+                            wx_article_body_template_id: editor.bodyTemplateId,
+                            wx_article_footer_template_id: editor.footerTemplateId
+                        });
+                }
+            };
+
+            self.init = function () {
+                ko.applyBindings(model, document.getElementById('editor-bar'));
+            }
+        };
+
+        var WxArticleEditor = function (options) {
+            var self = this;
+            var previewArticles = [];
+            var covers = [];
+            var titles = [];
+            var footerTemplates = [];
+            var bodyTemplates = [];
+
+            var $title = $('#wx-article-title');
+            var $cover = $('#wx-article-cover');
+            var $body = $('#wx-article-body');
+            var $footer = $('#wx-article-footer');
+
+            var editorBar = null;
+
+            this.titleId = options.title_id;
+
+            this.coverId = options.cover_id;
+
+            this.bodyTemplateId = options.body_template_id;
+
+            this.footerTemplateId = options.footer_template_id;
+
+            this.referralLinkId = options.referral_link_id;
+
+            this.novelId = options.novel_id;
+
+            this.categoryId = options.category_id;
+
+            this.articleId = options.article_id;
+
+            this.nextArticleId = options.next_article_id;
+
+            this.num = options.num;
+
+            this.init = function () {
+                return $.when(
+                        loadCovers(),
+                        loadTitles(),
+                        loadFooterTemplates(),
+                        loadBodyTemplates(),
+                        loadPreviewArticles()
+                    )
+                    .then(function () {
+                        editorBar = new EditorBar({
+                            editor: self,
+                            is_novel_online: options.is_novel_online,
+                            titles: titles,
+                            covers: covers,
+                            body_templates: _.map(bodyTemplates, function (it) {
+                                return { id: it.id, preview_img: it.preview_img };
+                            }),
+                            footer_templates: _.map(footerTemplates, function (it) {
+                                return { id: it.id, preview_img: it.preview_img };
+                            })
+                        });
+
+                        editorBar.init();
+
+                        if (self.titleId) {
+                            self.changeTitle(self.titleId);
+                        } else {
+                            renderTitle(_.sample(titles));
+                        }
+
+                        if (self.coverId) {
+                            self.changeCover(self.coverId);
+                        } else {
+                            renderCover(_.sample(covers));
+                        }
+
+                        if (self.bodyTemplateId) {
+                            self.changeBodyTemplate(self.bodyTemplateId);
+                        } else {
+                            renderBody(_.sample(bodyTemplates));
+                        }
+
+                        if (self.footerTemplateId) {
+                            self.changeFooterTemplate(self.footerTemplateId);
+                        } else {
+                            renderFooter(_.sample(footerTemplates));
+                        }
+                    });
+            };
+
+            this.$body = function () {
+              return $body;
+            };
+
+            this.changeTitle = function (id) {
+                var title = _.find(titles, function (it) {
+                    return it.id == id;
+                });
+
+                renderTitle(title);
+            };
+
+            this.changeCover = function (id) {
+                var cover = _.find(covers, function (it) {
+                    return it.id == id;
+                });
+
+                renderCover(cover);
+            };
+
+            this.changeBodyTemplate = function (id) {
+                var template = _.find(bodyTemplates, function (it) {
+                    return it.id == id;
+                });
+
+                renderBody(template);
+            };
+
+            this.changeFooterTemplate = function (id) {
+                var template = _.find(footerTemplates, function (it) {
+                    return it.id == id;
+                });
+
+                renderFooter(template);
+            };
+            this.drawHTML = function ($el) {
+              $el.find('img').each(function () {
+                var src = $(this).attr('src');
+                if (src && src.indexOf('http') === 0) {
+                  $(this).attr('src', '/NewWeb/Novels/proxy?url=' + encodeURIComponent(src));
+                }
+              });
+
+              var canvas = document.createElement('canvas');
+
+              var scaleFactor = 2;
+              var targetWidth = 320;
+
+              var fontFamily = 'Kaiti, STKaiti, STSong, NSimSun, "Microsoft YaHei", sans-serif';
+              var fontWeight = 'normal';
+              var fontSize = '20px !important';
+
+              var html = $el.html();
+              html = '<html>' +
+                '<head>' +
+                '<style>' +
+                    'html, body { padding:0;margin:0;font-family: ' + fontFamily + '; } ' +
+                    '.chapter-title { font-size: 20px !important; }' +
+                    '.chapter-content p {margin:0.6em 0; font-weight:' + fontWeight + '; text-indent:2em; font-size:' + fontSize + '; line-height:1.6em !important; } ' +
+                '</style>' +
+                '</head>' +
+                '<body style="background-color:white"><div style="width:' + targetWidth + 'px">' + html + '</div></body></html>';
+
+              return rasterizeHTML.drawHTML(html, null, {
+                zoom: scaleFactor,
+                width: parseInt(targetWidth, 10) * scaleFactor
+              })
+                .then(function (result) {
+
+                  var targetHeight = Math.floor(result.image.height / result.image.width * targetWidth);
+
+                  canvas.style.width = targetWidth + 'px';
+                  canvas.style.height = targetHeight + 'px';
+
+                  canvas.width = targetWidth * scaleFactor;
+                  canvas.height = targetHeight * scaleFactor;
+
+                  var ctx = canvas.getContext('2d');
+                  ctx.fillStyle = 'white';
+                  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                  canvas.getContext('2d').drawImage(result.image, 0, 0);
+
+                  return canvas;
+                });
+            };
+            function renderTitle(title) {
+                if (!title) {
+                    return false;
+                }
+
+                self.titleId = title.id;
+
+                $title.html(title.title);
+            }
+
+            function renderCover(cover) {
+                if (!cover) {
+                    return false;
+                }
+
+                self.coverId = cover.id;
+
+                $cover.html('<img style="width:100%;display:block;margin-bottom:20px;" src="' + cover.cover_url + '" />');
+            }
+
+            function renderBody(template) {
+                if (!template) {
+                    return false;
+                }
+
+                self.bodyTemplateId = template.id;
+
+                if (!template.compiled_template) {
+                    template.compiled_template = Handlebars.compile(template.template);
+                }
+
+                $body.html(template.compiled_template({ chapters: previewArticles }));
+            }
+
+            function renderFooter(template) {
+                if (!template) {
+                    return false;
+                }
+
+                self.footerTemplateId = template.id;
+
+                $footer.html(template.template);
+            }
+
+            function loadPreviewArticles() {
+                return $.get('/NewWeb/Novels/api_get_preview_articles?current_novel_id=' + self.novelId+'&num='+self.num, function (data) {
+                    previewArticles = data;
+
+                    _.each(previewArticles, function (article) {
+                      article.paragraphs = _.map(article.paragraphs, function (para) {
+                        return para.replace(/^[　\s]+/, '');
+                      });
+                    })                    
+                });
+            }
+
+            function loadCovers() {
+                return $.get('/NewWeb/Novels/api_get_covers?type=1&cid=' + self.categoryId, function (data) {
+                    covers = data;
+                });
+            }
+
+            function loadTitles() {
+                return $.get('/NewWeb/Novels/api_get_titles?type=1&cid=' + self.categoryId, function (data) {
+                    titles = data;
+                });
+            }
+
+            function loadFooterTemplates() {
+                return $.get('/NewWeb/Novels/api_get_footer_templates', function (data) {
+                    footerTemplates = data;
+                });
+            }
+
+            function loadBodyTemplates() {
+                return $.get('/NewWeb/Novels/api_get_body_templates', function (data) {
+                    bodyTemplates = data;
+                });
+            }
+        }
+    </script>
+
+</body></html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>提现记录</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>提现记录</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+  <form id="form1" name="form1" method="post" action="<{:U('Money/money')}>" class="fomm1">
+  <span class="select-box inline">
+  <select name="state" class="select">
+    <option value="1">等待打款</option>
+    <option value="2">已打款</option>
+  </select>
+  </span>
+    <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜状态</button>
+  </form>
+      </div>
+    </div>      
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+          <th>申请费用</th>
+          <th>备注</th>
+          <th>状态</th>
+          <th>申请时间</th>           
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="content"  id="content">
+              <tr>
+          <td><{$content.money}></td>
+          <td><{$content.beizhu}></td>
+          <td><switch name="content[state]">
+                      <case value="1"><span class="label label-red">等待打款</span></case>
+                      <case value="2"><span class="label label-blue">已打款</span></case>
+                    </switch></td>
+          <td><{$content.time}></td>   
+              </tr>
+            </volist>
+          </tbody>
+        </table>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

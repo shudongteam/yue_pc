@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>小说管理</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" /></head>
+  
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" /></div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script>
+      <include file="Sidebar:include" />
+      <div class="main-content">
+      <{$weixin_tps}>
+      <include file="Bread:include" /> 
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!--/span-->
+                <!-- left menu ends -->
+                <div class="actions-bar clearfix" style="margin-top:15px">
+                  <form class="form-inline search-form">
+                    <div class="input-group pull-right">
+                      <input type="text" name="q" value="" placeholder="小说名称" style="width:auto;">
+                      <input type="hidden" name="is_online" value="1">
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </form>
+                  <ul class="nav nav-pills nav-pills-sm pull-left" style="margin-top:3px">
+                    <li class="<eq name='is_all' value='1'>active</eq>">
+                      <a href="/NewWeb/Novels/index?order_by=NBookPaidan.nums%20<{$order_by}>&is_all=1">全部</a></li>
+                    <li class="<eq name='gender' value='1'>active</eq>">
+                      <a href="/NewWeb/Novels/index?order_by=NBookPaidan.nums%20<{$order_by}>&gender=1">男频</a></li>
+                    <li class="<eq name='gender' value='2'>active</eq>">
+                      <a href="/NewWeb/Novels/index?order_by=NBookPaidan.nums%20<{$order_by}>&gender=2">女频</a></li>
+                    <li class="<eq name='is_new' value='1'>active</eq>">
+                      <a href="/NewWeb/Novels/index?order_by=NBookPaidan.nums%20<{$order_by}>&is_new=1">新书</a></li>
+                  </ul>
+                </div>
+                <table class="table table-striped table-bordered responsive">
+                  <thead>
+                    <tr>
+                      <td>封面</td>
+                      <td>名称</td>
+                      <td>状态</td>
+                      <td class="text-center">性别频度</td>
+                      <td class="text-center">
+                        <a data-ui="table-sort" data-field="NBookPaidan.nums" data-start-dir="<{$order_by}>">派单指数</a>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <volist name="data" id="vo" empty="$empty">
+                    <tr>
+                      <td class="text-center">
+                        <img src="/Upload/Book/zhong/<{$vo.upload_img}>" width="50"></td>
+                      <td>
+                        <a href="/NewWeb/Novels/view/id/<{$vo.book_id}>"><!-- [都市]  --><{$vo.book_name}></a>
+                        <if condition="$vo.state eq 1">
+                          <span style="font-size:13px">[连载中]</span>
+                          <else/>
+                          <span style="font-size:13px">[完本]</span>
+                        </if>
+
+                        <if condition="strtotime($vo['time']) gt strtotime('-10 day')"><span style="padding:0 4px;background:orangered;color:white;font-size:12px;"> 新书</span></if>
+                        <eq name="$vo.web_id eq 1" value=""><span style="padding:0 4px;background:#00CC00;color:white;font-size:12px;"> 独家</span></eq>
+                        <!-- <i class="fa fa-arrow-circle-up" style="cursor:pointer;" data-toggle="tooltip" title="" data-original-title="2017-10-16 18:50 更新 1 章"></i> -->
+                        <div class="text-muted" style="margin-top:5px;line-height:1.6em;"><{$vo.chapter}>章</div></td>
+                      <td>
+                          <if condition="$vo.is_show eq 1">
+                            <span title="上架时间: <{$vo.time}>" class="btn btn-success btn-xs">已上架</span>
+                            <else/>
+                            <span class="btn btn-error btn-xs">已下架</span>
+                          </if>
+                      </td>
+                      <td class="text-center">
+                          <if condition="$vo.gender eq 1">
+                            男频
+                          <else/>
+                            女频
+                        </if>
+                      </td>
+                      <td class="text-center"><{$vo.rank}></td>
+                    </tr>
+                    </volist>
+                  </tbody>
+                </table>
+                <{$page}>
+                <div class="modal fade" id="edit-price-modal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                          <span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">设置价格</h4></div>
+                      <div class="modal-body">
+                        <form class="form-horizontal" id="edit-price-form">
+                          <div class="form-group">
+                            <div class="form-control-static col-sm-10" style="font-size:16px">《
+                              <span class="novel-name"></span>》</div></div>
+                          <div class="form-group">
+                            <label class="control-label col-sm-2">章节数量:</label>
+                            <div class="form-control-static col-sm-10">
+                              <span class="novel-chapter-count"></span>章节</div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-sm-2">免费章节:</label>
+                            <div class="col-sm-10">
+                              <input type="number" class="free-chapter-count" required="" name="free_chapter_count"></div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-sm-2">小说价格:</label>
+                            <div class="col-sm-10">
+                              <input type="number" class="novel-price" required="" name="novel_price">书币
+                              <p class="help-block">1 元人民币 = 100 书币</p></div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" id="btn-submit-edit-price-form" class="btn btn-primary">提交</button></div>
+                    </div>
+                  </div>
+                </div>
+                <script>$(function() {
+                    $('[data-toggle="tooltip"]').tooltip({
+                      container: $('body')
+                    });
+
+                    var has_admin_permission = false;
+                    var edited_novel_id = 0;
+
+                    $('[data-toggle="set-online"],[data-toggle="set-offline"]').tooltip();
+
+                    $('[data-toggle="get-reference-marketing-articles"]').click(function() {
+                      var novelId = $(this).data('novel-id');
+                      var content = $('.reference-marketing-articles[data-novel-id="' + novelId + '"]').html().trim();
+
+                      Modal.alert({
+                        title: '参考文案',
+                        message: plainTextToHtml(content)
+                      });
+
+                      return false;
+                    });
+
+                    if (has_admin_permission) {
+                      $('[data-toggle="set-online"]').click(function() {
+                        $.ajax({
+                          url: '/NewWeb/Novels/api_set_online?id=' + $(this).data('nid'),
+                          type: 'POST',
+                          contentType: 'application/json'
+                        }).then(function() {
+                          location.reload();
+                        }).fail(handleAjaxError);
+                      });
+
+                      $('[data-toggle="set-offline"]').click(function() {
+                        $.ajax({
+                          url: '/NewWeb/Novels/api_set_offline?id=' + $(this).data('nid'),
+                          type: 'POST',
+                          contentType: 'application/json'
+                        }).then(function() {
+                          location.reload();
+                        }).fail(handleAjaxError);
+                      })
+                    }
+
+                    $('.btn-edit-price').click(function() {
+                      var id = $(this).data('novel-id');
+                      edited_novel_id = id;
+
+                      $.get('/NewWeb/Novels/api_get_novel_info', {
+                        id: id
+                      }).then(function(result) {
+                        $('#edit-price-modal').find('.novel-name').html(result.title);
+                        $('#edit-price-modal').find('.novel-chapter-count').html(result.chapter_count);
+                        // 如果小说全本免费，这多半意味着是新上传的小说，不能把所有章节数显示在免费章节输入框中
+                        $('#edit-price-modal').find('.free-chapter-count').val(result.price > 0 ? result.free_chapter_count: '');
+                        $('#edit-price-modal').find('.novel-price').val(result.price > 0 ? result.price: '');
+
+                        $('#edit-price-modal').modal('show');
+                      });
+
+                      return false;
+                    });
+
+                    $('#btn-submit-edit-price-form').click(function() {
+                      var $button = $(this);
+                      if ($button.data('submitting')) {
+                        return false;
+                      }
+
+                      var valid = $('#edit-price-form')[0].checkValidity();
+                      if (!valid) {
+                        return false;
+                      }
+
+                      $button.data('submitting', true);
+
+                      var free_chapter_count = $('#edit-price-form [name="free_chapter_count"]').val();
+                      var price = $('#edit-price-form [name="novel_price"]').val();
+
+                      $.ajax({
+                        url: '/NewWeb/Novels/api_set_price?id=' + edited_novel_id + '&free_chapter_count=' + free_chapter_count + '&price=' + price,
+                        type: 'POST',
+                        contentType: 'application/json'
+                      }).then(function(result) {
+                        $('#edit-price-modal').modal('hide');
+                        toastr.success('设置成功');
+                        reloadPage(500);
+                      }).fail(handleAjaxError).always(function() {
+                        $button.data('submitting', false);
+                      });
+
+                      return false;
+                    });
+                  })</script>
+                <!-- PAGE CONTENT ENDS --></div>
+              <!-- /.col --></div>
+            <!-- /.row --></div>
+          <!-- /.page-content-area --></div>
+        <!-- /.page-content --></div>
+      <!-- /.main-content --></div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <include file="Script:include" /></body>
+
+</html>

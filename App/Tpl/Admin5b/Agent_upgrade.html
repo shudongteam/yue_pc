@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>升级站长</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language="javascript">
+function CheckPost()
+{
+	error = false;
+	$("#form-agent td").removeClass("error")
+	$('#form-agent tr').each(function(){
+		if(typeof($(this).find("input").val()) != 'undefined') {
+			if(!$(this).find("input").val()) {
+				alert($(this).find("input").attr('placeholder') + '!!');
+				$(this).find("input").focus();
+				error = true;
+				return false;
+			}
+			if(error)
+			{
+				return false;
+			}
+		}
+		
+		if(error)
+		{
+			return false;
+		}
+		
+	})
+	
+	if(error)
+	{
+		return false;
+	}
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>升级站长</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+      <div class="pubMain"> <a href="<{:U('Agent/index')}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form class="form form-horizontal" id="form-agent" action="" method="post" name="mform" onSubmit="return CheckPost();">
+   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">所属站点：</td>
+        <td><span class="select-box inline">
+       <select name="web_id" class="select select2">
+            <foreach name="webs" item="web">
+                <option value="<{$web.web_id}>"><{$web.web_name}></option>
+            </foreach>
+    </select>
+    </span>
+        </td>
+      </tr>      
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td><input type="submit" id="" value="确认升级" class="saveBtn"></td>
+      </tr>
+    </table>
+    </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

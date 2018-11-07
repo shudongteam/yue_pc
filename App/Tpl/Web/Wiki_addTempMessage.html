@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>添加模板消息</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<link rel="stylesheet" href="/Public/AdminPublic/ColorPicker/css/jquery.cxcolor.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script> -->
+<script type="text/javascript" src="/Public/AdminPublic/ColorPicker/jquery.cxcolor.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+  .saveMb { 
+    width: 117px; 
+    height: 42px; 
+    background: #483cef; 
+    color: #fff; 
+    font-size:16px; 
+    border-radius: 2px; 
+    -moz-border-radius: 2px; 
+    -webkit-border-radius: 2px;
+   }
+</style>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>添加模板消息</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="publishArt">
+        <div class="pubMain"> <a href="<{:U('Wiki/tempmessage', array('id' => $id))}>" class="backlistBtn"><i class="ico-back"></i>返回上层</a>
+      <form class="form form-horizontal" id="form" action="" method="post" name="mform">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dataclass">
+      <tr>
+        <td class="contenta">模板消息ID：</td>
+        <td><input name="temp_id" type="text" class="shuruTxt" placeholder="请输入模板消息ID"  value="<{$data.temp_id}>"/></td>
+      </tr>
+        <tr>
+        <td class="contenta">标题：</td>
+        <td>
+          <input name="title" type="text" id="title" class="shuruTxt" placeholder="请输入标题"  maxlength="30" value="<{$data.title}>" />
+          <input id="cp1" name="title_color" type="text" class="input_cxcolor" readonly="" value="<{$data.title_color|default='#000000'}>">
+        </td>
+      </tr>
+
+      <tr>
+        <td class="contenta">副标题：</td>
+        <td>
+          <input name="type" id="type" type="text" class="shuruTxt" placeholder="请输入副标题"  maxlength="30" value="<{$data.type}>" />         
+          <input id="cp2" name="type_color" type="text" class="input_cxcolor" readonly="" value="<{$data.type_color|default='#000000'}>">
+        </td>
+      </tr>      
+        <td class="contenta" valign="top" >内容：</td>
+        <td>
+          <textarea name="content" id="content" class="textarea"  placeholder="回复内容" maxlength="150"><{$data.content}></textarea>
+          <input id="cp3" name="content_color" type="text" class="input_cxcolor" readonly="" value="<{$data.content_color|default='#000000'}>">
+        </td>
+      </tr> 
+      <tr>
+        <td class="contenta">链接：</td>
+        <td>
+          <input name="url" type="text" class="shuruTxt" placeholder="请输入链接" value="<{$data.url}>" />
+        </td>
+      </tr>
+      <tr>
+        <td class="contenta">定时发送：</td>
+        <td>
+        <input readonly="true" type="text" name='sub_time' onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss', minDate:'%y-%M-%d %H:%m:%s'})" id="pubDate" class="shuruTxt Wdate" style="width:150px;" placeholder="选择定时时间" value="<{$data.sub_time}>">
+        </td>
+      </tr>
+      <tr>
+       <tr>
+        <td class="contenta" valign="top" >备注：</td>
+        <td>
+          <textarea name="remark" id="remark" class="textarea"  placeholder="请输入备注" maxlength="150"><{$data.remark}></textarea>
+          <input id="cp4" name="remark_color" type="text" class="input_cxcolor" readonly="" value="<{$data.remark_color|default='#000000'}>">
+        </td>
+      </tr>
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td>
+          <button type="button" class="saveBtn" onclick="do_post()">确认</button>
+          <!-- <button type="button" class="saveBtn">维护中......</button> -->
+          <button type="button" class="saveMb" onclick="save_mb()">保存为模板</button>
+        </td>
+      </tr>
+    </table>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+      $('#cp1').bind('change', function(){
+        $("#title").css('color', this.value);
+        $(this).val(this.value);
+      });
+    $('#cp1').cxColor();
+
+    $('#cp2').bind('change', function(){
+        $("#type").css('color', this.value);
+                $(this).val(this.value);
+      });
+    $('#cp2').cxColor();
+
+      $('#cp3').bind('change', function(){
+        $("#content").css('color', this.value);
+        $(this).val(this.value);
+      });
+    $('#cp3').cxColor();
+
+    $('#cp4').bind('change', function(){
+      $("#remark").css('color', this.value);
+      $(this).val(this.value);
+    });
+      $('#cp4').cxColor();
+   });
+
+    var location_url = "<{:U('Wiki/tempmessage', array('id' => $id))}>";
+  function do_post(){
+    var title = $("input[name='title']").val();
+    var content = $("textarea[name='content']").val();
+    var remark = $("textarea[name='remark']").val();
+    var temp_id = $("input[name='temp_id']").val();
+    var type = $("input[name='type']").val();
+    var url = $("input[name='url']").val();
+    var sub_time = $("#pubDate").val();
+
+
+    var type_color = $("input[name='type_color']").val();
+    var title_color = $("input[name='title_color']").val();
+    var content_color = $("input[name='content_color']").val();
+    var remark_color = $("input[name='remark_color']").val();
+
+    if(title == "") {
+      alert("请输入标题！");
+      return false;
+    }
+  
+    if(content == "") {
+      alert("请输入内容！");
+      return false;
+    }
+  
+    if(temp_id == "") {
+      alert("请输入模板消息ID！");
+      return false;
+    }
+  
+    if(type == "") {
+      alert("请输入副标题！");
+      return false;
+    }
+
+    if(url == "") {
+      alert("请输入链接！");
+      return false;
+    }
+
+    $('.saveBtn').removeAttr('onclick');
+
+    var post_url = "<{:U('Wiki/addTempMessage', array('id' => $id))}>";
+
+    $.ajax({
+      timeout:0,
+      url: post_url,
+      type: "post",
+      data: 'title=' + title + '&content=' + content + '&temp_id=' + temp_id + '&type=' + type + '&url=' + url.replace(/\&/g,"%26") + '&remark=' + remark + '&type_color=' + type_color + '&title_color=' + title_color + '&content_color=' + content_color + '&remark_color=' + remark_color + '&sub_time=' + sub_time,
+      success: function (data) {
+          if(data == 1) {
+             window.location.href = location_url;
+          } else {
+              clearTimeout(t);
+              alert('发送失败:'+data);
+          }    
+      }
+    });
+    timedCount();
+  }
+
+var c = 1;
+var t;
+function timedCount() {
+  $('.saveBtn').html("发送中("+ c + "s)");
+  c++;
+  if (c > 20) {
+    window.location.href = location_url;
+  }
+  t = setTimeout("timedCount()",1000);
+}
+
+
+//保存模板
+function save_mb(){
+    var title = $("input[name='title']").val();
+    var content = $("textarea[name='content']").val();
+    var remark = $("textarea[name='remark']").val();
+    var temp_id = $("input[name='temp_id']").val();
+    var type = $("input[name='type']").val();
+    var url = $("input[name='url']").val();
+    var sub_time = $("#pubDate").val();
+
+
+    var type_color = $("input[name='type_color']").val();
+    var title_color = $("input[name='title_color']").val();
+    var content_color = $("input[name='content_color']").val();
+    var remark_color = $("input[name='remark_color']").val();
+
+
+    if(temp_id == "") {
+      alert("请输入模板消息ID！");
+      return false;
+    }
+
+    var post_url2 = "<{:U('Wiki/saveTempMessage', array('id' => $id))}>";
+    $.ajax({
+      timeout:0,
+      url: post_url2,
+      type: "post",
+      data: 'title=' + title + '&content=' + content + '&temp_id=' + temp_id + '&type=' + type + '&url=' + url.replace(/\&/g,"%26") + '&remark=' + remark + '&type_color=' + type_color + '&title_color=' + title_color + '&content_color=' + content_color + '&remark_color=' + remark_color + '&sub_time=' + sub_time,
+      success: function (data) {
+          if(data == 1) {
+              alert('保存成功!');
+          } else {
+              alert('保存失败!');
+          }    
+      }
+  });
+}
+</script>
+</body>
+</html>

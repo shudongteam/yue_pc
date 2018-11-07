@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>查看作品</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script language='JavaScript'>
+function CheckAll(form){
+    if(form.suo.checked==true){
+    for (var i=0;i<form.elements.length;i++)
+   {
+      var e = form.elements[i];
+      e.checked = true;
+   }       
+    }else{
+     for (var i=0;i<form.elements.length;i++)
+   {
+      var e = form.elements[i];
+      e.checked = false;
+   }         
+        
+    }
+    
+}
+</script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>图书管理 <span class="en">&gt;</span> <{$isbook[book_name]}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">   
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+        <form id="formDel" name="formDel" method="post" action="<{:U('Chapter/operation')}>">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+                <th>序号</th>
+                <th>章节名称</th>
+                <th>字数</th>
+
+
+              </tr>
+            </thead>
+          <tbody>
+          <volist name="content"  id="vo">
+            <tr>
+                  <td><{$vo.num}></td>
+                  <td><{$vo.title}></td>
+                  <td><{$vo.number}></td>
+              </tr>
+           </volist>
+          </tbody>
+        </table>
+       </form>
+        <!--pages S-->
+        <{$page}>
+        <!--pages E-->
+        <gt name="count" value="15">
+        <div class="form-group" style="width: 178px; height: 34px; float: right; margin-top: -93px; margin-right: 405px; position: relative; z-index: 999;">
+          <form action=""  method="get">
+            <span>跳到</span>
+            <input name="p" type="text" style="border: 1px solid #ddd; height: 33px; margin-left: 11px; width: 44px; text-align: center;" />
+            <span>页</span>
+            <input class="btnis" type="submit" value="跳转" />
+          </form>
+        </div>
+        </gt>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

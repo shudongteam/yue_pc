@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>后台首页</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/layer/layer.js"></script> 
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2>后台首页</h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+      <div class="cg-title clearfix"><a href="javascript:;" onclick='shuaxin()' class="default-add-btn newPdBtn"><i class="ico-add Hui-iconfont">&#xe68f;</i>数据刷新</a> </div>
+    <div class="cgsuperCtab">
+    <div class="Mian-cont-tongji">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tongji">
+        <tr>
+          <td><div class="xinxi"><b><{$tongji.money_day}></b><br>当日充值</div></td>
+          <td>&nbsp;</td>
+          <td><div class="xinxi"><b><{$tongji.money_month}></b><br>本月充值(分成后)</div></td>
+          <td>&nbsp;</td>
+          <td><div class="xinxi"><b><{$tongji.money_total}></b><br>累计充值(分成后)</div></td>
+           <td>&nbsp;</td>  
+          <!-- <td><div class="xinxi"><b><{$tongji.money_settlement}></b><br>未结算分成(分成后)</div></td>  -->         
+        </tr>
+      </table>  
+      </div>   
+        <if condition="$isagent">
+        <div class="Mian-cont-tongji" style="margin-bottom: 20px;">
+        <table border="0" cellpadding="0" cellspacing="0" class="layui-table">
+          <thead>
+            <tr>
+              <th colspan="2" scope="col">我的客户经理</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th width="200" align="left">经理名称：</th>
+              <td><{$isagent.pen_name}></td>
+            </tr>
+            <tr>
+              <th width="200" align="left">电话</th>
+              <td><{$isagent.phone}></td>
+            </tr>
+            <tr>
+              <th width="200" align="left">QQ</th>
+              <td><{$isagent.qq}></td>
+            </tr>
+            <tr>
+              <th width="200" align="left">EMAIL</th>
+              <td><{$isagent.email}></td>
+            </tr>            
+          </tbody>
+        </table>
+      </div>   
+      </if>
+<!--       <div class="Mian-cont-tongji">
+        <table border="0" cellpadding="0" cellspacing="0" class="layui-table">
+          <thead>
+            <tr>
+              <th colspan="2" scope="col">系统信息</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left">版本信息</td>
+              <td>书库监控管理系统</td>
+            </tr>
+            <tr>
+              <td>技术联系</td>
+              <td>qq：752965712 死神 有BUG可以联系我</td>
+            </tr>
+            <tr>
+              <td>版权所有</td>
+              <td>本系统由，南京希遥文化传媒有限公司提供，任何商业行为公司必究。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+function shuaxin() {
+$.ajax({
+        url: "<{:U('Main/newtongji')}>",
+        type: "get",
+        success: function (data) {
+            if(data==1){
+                location.replace(location.href);
+            }else{
+                alert("系统错误");
+            }
+        }
+    });
+}  
+</script> 
+<eq name="notice" value="1">
+<notempty name="content">
+<script type="text/javascript">
+    $(function(){
+      var url = "<{:U('Main/show_notice')}>";
+    layer.open({
+      type: 2,
+      title: '今日公告',
+      shadeClose: true,
+      shade: 0.8,
+      area: ['70%', '70%'],
+      content: url
+    }); 
+  });  
+</script>
+</eq>
+</notempty>
+</body>
+</html>

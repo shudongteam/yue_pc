@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>订单统计</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <include file="Head:include" /></head>
+  
+  <body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+      <include file="Navbar:include" /></div>
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">try {
+          ace.settings.check('main-container', 'fixed')
+        } catch(e) {}</script>
+      <include file="Sidebar:include" />
+      <div class="main-content">
+    <{$weixin_tps}>
+      <include file="Bread:include" /> 
+        <div class="page-content">
+          <div class="page-content-area">
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!--/span-->
+                <!-- left menu ends -->
+                <form style="margin-bottom:10px;" class="form-inline">
+                  <div class="form-group">
+                    <div class="input-group date" id="from-date-picker">
+                      <input type="text" class="form-control" value="" placeholder="开始日期">
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group date" id="to-date-picker">
+                      <input type="text" class="form-control" value="" placeholder="结束日期">
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary" id="btn-search">查询</button>
+                  <!-- <span class="text-muted" style="display: inline-block; vertical-align: bottom; margin-left: 10px">支付金额: ¥0.00, 支付笔数: 0</span> -->
+                  <button type="button" class="btn btn-primary pull-right" id="btn-export">
+                    <i class="fa fa-download"></i>导出已支付订单</button>
+                </form>
+                <nav>
+                  <form class="form-inline search-form">
+                    <div class="input-group pull-right">
+                      <input type="text" name="q" value="" placeholder="商户单号">
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </form>
+                  <ul class="nav nav-tabs pull-left">
+                    <li class="<eq name='status' value='0'>active</eq>">
+                      <a href="/NewWeb/Orders/index">全部</a></li>
+                    <li class="<eq name='status' value='2'>active</eq>">
+                      <a href="/NewWeb/Orders/index?status=2">已支付</a></li>
+                    <li class="<eq name='status' value='1'>active</eq>">
+                      <a href="/NewWeb/Orders/index?status=1">未支付</a></li>
+                  </ul>
+                </nav>
+                <table class="table table-striped table-bordered table-hover responsive">
+                  <thead>
+                    <tr>
+                      <td>商户单号</td>
+                      <td>用户</td>
+                      <td class="text-right">金额</td>
+                      <td class="text-center">订单状态</td>
+                      <td class="text-center">创建日期</td>
+                      <td class="text-center">来源</td>
+                      <td>代理</td></tr>
+                  </thead>
+                  <tbody>
+                      <volist name="data" id="vo" empty="$empty">
+                          <tr>
+                              <td><{$vo.trade}></td>
+                              <td><{$vo.pen_name}></td>
+                              <td class="text-right"><{$vo.money}></td>
+                              <td class="text-center">
+                                <if condition="$vo['state'] eq 2">
+                                  <span class="btn-xs btn-success">已支付</span>
+                                <else/>
+                                  <span class="btn-xs btn-danger">未支付</span>
+                              </if>
+                              </td>
+                              <td class="text-center"><{$vo.time}></td>
+                              <td class="text-center"><{$vo.name}></td>
+                              <td><{$vo.agent_name}></td>  
+                          </tr>
+                      </volist>
+                  </tbody>
+                </table>
+                <{$page}>
+                <script>$(function() {
+                    $('[data-toggle="popover"]').webuiPopover({
+                      placement: 'top',
+                      content: function() {
+                        return $(this).closest('tr').find('.order-info-popover').html();
+                      }
+                    });
+
+                    $('#from-date-picker').datetimepicker({
+                      format: 'YYYY-MM-DD'
+                    });
+                    $('#to-date-picker').datetimepicker({
+                      format: 'YYYY-MM-DD'
+                    });
+
+                    $('#btn-search').click(function() {
+                      loadList();
+                      return false;
+                    });
+
+                    $('#btn-export').click(function() {
+                      loadList({
+                        alt: 'excel'
+                      });
+                      return false;
+                    });
+
+                    function loadList(params) {
+                      var search = _.assign({},
+                      parseQueryString(), params);
+
+                      _.assign(search, {
+                        from: $('#from-date-picker :text').val(),
+                        to: $('#to-date-picker :text').val()
+                      });
+
+                      if (params && params.alt == 'excel') {
+                        if (!search.from || !search.to) {
+                          Modal.alert({
+                            title: '请选择时间范围',
+                            message: '请选择时间范围 (不能大于 31 天)'
+                          });
+
+                          return false;
+                        }
+
+                        var days = moment(search.to).diff(moment(search.from), 'days') + 1;
+                        if (days > 31) {
+                          Modal.alert({
+                            title: '时间范围过大',
+                            message: '时间范围不能大于 31 天'
+                          });
+
+                          return false;
+                        }
+                      }
+
+                      var queryString = _.chain(search).map(function(val, key) {
+                        return key + '=' + encodeURIComponent(val);
+                      }).value().join('&');
+
+                      location.href = location.pathname + '?' + queryString;
+                    }
+
+                    $('[data-toggle="correct-status"]').click(function() {
+                      var $button = $(this);
+                      if ($button.data('in_progress')) {
+                        return false;
+                      }
+
+                      $button.data('in_progress', true);
+                      $button.find('.fa').addClass('fa-spin');
+
+                      var id = $(this).data('id');
+
+                      $.ajax({
+                        url: '/backend/orders/api_correct_payment_status/' + id,
+                        type: 'POST',
+                        contentType: 'application/json'
+                      }).then(function(result) {
+                        if (result.success) {
+                          toastr.success('核对成功');
+                          reloadPage(500);
+                        } else {
+                          toastr.error(result.message);
+                        }
+                      }).fail(handleAjaxError).always(function() {
+                        $button.data('in_progress', false);
+                        $button.find('.fa').removeClass('fa-spin');
+                      });
+
+                      return false;
+                    });
+
+                    $('[data-toggle="refund"]').click(function() {
+                      refund($(this).data('id'));
+                      return false;
+                    });
+
+                    function refund(orderId) {
+                      var $row = $('tr[data-order-id="' + orderId + '"]');
+                      return Modal.open({
+                        title: '退款确认',
+                        body: '<div class="form-horizontal">' + '<div class="form-group">' + '<label class="col-sm-4 control-label">订单号</label>' + '<div class="col-sm-8"><p class="form-control-static">' + $row.find('.border-id').text().trim() + '</p></div>' + '</div>' + '<div class="form-group">' + '<label class="col-sm-4 control-label">用户</label>' + '<div class="col-sm-8"><p class="form-control-static">' + $row.find('.member-info').html() + '</p></div>' + '</div>' + '<div class="form-group">' + '<label class="col-sm-4 control-label">订单金额</label>' + '<div class="col-sm-8"><p class="form-control-static">' + $row.find('.order-amount').text() + '</p></div>' + '</div>' + '</div>',
+                        buttons: [{
+                          text: '取消',
+                          click: function() {
+                            this.close();
+                          }
+                        },
+                        {
+                          text: '确定退款',
+                          className: 'btn-primary',
+                          click: function() {
+                            var modal = this;
+
+                            doRefund(orderId).then(function() {
+                              modal.close();
+                              Modal.alert({
+                                title: '退款提交成功',
+                                message: '退款提交成功, 可能需要几分钟时间到帐'
+                              }).then(function() {
+                                reloadPage(1000);
+                              });
+                            });
+                          }
+                        }]
+                      });
+                    }
+
+                    function doRefund(orderId) {
+                      return $.ajax({
+                        url: '/backend/orders/api_refund/' + orderId,
+                        type: 'POST',
+                        contentType: 'application/json'
+                      }).fail(handleAjaxError);
+                    }
+                  });</script>
+                <!-- PAGE CONTENT ENDS --></div>
+              <!-- /.col --></div>
+            <!-- /.row --></div>
+          <!-- /.page-content-area --></div>
+        <!-- /.page-content --></div>
+      <!-- /.main-content --></div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <include file="Script:include" /></body>
+
+</html>

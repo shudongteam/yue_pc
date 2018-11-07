@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>查看全勤</title>
+<link rel="stylesheet" href="/Public/AdminPublic/css/base.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/css/page.css" />
+<link rel="stylesheet" href="/Public/AdminPublic/iconfont/iconfont.css">
+<script type="text/javascript" src="/Public/AdminPublic/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/modernizr.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/js/main.js"></script>
+<script type="text/javascript" src="/Public/AdminPublic/DatePicker/WdatePicker.js"></script>
+</head>
+<body style="background: #f6f5fa;">
+<div class="super-content RightMain">
+  <div class="super-header">
+    <h2><a href="<{:U('Book/index')}>" class="team-a">作品管理</a> <span class="en">&gt;</span> 查看全勤 <span class="en">&gt;</span> <{$isbook.book_name}></h2>
+    <include file="Main:user"/> </div>
+  <!--header-->
+  <div class="superCtab">
+    <div class="cg-title clearfix">
+      <div class="searchBar searchBar2">
+        <form id="form1" name="form1" method="post" action="" class="fomm1">
+          <input readonly="true" type="text" name='yue' value="<{$yue}>" onFocus="WdatePicker({dateFmt:'yyyy-MM'})" id="pubDate" class="keyword Wdate" style="width:110px;" placeholder="选择时间">
+          <input type="text" placeholder="福利价格" value="<{$welfare}>" name="welfare" class="keyword" style='width: 80px;' onKeyUp="this.value = this.value.replace(/\D/g, '')" onafterpaste="this.value=this.value.replace(/\D/g,'')" />
+          <button class="search-button" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜月份</button>
+        </form>
+      </div>
+    </div>
+    <div class="cgsuperCtab">
+      <div class="Mian-cont-wrap">
+          <table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+            <thead>
+              <tr>
+          <th>时间</th>
+          <th>总字数</th>
+          <th>缺失字数</th>
+          <th>当日稿费</th>
+          <th>结余</th>
+              </tr>
+            </thead>
+          <tbody>
+            <volist name="shuzu"  id="vo">
+              <tr>
+           <td><{$vo.riqi}></td>
+          <td><{$vo.zongzishu}></td>
+          <td><{$vo.queshi}></td>    
+          <td><{$vo.dangri}></td>
+          <td><{$vo.jieyu}></td>
+              </tr>
+            </volist>
+        <tr class="text-c odd" role="row">
+          <td align="center">数据统计</td>
+          <td colspan="5" align="left" class="tabanniu">享受千字：<font color="red"><{$isbook.welfare}></font> 元福利  本月结余：<font color="red"><b><{$tongji.zongjieyu}></b></font> RMB</td>
+        </tr>                 
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
